@@ -3,27 +3,52 @@ import createGlobe from 'cobe';
 import { useTheme } from '../../context/ThemeContext';
 
 const MARKERS = [
-  { id: 'ankara',   location: [39.9334,  32.8597], size: 0.12 },
-  { id: 'istanbul', location: [41.0082,  28.9784], size: 0.10 },
-  { id: 'doha',     location: [25.2854,  51.5310], size: 0.10 },
-  { id: 'moscow',   location: [55.7558,  37.6173], size: 0.10 },
-  { id: 'kazan',    location: [55.7961,  49.1088], size: 0.10 },
-  { id: 'london',   location: [51.5074,  -0.1278], size: 0.09 },
-  { id: 'berlin',   location: [52.5200,  13.4050], size: 0.08 },
-  { id: 'mecca',    location: [21.3891,  39.8579], size: 0.09 },
-  { id: 'bangkok',  location: [13.7563, 100.5018], size: 0.08 },
-  { id: 'dubai',    location: [25.2048,  55.2708], size: 0.09 },
+  { id: 'ankara',   label: 'Ankara',   country: 'TR', location: [39.9334,  32.8597], size: 0.12 },
+  { id: 'istanbul', label: 'İstanbul', country: 'TR', location: [41.0082,  28.9784], size: 0.10 },
+  { id: 'doha',     label: 'Doha',     country: 'QA', location: [25.2854,  51.5310], size: 0.10 },
+  { id: 'moscow',   label: 'Moskova',  country: 'RU', location: [55.7558,  37.6173], size: 0.10 },
+  { id: 'kazan',    label: 'Kazan',    country: 'RU', location: [55.7961,  49.1088], size: 0.10 },
+  { id: 'london',   label: 'Londra',   country: 'UK', location: [51.5074,  -0.1278], size: 0.09 },
+  { id: 'berlin',   label: 'Berlin',   country: 'DE', location: [52.5200,  13.4050], size: 0.08 },
+  { id: 'mecca',    label: 'Mekke',    country: 'SA', location: [21.3891,  39.8579], size: 0.09 },
+  { id: 'bangkok',  label: 'Bangkok',  country: 'TH', location: [13.7563, 100.5018], size: 0.08 },
+  { id: 'dubai',    label: 'Dubai',    country: 'AE', location: [25.2048,  55.2708], size: 0.09 },
 ];
 
+function project(lat, lon, phi, theta) {
+  const latR = lat * Math.PI / 180;
+  const lonR = lon * Math.PI / 180 - Math.PI;
+  const cL = Math.cos(latR);
+  let x = -cL * Math.cos(lonR);
+  let y =  Math.sin(latR);
+  let z =  cL * Math.sin(lonR);
+
+  const r = 0.85;
+  x *= r; y *= r; z *= r;
+
+  const cP = Math.cos(phi), sP = Math.sin(phi);
+  const cT = Math.cos(theta), sT = Math.sin(theta);
+
+  const x2 =  cP * x + sP * z;
+  const y2 =  sP * sT * x + cT * y - cP * sT * z;
+  const z2 = -sP * cT * x + sT * y + cP * cT * z;
+
+  return { sx: (x2 + 1) / 2, sy: (-y2 + 1) / 2, z: z2 };
+}
+
 export default function CobeGlobe() {
-  const canvasRef = useRef(null);
+  const canvasRef        = useRef(null);
   const pointerInteracting = useRef(null);
-  const lastPointer = useRef(null);
-  const dragOffset = useRef({ phi: 0, theta: 0 });
-  const velocity = useRef({ phi: 0, theta: 0 });
-  const phiOffsetRef = useRef(0);
-  const thetaOffsetRef = useRef(0);
-  const isPausedRef = useRef(false);
+  const lastPointer      = useRef(null);
+  const dragOffset       = useRef({ phi: 0, theta: 0 });
+  const velocity         = useRef({ phi: 0, theta: 0 });
+  const phiOffsetRef     = useRef(0);
+  const thetaOffsetRef   = useRef(0);
+  const isPausedRef      = useRef(false);
+  const labelLayerRef    = useRef(null);
+  const labelRefs        = useRef({});
+  const labelStateRef    = useRef({});
+  const containerSizeRef = useRef({ w: 0, h: 0 });
   const { isDark } = useTheme();
 
   const handlePointerDown = useCallback((e) => {
@@ -51,7 +76,7 @@ export default function CobeGlobe() {
 
   const handlePointerUp = useCallback(() => {
     if (pointerInteracting.current !== null) {
-      phiOffsetRef.current += dragOffset.current.phi;
+      phiOffsetRef.current   += dragOffset.current.phi;
       thetaOffsetRef.current += dragOffset.current.theta;
       dragOffset.current = { phi: 0, theta: 0 };
       lastPointer.current = null;
@@ -84,6 +109,12 @@ export default function CobeGlobe() {
     const markerColor   = [0.063, 0.725, 0.506];
     const glowColor     = isDark ? [0.063, 0.6, 0.4] : [0.5, 0.9, 0.75];
 
+    const refreshSize = () => {
+      if (!labelLayerRef.current) return;
+      const r = labelLayerRef.current.getBoundingClientRect();
+      containerSizeRef.current = { w: r.width, h: r.height };
+    };
+
     function init() {
       const width = canvas.offsetWidth;
       if (width === 0 || globe) return;
@@ -106,6 +137,8 @@ export default function CobeGlobe() {
         opacity: 0.85,
       });
 
+      refreshSize();
+
       function animate() {
         if (!isPausedRef.current) {
           phi += 0.003;
@@ -121,9 +154,13 @@ export default function CobeGlobe() {
           else if (thetaOffsetRef.current > tMax)
             thetaOffsetRef.current += (tMax - thetaOffsetRef.current) * 0.1;
         }
+
+        const curPhi   = phi + phiOffsetRef.current + dragOffset.current.phi;
+        const curTheta = 0.3 + thetaOffsetRef.current + dragOffset.current.theta;
+
         globe.update({
-          phi:   phi + phiOffsetRef.current + dragOffset.current.phi,
-          theta: 0.3 + thetaOffsetRef.current + dragOffset.current.theta,
+          phi: curPhi,
+          theta: curTheta,
           dark,
           mapBrightness,
           baseColor,
@@ -131,6 +168,25 @@ export default function CobeGlobe() {
           glowColor,
           markers: MARKERS,
         });
+
+        const { w, h } = containerSizeRef.current;
+        if (w > 0) {
+          for (const m of MARKERS) {
+            const el = labelRefs.current[m.id];
+            if (!el) continue;
+            const { sx, sy, z } = project(m.location[0], m.location[1], curPhi, curTheta);
+            const tx = Math.max(8, Math.min(w - 8, sx * w));
+            const ty = sy * h;
+            const visible = z >= 0.05;
+            const prev = labelStateRef.current[m.id] || {};
+            if (Math.abs((prev.tx ?? 0) - tx) > 0.5 || Math.abs((prev.ty ?? 0) - ty) > 0.5) {
+              el.style.transform = `translate3d(${tx}px,${ty}px,0) translate(-50%,calc(-100% - 14px))`;
+            }
+            if (prev.visible !== visible) el.style.opacity = visible ? '1' : '0';
+            labelStateRef.current[m.id] = { tx, ty, visible };
+          }
+        }
+
         animId = requestAnimationFrame(animate);
       }
       animate();
@@ -154,7 +210,11 @@ export default function CobeGlobe() {
       };
     }
 
+    const sizeObserver = new ResizeObserver(refreshSize);
+    if (labelLayerRef.current) sizeObserver.observe(labelLayerRef.current);
+
     return () => {
+      sizeObserver.disconnect();
       if (animId) cancelAnimationFrame(animId);
       if (globe) globe.destroy();
     };
@@ -176,6 +236,52 @@ export default function CobeGlobe() {
           filter: 'drop-shadow(0 0 60px rgba(16,185,129,0.3))',
         }}
       />
+      <div ref={labelLayerRef} className="cobe-label-layer" aria-hidden="true">
+        {MARKERS.map((m) => (
+          <span
+            key={m.id}
+            ref={(el) => { labelRefs.current[m.id] = el; }}
+            className="cobe-label"
+          >
+            <span className="cobe-label__name">{m.label}</span>
+            {m.country && <span className="cobe-label__country">{m.country}</span>}
+          </span>
+        ))}
+      </div>
+      <style>{`
+        .cobe-label-layer { position:absolute; inset:0; pointer-events:none; }
+        .cobe-label {
+          position:absolute; top:0; left:0;
+          display:inline-flex; flex-direction:column; align-items:center; gap:2px;
+          padding:5px 10px; border-radius:9999px;
+          font-family:'Inter',system-ui,sans-serif; font-size:11px; line-height:1;
+          white-space:nowrap; pointer-events:none;
+          opacity:0; transition:opacity 220ms ease-out;
+          will-change:transform,opacity; transform-origin:50% 100%;
+          backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+          background:rgba(255,255,255,0.92);
+          color:#064e3b;
+          border:1px solid rgba(16,185,129,0.28);
+          box-shadow:0 4px 14px -4px rgba(16,185,129,0.25),0 2px 6px -2px rgba(0,0,0,0.06);
+        }
+        .cobe-label__name { font-family:'Outfit','Inter',sans-serif; font-weight:700; }
+        .cobe-label__country {
+          font-size:9px; opacity:0.65; letter-spacing:0.10em;
+          text-transform:uppercase; font-weight:600;
+        }
+        .cobe-label::after {
+          content:""; position:absolute; bottom:-3px; left:50%;
+          width:6px; height:6px;
+          transform:translateX(-50%) rotate(45deg);
+          background:inherit; border-right:inherit; border-bottom:inherit;
+        }
+        [data-theme="dark"] .cobe-label {
+          background:rgba(7,14,10,0.82);
+          color:#d1fae5;
+          border-color:rgba(16,185,129,0.40);
+          box-shadow:0 4px 14px -4px rgba(0,0,0,0.5),inset 0 0 0 1px rgba(16,185,129,0.10);
+        }
+      `}</style>
     </div>
   );
 }
