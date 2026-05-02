@@ -1,0 +1,58 @@
+{
+  "hero": {
+    "stats": { "country": "25", "client": "120", "forum": "40", "year": "6" }
+  },
+  "about": {
+    "stats": { "country": "25", "year": "6", "forum": "40" }
+  },
+  "services": [
+    { "id": "s1", "icon": "Globe", "titleKey": "services_page.s1.title", "descKey": "services_page.s1.desc" },
+    { "id": "s2", "icon": "Users", "titleKey": "services_page.s2.title", "descKey": "services_page.s2.desc" },
+    { "id": "s3", "icon": "TrendingUp", "titleKey": "services_page.s3.title", "descKey": "services_page.s3.desc" },
+    { "id": "s4", "icon": "Building", "titleKey": "services_page.s4.title", "descKey": "services_page.s4.desc" },
+    { "id": "s5", "icon": "Network", "titleKey": "services_page.s5.title", "descKey": "services_page.s5.desc" },
+    { "id": "s6", "icon": "Calendar", "titleKey": "services_page.s6.title", "descKey": "services_page.s6.desc" }
+  ],
+  "projects": {
+    "completed": [
+      { "id": "p1", "titleKey": "projects.past1", "locationKey": "projects.past1_loc", "year": "2024" },
+      { "id": "p2", "titleKey": "projects.past2", "locationKey": "projects.past2_loc", "year": "2023" },
+      { "id": "p3", "titleKey": "projects.past3", "locationKey": "projects.past3_loc", "year": "2023" },
+      { "id": "p4", "titleKey": "projects.past4", "locationKey": "projects.past4_loc", "year": "2022" }
+    ],
+    "upcoming": [
+      { "id": "u1", "titleKey": "projects.up1", "locationKey": "projects.up1_loc", "dateKey": "projects.up1_date" },
+      { "id": "u2", "titleKey": "projects.up2", "locationKey": "projects.up2_loc", "dateKey": "projects.up2_date" },
+      { "id": "u3", "titleKey": "projects.up3", "locationKey": "projects.up3_loc", "dateKey": "projects.up3_date" }
+    ]
+  },
+  "faq": [
+    { "id": "faq1", "qKey": "faq.q1", "aKey": "faq.a1" },
+    { "id": "faq2", "qKey": "faq.q2", "aKey": "faq.a2" },
+    { "id": "faq3", "qKey": "faq.q3", "aKey": "faq.a3" },
+    { "id": "faq4", "qKey": "faq.q4", "aKey": "faq.a4" },
+    { "id": "faq5", "qKey": "faq.q5", "aKey": "faq.a5" },
+    { "id": "faq6", "qKey": "faq.q6", "aKey": "faq.a6" },
+    { "id": "faq7", "qKey": "faq.q7", "aKey": "faq.a7" },
+    { "id": "faq8", "qKey": "faq.q8", "aKey": "faq.a8" }
+  ],
+  "career": {
+    "positions": [
+      {
+        "id": "c1",
+        "titleKey": "career.job_title",
+        "locationKey": "career.location",
+        "status": "open",
+        "descKey": "career.desc"
+      }
+    ]
+  },
+  "contact": {
+    "email": "info@sscongress.com",
+    "phone": "+90 312 000 0000",
+    "address": "Beştepe Mah. Yaşam Cad. No:13, Yenimahalle / Ankara",
+    "weekdays": "09:00 - 18:00",
+    "saturday": "10:00 - 14:00"
+  },
+  "gallery": []
+}
