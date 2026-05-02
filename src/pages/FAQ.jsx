@@ -1,20 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const EM = '#10b981';
 const BORDER = '1px solid var(--c-border-md)';
 
-const faqs = [
-  { q: 'Hangi sektorlerde hizmet veriyorsunuz?', a: 'Ihracat, ithalat, lojistik, dis ticaret danismanligi ve uluslararasi pazarlama alanlarinda faaliyet gosteriyoruz.' },
-  { q: 'Danismanlik hizmetiniz sirketimize nasil fayda saglar?', a: 'Sureclerinizi daha verimli hale getirir, maliyetlerinizi azaltir ve kuresel pazarlarda rekabet gucu kazandiririz.' },
-  { q: "Start-up ve KOBIlerle calisiyor musunuz?", a: 'Evet, ozellikle kucuk ve orta olcekli isletmelere ihracat ve global pazara acilma konularinda ozel cozumler sunuyoruz.' },
-  { q: 'SS Congress hangi ulkelerde hizmet veriyor?', a: "4 kita ve 25'ten fazla ulkede aktif olarak faaliyet gosteriyoruz. Katar, Japonya, Rusya, Hollanda, Suudi Arabistan ve daha pek cok ulkede hizmet sunuyoruz." },
-  { q: 'Bir is forumu organize ettirmek icin sureci nasil baslatirim?', a: 'Ihtiyacinizi ve hedef pazarinizi birlikte degerlendiriyor, size ozel bir organizasyon plani hazirliyoruz. Tum surecler SS Congress tarafindan yonetiliyor.' },
-  { q: "SS Congress'in diger organizasyon sirketlerinden farki nedir?", a: 'Yalnizca etkinlik organize etmiyoruz; ayni zamanda stratejik danismanlik veriyor, birden fazla ulkenin ticaret bakanligiyla koordineli calisiyoruz.' },
-  { q: 'Uzun vadeli is ortakligi sagliyor musunuz?', a: 'Evet, musterilerimizle uzun soluklu, guvene dayali is birlikleri kurmayı hedefliyoruz.' },
-  { q: 'Uluslararasi mevzuat ve belgeler konusunda yardimci oluyor musunuz?', a: 'Evet, gerekli belgeler, sertifikalar ve yasal sureclerde size rehberlik ediyoruz.' },
-];
+const FAQ_COUNT = 8;
 
 function Item({ q, a, i }) {
   const [open, setOpen] = useState(false);
@@ -42,13 +34,18 @@ function Item({ q, a, i }) {
 }
 
 export default function FAQPage() {
+  const { t } = useLanguage();
+  const faqs = Array.from({ length: FAQ_COUNT }, (_, i) => ({
+    q: t(`faq.q${i+1}`),
+    a: t(`faq.a${i+1}`),
+  }));
   return (
     <div style={{ backgroundColor: 'var(--c-bg)', minHeight: '100vh', paddingTop: 100, paddingBottom: 96 }}>
       <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 32px' }}>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ textAlign: 'center', marginBottom: 56 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>Yardim Merkezi</p>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>{t('faq.badge')}</p>
           <h1 style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 'clamp(2rem,5vw,3.5rem)', letterSpacing: '-0.04em', lineHeight: 1.05, color: 'var(--c-heading)' }}>
-            Sikca Sorulan Sorular
+            {t('faq.h1')}
           </h1>
         </motion.div>
         <div style={{ border: BORDER, borderRadius: 20, padding: '0 32px', background: 'rgba(16,185,129,0.05)' }}>

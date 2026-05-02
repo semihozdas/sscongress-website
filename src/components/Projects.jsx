@@ -1,23 +1,11 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, MapPin, Calendar } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const BORDER = '1px solid var(--c-border)';
 const CARD_BG = 'var(--c-bg-alt)';
 const EM = '#10b981';
-
-const past = [
-  { name: 'Katar İş Forumu 2024', loc: 'Doha, Katar' },
-  { name: 'Rusya ProExpo Katılımı', loc: 'Moskova, Rusya' },
-  { name: 'Londra Helal Forumu', loc: 'Londra, BK' },
-  { name: 'Mekke Helal Ekonomi Zirvesi', loc: 'Mekke, S. Arabistan' },
-];
-
-const upcoming = [
-  { name: 'Kazan Forum 2026', loc: 'Kazan, Tataristan', date: '12–17 Mayıs 2026', link: '/proje/kazan-forum-2026', highlight: true },
-  { name: 'Tayland Expo 2025', loc: 'Bangkok, Tayland', date: '2025' },
-  { name: 'Berlin ITB Türk Delegasyonu', loc: 'Berlin, Almanya', date: '2025' },
-];
 
 function Row({ name, loc, date, link, highlight, index }) {
   const inner = (
@@ -54,6 +42,20 @@ function Row({ name, loc, date, link, highlight, index }) {
 }
 
 export default function Projects() {
+  const { t } = useLanguage();
+
+  const past = [
+    { name: t('projects.past1'), loc: t('projects.past1_loc') },
+    { name: t('projects.past2'), loc: t('projects.past2_loc') },
+    { name: t('projects.past3'), loc: t('projects.past3_loc') },
+    { name: t('projects.past4'), loc: t('projects.past4_loc') },
+  ];
+  const upcoming = [
+    { name: t('projects.up1'), loc: t('projects.up1_loc'), date: t('projects.up1_date'), link: '/proje/kazan-forum-2026', highlight: true },
+    { name: t('projects.up2'), loc: t('projects.up2_loc'), date: t('projects.up2_date') },
+    { name: t('projects.up3'), loc: t('projects.up3_loc'), date: t('projects.up3_date') },
+  ];
+
   return (
     <section style={{ backgroundColor: 'var(--c-bg)', padding: '96px 32px' }}>
       <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -61,9 +63,9 @@ export default function Projects() {
           initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}
           style={{ textAlign: 'center', marginBottom: 64 }}
         >
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>Portföy</p>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>{t('projects.badge')}</p>
           <h2 style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 'clamp(2rem,4.5vw,3.2rem)', letterSpacing: '-0.04em', lineHeight: 1.05, color: 'var(--c-heading)' }}>
-            Projelerimiz
+            {t('projects.h2')}
           </h2>
         </motion.div>
 
@@ -72,7 +74,7 @@ export default function Projects() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
               <div style={{ width: 3, height: 24, borderRadius: 2, background: '#22c55e' }} />
-              <h3 style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 17, color: 'var(--c-heading)' }}>Tamamlanan Projeler</h3>
+              <h3 style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 17, color: 'var(--c-heading)' }}>{t('projects.completed')}</h3>
             </div>
             {past.map((p, i) => <Row key={i} {...p} index={i} />)}
           </div>
@@ -81,7 +83,7 @@ export default function Projects() {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
               <div style={{ width: 3, height: 24, borderRadius: 2, background: EM }} />
-              <h3 style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 17, color: 'var(--c-heading)' }}>Gelecek Projeler</h3>
+              <h3 style={{ fontFamily: 'Outfit', fontWeight: 700, fontSize: 17, color: 'var(--c-heading)' }}>{t('projects.upcoming')}</h3>
             </div>
             {upcoming.map((p, i) => <Row key={i} {...p} index={i} />)}
           </div>

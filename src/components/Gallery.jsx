@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const imageModules = import.meta.glob('../assets/sss galery/*.{webp,jpg,jpeg,png}', {
   eager: true,
@@ -15,6 +16,7 @@ function chunk(arr, size) {
 }
 
 export default function Gallery() {
+  const { t } = useLanguage();
   const [hover, setHover] = useState(null);
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [perRow, setPerRow] = useState(5);
@@ -67,10 +69,10 @@ export default function Gallery() {
           style={{ textAlign: 'center', marginBottom: 56 }}
         >
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: '#10b981', marginBottom: 14 }}>
-            Galeri
+            {t('gallery.badge')}
           </p>
           <h2 style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 'clamp(2rem,4.5vw,3.2rem)', letterSpacing: '-0.04em', lineHeight: 1.05, color: 'var(--c-heading)' }}>
-            Sahne Arkasından
+            {t('gallery.h2')}
           </h2>
         </motion.div>
 

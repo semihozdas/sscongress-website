@@ -77,3 +77,13 @@ ul { list-style:none; }
 ::-webkit-scrollbar { width:5px; }
 ::-webkit-scrollbar-track { background:var(--c-bg); }
 ::-webkit-scrollbar-thumb { background:#10b981; border-radius:3px; }
+
+/* ── RTL (Arabic) ────────────────────────────────── */
+[dir="rtl"] .hero-ctas { flex-direction: row-reverse; }
+[dir="rtl"] .hero-badge { flex-direction: row-reverse; }
+[dir="rtl"] .rot-card-rel-head { flex-direction: row-reverse; }
+[dir="rtl"] .rot-card-energy-row { flex-direction: row-reverse; }
+[dir="rtl"] .hero-partners-label { text-align: left; border-right: none; border-left: 1px solid var(--c-border); padding-right: 0; padding-left: 24px; }
+[dir="rtl"] .gal-mclose { right: auto; left: 24px; }
+[dir="rtl"] .gal-mprev  { left: auto; right: 24px; }
+[dir="rtl"] .gal-mnext  { right: auto; left: 24px; }

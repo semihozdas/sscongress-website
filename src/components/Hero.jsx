@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Play, Globe2 } from 'lucide-react';
 import { InfiniteSlider } from './ui/InfiniteSlider';
 import { ProgressiveBlur } from './ui/ProgressiveBlur';
+import { useLanguage } from '../context/LanguageContext';
 
 const YT_ID = 'ScUH2ZKUxAI';
 const YT_SRC =
@@ -31,6 +32,7 @@ const fadeUp = (delay = 0) => ({
 });
 
 export default function Hero() {
+  const { t } = useLanguage();
   return (
     <section className="hero-section">
       {/* Background video */}
@@ -52,37 +54,41 @@ export default function Hero() {
           <motion.div {...fadeUp(0)}>
             <div className="hero-badge">
               <span className="hero-badge-dot" />
-              Küresel İş Ortağınız · 25+ Ülke
+              {t('hero.badge')}
             </div>
           </motion.div>
 
           <motion.h1 {...fadeUp(0.08)} className="hero-h1">
-            Dünyayı{' '}
-            <span className="hero-h1-grad">İş Ortağınızla</span>
-            <br />Keşfedin
+            {t('hero.h1_pre')}{' '}
+            <span className="hero-h1-grad">{t('hero.h1_grad')}</span>
+            <br />{t('hero.h1_post')}
           </motion.h1>
 
           <motion.p {...fadeUp(0.16)} className="hero-sub">
-            Uluslararası iş forumları ve ticaret heyetleri aracılığıyla
-            firmaların dünya pazarlarına açılmasına stratejik destek sunuyoruz.
+            {t('hero.sub')}
           </motion.p>
 
           <motion.div {...fadeUp(0.24)} className="hero-ctas">
             <Link to="/iletisim" className="hero-cta-primary">
-              <span>Teklif Alın</span>
+              <span>{t('hero.cta1')}</span>
               <ArrowRight size={16} />
             </Link>
             <Link to="/proje/kazan-forum-2026" className="hero-cta-ghost">
               <Play size={14} />
-              <span>Kazan Forum 2026</span>
+              <span>{t('hero.cta2')}</span>
             </Link>
           </motion.div>
 
           <motion.div {...fadeUp(0.36)} className="hero-stats">
-            {stats.map(({ v, l }) => (
-              <div key={l} className="hero-stat">
+            {[
+              { v: '25+', key: 'hero.stat_country' },
+              { v: '200+', key: 'hero.stat_client' },
+              { v: '50+', key: 'hero.stat_forum' },
+              { v: '10+', key: 'hero.stat_year' },
+            ].map(({ v, key }) => (
+              <div key={key} className="hero-stat">
                 <div className="hero-stat-v">{v}</div>
-                <div className="hero-stat-l">{l}</div>
+                <div className="hero-stat-l">{t(key)}</div>
               </div>
             ))}
           </motion.div>
@@ -92,7 +98,7 @@ export default function Hero() {
       {/* Partners */}
       <div className="hero-partners">
         <div className="hero-partners-row">
-          <div className="hero-partners-label">Resmi Paydaşlar</div>
+          <div className="hero-partners-label">{t('hero.partners')}</div>
           <div className="hero-partners-track">
             <InfiniteSlider duration={45} gap={48}>
               {partners.map((p) => (

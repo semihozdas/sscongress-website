@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const EM = '#10b981';
 const BORDER = '1px solid var(--c-border)';
@@ -14,30 +15,32 @@ const inputStyle = {
 };
 
 export default function ContactPage() {
+  const { t } = useLanguage();
+  const infoCards = [
+    { Icon: Mail,  titleKey: 'contact.email_title',   lines: ['info@sscongress.com'] },
+    { Icon: Phone, titleKey: 'contact.phone_title',   lines: ['+90 542 453 36 06', '+90 507 264 08 85'] },
+    { Icon: MapPin,titleKey: 'contact.address_title', lines: ['Beştepe Mah. 31. Sok. No:2A Kat:9', 'Yenimahalle / ANKARA'] },
+    { Icon: Clock, titleKey: 'contact.hours_title',   lines: [t('contact.hours_weekdays'), t('contact.hours_saturday')] },
+  ];
   return (
     <div style={{ backgroundColor: 'var(--c-bg)', minHeight: '100vh', paddingTop: 100, paddingBottom: 96 }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 32px' }}>
         <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ marginBottom: 56 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>Bize Ulasin</p>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: EM, marginBottom: 14 }}>{t('contact.badge')}</p>
           <h1 style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 'clamp(2.5rem,6vw,4rem)', letterSpacing: '-0.04em', lineHeight: 1.05, color: 'var(--c-heading)', marginBottom: 16 }}>
-            Iletisim
+            {t('contact.h1')}
           </h1>
           <p style={{ color: MUTED, fontSize: 16, maxWidth: 480, lineHeight: 1.7 }}>
-            Sorulariniz ve danismanlik talepleriniz icin bize ulasin.
+            {t('contact.sub')}
           </p>
         </motion.div>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 48 }} className="contact-grid">
           {/* Info cards */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {[
-              { Icon: Mail, title: 'E-posta', lines: ['info@sscongress.com'] },
-              { Icon: Phone, title: 'Telefon', lines: ['+90 542 453 36 06', '+90 507 264 08 85'] },
-              { Icon: MapPin, title: 'Adres', lines: ['Bestepe Mah. 31. Sok. No:2A Kat:9', 'Yenimahalle / ANKARA'] },
-              { Icon: Clock, title: 'Calisma Saatleri', lines: ['Pazartesi - Cuma: 09:00 - 18:00', 'Cumartesi: 10:00 - 14:00'] },
-            ].map(({ Icon, title, lines }) => (
+            {infoCards.map(({ Icon, titleKey, lines }) => (
               <motion.div
-                key={title}
+                key={titleKey}
                 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}
                 style={{ display: 'flex', gap: 16, padding: '18px 20px', borderRadius: 14, border: BORDER, background: CARD }}
               >
@@ -45,7 +48,7 @@ export default function ContactPage() {
                   <Icon size={16} style={{ color: EM }} />
                 </div>
                 <div>
-                  <p style={{ fontWeight: 600, color: 'var(--c-heading)', fontSize: 13, marginBottom: 4 }}>{title}</p>
+                  <p style={{ fontWeight: 600, color: 'var(--c-heading)', fontSize: 13, marginBottom: 4 }}>{t(titleKey)}</p>
                   {lines.map(l => <p key={l} style={{ fontSize: 13, color: MUTED }}>{l}</p>)}
                 </div>
               </motion.div>
@@ -67,32 +70,32 @@ export default function ContactPage() {
             style={{ padding: '40px 36px', borderRadius: 20, border: BORDER, background: CARD }}
           >
             <h2 style={{ fontFamily: 'Outfit', fontWeight: 800, fontSize: 22, color: 'var(--c-heading)', marginBottom: 28 }}>
-              Ucretsiz Danismanlik Alin
+              {t('contact.form_title')}
             </h2>
             <form style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>Ad Soyad</label>
-                  <input type="text" placeholder="Adiniz Soyadiniz" style={inputStyle} />
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>{t('contact.field_name')}</label>
+                  <input type="text" placeholder={t('contact.field_name_ph')} style={inputStyle} />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>E-posta</label>
-                  <input type="email" placeholder="email@sirket.com" style={inputStyle} />
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>{t('contact.field_email')}</label>
+                  <input type="email" placeholder={t('contact.field_email_ph')} style={inputStyle} />
                 </div>
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>Sirket Adi</label>
-                <input type="text" placeholder="Sirketinizin adi" style={inputStyle} />
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>{t('contact.field_company')}</label>
+                <input type="text" placeholder={t('contact.field_company_ph')} style={inputStyle} />
               </div>
               <div>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>Mesajiniz</label>
-                <textarea rows={4} placeholder="Hangi konuda destek almak istersiniz?" style={{ ...inputStyle, resize: 'none' }} />
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--c-muted)', marginBottom: 7 }}>{t('contact.field_message')}</label>
+                <textarea rows={4} placeholder={t('contact.field_message_ph')} style={{ ...inputStyle, resize: 'none' }} />
               </div>
               <button
                 type="submit"
                 style={{ padding: '14px', borderRadius: 12, background: 'linear-gradient(135deg,#10b981,#059669)', color: '#022c22', fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: 'Outfit', marginTop: 4, boxShadow: '0 8px 24px rgba(16,185,129,0.25)' }}
               >
-                Randevu Talebi Gonder
+                {t('contact.submit')}
               </button>
             </form>
           </motion.div>

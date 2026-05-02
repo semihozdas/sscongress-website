@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -22,6 +23,7 @@ const ScrollToTop = () => {
 export default function App() {
   return (
     <ThemeProvider>
+    <LanguageProvider>
     <Router>
       <ScrollToTop />
       <Navbar />
@@ -40,6 +42,7 @@ export default function App() {
       </main>
       <Footer />
     </Router>
+    </LanguageProvider>
     </ThemeProvider>
   );
 }

@@ -3,83 +3,34 @@ import {
   ArrowRight, Link2, Zap,
   Globe, Landmark, BarChart3, CalendarDays, Target, BadgeCheck,
 } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
-const defaultItems = [
-  {
-    id: 1,
-    title: 'Uluslararası İş Forumları',
-    date: '2019',
-    content: 'Katar, Japonya, Rusya ve Afrika gibi ülkelerde sektörel iş forumları ve ticaret heyetleri.',
-    category: 'Hizmet',
-    icon: Globe,
-    relatedIds: [2, 3],
-    status: 'completed',
-    energy: 95,
-  },
-  {
-    id: 2,
-    title: 'Bakanlık Koordinasyonu',
-    date: '2020',
-    content: 'Birden fazla ülkenin ticaret bakanlığıyla resmi kanallar üzerinden doğrudan iş birliği.',
-    category: 'Strateji',
-    icon: Landmark,
-    relatedIds: [1, 4],
-    status: 'completed',
-    energy: 90,
-  },
-  {
-    id: 3,
-    title: 'Pazar Giriş Danışmanlığı',
-    date: '2021',
-    content: 'Yeni pazarlara açılmak isteyen firmalara strateji geliştirmeden ortaklığa uçtan uca danışmanlık.',
-    category: 'Danışmanlık',
-    icon: BarChart3,
-    relatedIds: [1, 5],
-    status: 'completed',
-    energy: 85,
-  },
-  {
-    id: 4,
-    title: 'Kazan Forum 2026',
-    date: 'May 2026',
-    content: '17. Uluslararası Ekonomi Forumu — Rusya / İslam Dünyası. Kazan, Tataristan.',
-    category: 'Proje',
-    icon: CalendarDays,
-    relatedIds: [2, 6],
-    status: 'in-progress',
-    energy: 75,
-  },
-  {
-    id: 5,
-    title: 'Fuar & Expo',
-    date: '2022',
-    content: 'Tayland Expo, Rusya ProExpo, Berlin ITB gibi global fuarlarda Türk firmalarına katılım organizasyonu.',
-    category: 'Hizmet',
-    icon: Target,
-    relatedIds: [3, 6],
-    status: 'completed',
-    energy: 80,
-  },
-  {
-    id: 6,
-    title: 'Helal Ekonomi',
-    date: '2023',
-    content: 'Mekke Helal Forumu ve Londra Helal Forumu platformlarında uzmanlaşmış çözümler.',
-    category: 'Hizmet',
-    icon: BadgeCheck,
-    relatedIds: [4, 5],
-    status: 'completed',
-    energy: 88,
-  },
+const ITEM_CONFIG = [
+  { id: 1, icon: Globe,       relatedIds: [2, 3], status: 'completed',  energy: 95 },
+  { id: 2, icon: Landmark,    relatedIds: [1, 4], status: 'completed',  energy: 90 },
+  { id: 3, icon: BarChart3,   relatedIds: [1, 5], status: 'completed',  energy: 85 },
+  { id: 4, icon: CalendarDays,relatedIds: [2, 6], status: 'in-progress',energy: 75 },
+  { id: 5, icon: Target,      relatedIds: [3, 6], status: 'completed',  energy: 80 },
+  { id: 6, icon: BadgeCheck,  relatedIds: [4, 5], status: 'completed',  energy: 88 },
 ];
 
-const statusLabel = {
-  completed: 'Tamamlandı',
-  'in-progress': 'Devam Ediyor',
-  pending: 'Beklemede',
-};
+export default function RadialOrbitalTimeline() {
+  const { t } = useLanguage();
 
-export default function RadialOrbitalTimeline({ items = defaultItems }) {
+  const items = ITEM_CONFIG.map((cfg, i) => ({
+    ...cfg,
+    title:    t(`orbital.item${i+1}.title`),
+    category: t(`orbital.item${i+1}.category`),
+    date:     t(`orbital.item${i+1}.date`),
+    content:  t(`orbital.item${i+1}.content`),
+  }));
+
+  const statusLabel = {
+    completed:   t('orbital.status.completed'),
+    'in-progress': t('orbital.status.inprogress'),
+    pending:     t('orbital.status.pending'),
+  };
+
   const [expandedItems, setExpandedItems] = useState({});
   const [rotationAngle, setRotationAngle] = useState(0);
   const [autoRotate, setAutoRotate] = useState(true);
@@ -282,7 +233,7 @@ export default function RadialOrbitalTimeline({ items = defaultItems }) {
 
                   <div className="rot-card-energy">
                     <div className="rot-card-energy-row">
-                      <span><Zap size={11} /> Kapasite</span>
+                      <span><Zap size={11} /> {t('orbital.capacity')}</span>
                       <span className="rot-card-energy-val">{item.energy}%</span>
                     </div>
                     <div className="rot-card-energy-bar">
@@ -293,7 +244,7 @@ export default function RadialOrbitalTimeline({ items = defaultItems }) {
                   {item.relatedIds.length > 0 && (
                     <div className="rot-card-rel">
                       <div className="rot-card-rel-head">
-                        <Link2 size={10} /> Bağlantılı Alanlar
+                        <Link2 size={10} /> {t('orbital.related')}
                       </div>
                       <div className="rot-card-rel-chips">
                         {item.relatedIds.map((rid) => {
@@ -324,9 +275,9 @@ export default function RadialOrbitalTimeline({ items = defaultItems }) {
       <button
         className="rot-toggle"
         onClick={(e) => { e.stopPropagation(); setAutoRotate((v) => !v); }}
-        aria-label={autoRotate ? 'Döndürmeyi durdur' : 'Döndürmeyi başlat'}
+        aria-label={autoRotate ? t('orbital.pause') : t('orbital.rotate')}
       >
-        {autoRotate ? 'Durdur' : 'Döndür'}
+        {autoRotate ? t('orbital.pause') : t('orbital.rotate')}
       </button>
 
       <style>{`

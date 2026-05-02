@@ -1,29 +1,31 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook, ArrowUp, Globe2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const EM = '#10b981';
 const BORDER = '1px solid var(--c-border-md)';
 const MUTED = 'var(--c-muted)';
 
-const navLinks = [
-  { label: 'Ana Sayfa', to: '/' },
-  { label: 'Hakkımızda', to: '/hakkimizda' },
-  { label: 'Hizmetlerimiz', to: '/hizmetlerimiz' },
-  { label: 'Projeler', to: '/projeler' },
-  { label: 'İletişim', to: '/iletisim' },
+const NAV_LINKS = [
+  { key: 'nav.home',     to: '/' },
+  { key: 'nav.about',    to: '/hakkimizda' },
+  { key: 'nav.services', to: '/hizmetlerimiz' },
+  { key: 'nav.projects', to: '/projeler' },
+  { key: 'nav.contact',  to: '/iletisim' },
 ];
 
-const corpLinks = [
-  { label: 'SSS', to: '/sss' },
-  { label: 'Kariyer', to: '/kariyer' },
-  { label: 'Gizlilik Politikası', to: '#' },
-  { label: 'KVKK Aydınlatma', to: '#' },
+const CORP_LINKS = [
+  { key: 'footer.faq',     to: '/sss' },
+  { key: 'footer.career',  to: '/kariyer' },
+  { key: 'footer.privacy', to: '#' },
+  { key: 'footer.kvkk',    to: '#' },
 ];
 
 const socials = [Linkedin, Twitter, Instagram, Facebook];
 
 export default function Footer() {
+  const { t } = useLanguage();
   return (
     <footer style={{ backgroundColor: 'var(--c-footer)', borderTop: BORDER }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '72px 32px 32px' }}>
@@ -40,7 +42,7 @@ export default function Footer() {
               </span>
             </Link>
             <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.7, marginBottom: 24, maxWidth: 260 }}>
-              Dünya pazarlarına açılan firmalara stratejik, diplomatik ve organizasyonel destek sunan küresel ortağınız.
+              {t('footer.tagline')}
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               {socials.map((Icon, i) => (
@@ -59,14 +61,14 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>Menü</p>
+            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>{t('footer.menu')}</p>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {navLinks.map(({ label, to }) => (
+              {NAV_LINKS.map(({ key, to }) => (
                 <li key={to}>
                   <Link to={to} style={{ fontSize: 14, color: MUTED, transition: 'color 0.2s' }}
                     onMouseEnter={e => e.target.style.color = 'var(--c-heading)'}
                     onMouseLeave={e => e.target.style.color = MUTED}
-                  >{label}</Link>
+                  >{t(key)}</Link>
                 </li>
               ))}
             </ul>
@@ -74,14 +76,14 @@ export default function Footer() {
 
           {/* Corp links */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>Kurumsal</p>
+            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>{t('footer.corporate')}</p>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {corpLinks.map(({ label, to }) => (
+              {CORP_LINKS.map(({ key, to }) => (
                 <li key={to}>
                   <Link to={to} style={{ fontSize: 14, color: MUTED, transition: 'color 0.2s' }}
                     onMouseEnter={e => e.target.style.color = 'var(--c-heading)'}
                     onMouseLeave={e => e.target.style.color = MUTED}
-                  >{label}</Link>
+                  >{t(key)}</Link>
                 </li>
               ))}
             </ul>
@@ -89,7 +91,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>İletişim</p>
+            <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: EM, marginBottom: 20 }}>{t('footer.contact_title')}</p>
             <ul style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
                 { Icon: MapPin, text: 'Beştepe Mah. 31. Sok. No:2A Kat:9\nYenimahalle / ANKARA' },
@@ -109,7 +111,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div style={{ borderTop: BORDER, paddingTop: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
-          <p style={{ fontSize: 12, color: 'var(--c-subtle)' }}>© SS CONGRESS 2025 — Tüm Hakları Saklıdır</p>
+          <p style={{ fontSize: 12, color: 'var(--c-subtle)' }}>{t('footer.copyright')}</p>
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             whileHover={{ y: -3, scale: 1.08 }}
