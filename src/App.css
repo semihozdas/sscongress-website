@@ -1,0 +1,5 @@
+/* Custom App styles will be minimal as most is in index.css or components */
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}

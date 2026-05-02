@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+
+/* ── Light (default) ──────────────────────────────── */
+:root {
+  --c-bg:          #ffffff;
+  --c-bg-alt:      #f0fdf4;
+  --c-card:        #f0fdf4;
+  --c-bg-em:       #e6f9f3;
+  --c-footer:      #f8fffe;
+  --c-heading:     #0f1f1a;
+  --c-body:        #374151;
+  --c-body-mid:    #4b5563;
+  --c-muted:       #6b7280;
+  --c-subtle:      #9ca3af;
+  --c-faint:       #d1d5db;
+  --c-border:      rgba(16,185,129,0.22);
+  --c-border-md:   rgba(16,185,129,0.18);
+  --c-border-sm:   rgba(16,185,129,0.15);
+  --c-border-xs:   rgba(16,185,129,0.10);
+  --c-navbar:      rgba(255,255,255,0.92);
+  --c-navbar-br:   rgba(16,185,129,0.15);
+  --c-glass:       rgba(255,255,255,0.88);
+  --c-hero-fade:   rgba(240,253,244,0.85);
+  --c-partners:    #f0fdf4;
+  --c-mouse-glow:  #f0fdf4;
+  --c-grid-line:   rgba(16,185,129,0.06);
+  --c-stat-dot:    #e5e7eb;
+  --c-shadow-card: 0 2px 16px rgba(16,185,129,0.10),0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* ── Dark override ────────────────────────────────── */
+[data-theme="dark"] {
+  --c-bg:          #070e0a;
+  --c-bg-alt:      #080f0b;
+  --c-card:        rgba(16,185,129,0.04);
+  --c-bg-em:       #0c1810;
+  --c-footer:      #040a06;
+  --c-heading:     #ffffff;
+  --c-body:        rgba(255,255,255,0.65);
+  --c-body-mid:    rgba(255,255,255,0.55);
+  --c-muted:       rgba(255,255,255,0.45);
+  --c-subtle:      rgba(255,255,255,0.35);
+  --c-faint:       rgba(255,255,255,0.20);
+  --c-border:      rgba(16,185,129,0.14);
+  --c-border-md:   rgba(16,185,129,0.11);
+  --c-border-sm:   rgba(16,185,129,0.09);
+  --c-border-xs:   rgba(16,185,129,0.07);
+  --c-navbar:      rgba(7,14,10,0.92);
+  --c-navbar-br:   rgba(16,185,129,0.08);
+  --c-glass:       rgba(7,14,10,0.85);
+  --c-hero-fade:   rgba(7,14,10,0.80);
+  --c-partners:    #070e0a;
+  --c-mouse-glow:  rgba(16,185,129,0.06);
+  --c-grid-line:   rgba(16,185,129,0.03);
+  --c-stat-dot:    rgba(255,255,255,0.15);
+  --c-shadow-card: 0 4px 24px rgba(0,0,0,0.30);
+}
+
+/* ── Base ─────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+
+body {
+  font-family:'Inter',sans-serif;
+  background:var(--c-bg);
+  color:var(--c-body);
+  overflow-x:hidden;
+  line-height:1.6;
+  transition:background 0.3s ease, color 0.3s ease;
+}
+
+h1,h2,h3,h4,h5,h6 { font-family:'Outfit',sans-serif; line-height:1.1; font-weight:800; }
+a { text-decoration:none; color:inherit; }
+ul { list-style:none; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--c-bg); }
+::-webkit-scrollbar-thumb { background:#10b981; border-radius:3px; }
