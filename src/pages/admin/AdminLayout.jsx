@@ -3,7 +3,7 @@ import { useNavigate, Outlet, NavLink, Link } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Globe, Image, Briefcase, HelpCircle,
   Phone, Users, LogOut, Menu, KeyRound, ExternalLink, Languages,
-  ChevronLeft, X
+  ChevronLeft, X, Leaf
 } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -43,36 +43,34 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-950 font-[Inter,sans-serif]">
-      {/* Mobile Overlay */}
+    <div className="flex min-h-screen bg-[#F0F4F3] font-[Inter,sans-serif]">
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
       )}
 
-      {/* Sidebar */}
       <aside className={`fixed lg:sticky top-0 h-screen z-50 flex flex-col transition-all duration-300 ease-in-out
         ${collapsed ? 'w-[72px]' : 'w-[260px]'}
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        bg-slate-900 border-r border-slate-800/60`}
+        bg-[#E8EFEC] border-r border-[#D0DDD8]`}
+        style={{ boxShadow: '6px 0 20px rgba(0,0,0,0.03)' }}
       >
-        {/* Logo */}
-        <div className={`flex items-center h-[72px] border-b border-slate-800/60 ${collapsed ? 'justify-center px-3' : 'px-6'}`}>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
-            <span className="text-white font-bold text-sm">SS</span>
+        <div className={`flex items-center h-[72px] border-b border-[#D0DDD8] ${collapsed ? 'justify-center px-3' : 'px-6'}`}>
+          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[#E8EFEC]"
+            style={{ boxShadow: '4px 4px 10px rgba(0,0,0,0.08), -4px -4px 10px rgba(255,255,255,0.9)' }}>
+            <Leaf size={20} className="text-emerald-600" />
           </div>
           {!collapsed && (
             <div className="ml-3">
-              <p className="text-sm font-semibold text-white">SS Congress</p>
-              <p className="text-[11px] text-slate-500">Yönetim Paneli</p>
+              <p className="text-sm font-semibold text-[#1A2F2A]">SS Congress</p>
+              <p className="text-[11px] text-[#6B8F82]">Yönetim Paneli</p>
             </div>
           )}
-          <button onClick={() => setMobileOpen(false)} className="lg:hidden ml-auto p-1.5 text-slate-400 hover:text-white">
+          <button onClick={() => setMobileOpen(false)} className="lg:hidden ml-auto p-1.5 text-[#6B8F82] hover:text-[#1A2F2A] cursor-pointer">
             <X size={18} />
           </button>
         </div>
 
-        {/* Navigation */}
-        <nav className={`flex-1 py-5 overflow-y-auto ${collapsed ? 'px-2' : 'px-3'} space-y-1`}>
+        <nav className={`flex-1 py-5 overflow-y-auto ${collapsed ? 'px-2' : 'px-3'} space-y-1.5`}>
           {navItems.map(item => (
             <NavLink
               key={item.to}
@@ -83,10 +81,13 @@ export default function AdminLayout() {
               className={({ isActive }) =>
                 `flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 cursor-pointer group
                 ${isActive
-                  ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                  : 'text-slate-400 hover:text-white hover:bg-slate-800/70 border border-transparent'
+                  ? 'bg-[#E8EFEC] text-emerald-700 font-semibold'
+                  : 'text-[#5A7D72] hover:text-[#1A2F2A] hover:bg-[#E0EBE7]'
                 }`
               }
+              style={({ isActive }) => isActive ? {
+                boxShadow: 'inset 3px 3px 6px rgba(0,0,0,0.06), inset -3px -3px 6px rgba(255,255,255,0.8)'
+              } : {}}
             >
               <item.icon size={18} className="shrink-0" />
               {!collapsed && <span>{item.label}</span>}
@@ -94,47 +95,44 @@ export default function AdminLayout() {
           ))}
         </nav>
 
-        {/* Bottom Actions */}
-        <div className={`${collapsed ? 'px-2' : 'px-3'} py-4 border-t border-slate-800/60 space-y-1`}>
-          <Link to="/" target="_blank" className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-slate-500 hover:text-slate-300 hover:bg-slate-800/70 transition-all cursor-pointer`} title="Siteyi Görüntüle">
+        <div className={`${collapsed ? 'px-2' : 'px-3'} py-4 border-t border-[#D0DDD8] space-y-1`}>
+          <Link to="/" target="_blank" className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-[#6B8F82] hover:text-[#1A2F2A] hover:bg-[#E0EBE7] transition-all cursor-pointer`} title="Siteyi Görüntüle">
             <ExternalLink size={16} className="shrink-0" />
             {!collapsed && <span>Siteyi Görüntüle</span>}
           </Link>
-          <button onClick={logout} className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-slate-500 hover:text-red-400 hover:bg-red-500/5 w-full transition-all cursor-pointer`} title="Çıkış">
+          <button onClick={logout} className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-[#6B8F82] hover:text-red-600 hover:bg-red-50 w-full transition-all cursor-pointer`} title="Çıkış">
             <LogOut size={16} className="shrink-0" />
             {!collapsed && <span>Çıkış Yap</span>}
           </button>
         </div>
 
-        {/* Collapse Toggle */}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex absolute -right-3 top-[80px] w-6 h-6 bg-slate-800 border border-slate-700 rounded-full items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all cursor-pointer shadow-md"
+          className="hidden lg:flex absolute -right-3 top-[80px] w-6 h-6 bg-[#E8EFEC] border border-[#D0DDD8] rounded-full items-center justify-center text-[#6B8F82] hover:text-[#1A2F2A] transition-all cursor-pointer"
+          style={{ boxShadow: '2px 2px 6px rgba(0,0,0,0.08), -2px -2px 6px rgba(255,255,255,0.9)' }}
         >
           <ChevronLeft size={12} className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} />
         </button>
       </aside>
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Top Bar */}
-        <header className="sticky top-0 z-30 h-[72px] bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/40 px-6 lg:px-8 flex items-center justify-between">
-          <button className="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors cursor-pointer" onClick={() => setMobileOpen(true)}>
+        <header className="sticky top-0 z-30 h-[72px] bg-[#F0F4F3]/90 backdrop-blur-md border-b border-[#D0DDD8]/60 px-6 lg:px-8 flex items-center justify-between">
+          <button className="lg:hidden p-2 text-[#5A7D72] hover:text-[#1A2F2A] rounded-lg hover:bg-[#E0EBE7] transition-colors cursor-pointer" onClick={() => setMobileOpen(true)}>
             <Menu size={20} />
           </button>
           <div className="hidden lg:block" />
 
           {user && (
             <div className="flex items-center gap-3">
-              <span className="text-[13px] text-slate-500 hidden sm:block">Merhaba, <span className="text-slate-300 font-medium">{user.username}</span></span>
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500/20 to-indigo-500/20 border border-blue-500/30 flex items-center justify-center">
-                <span className="text-blue-400 text-xs font-bold">{user.username?.charAt(0).toUpperCase()}</span>
+              <span className="text-[13px] text-[#6B8F82] hidden sm:block">Merhaba, <span className="text-[#1A2F2A] font-medium">{user.username}</span></span>
+              <div className="w-9 h-9 rounded-xl bg-[#E8EFEC] flex items-center justify-center"
+                style={{ boxShadow: '3px 3px 8px rgba(0,0,0,0.06), -3px -3px 8px rgba(255,255,255,0.9)' }}>
+                <span className="text-emerald-700 text-xs font-bold">{user.username?.charAt(0).toUpperCase()}</span>
               </div>
             </div>
           )}
         </header>
 
-        {/* Page Content */}
         <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
           <Outlet />
         </main>

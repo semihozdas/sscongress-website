@@ -88,84 +88,84 @@ export default function AdminTranslations() {
     return keys.sort();
   }, [currentData, activeSection, search]);
 
-  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" /></div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-emerald-200 border-t-emerald-500 rounded-full animate-spin" /></div>;
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Çeviriler</h1>
-          <p className="text-slate-400 mt-1">{Object.keys(currentData).length} metin anahtarı</p>
+          <h1 className="text-2xl font-bold text-[#1A2F2A]">Çeviriler</h1>
+          <p className="text-[#6B8F82] mt-1">{Object.keys(currentData).length} metin anahtarı</p>
         </div>
-        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-lg shadow-blue-500/25">
+        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer"
+          style={{ boxShadow: '4px 4px 12px rgba(16,185,129,0.25)' }}>
           {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
         </button>
       </div>
 
-      {/* Language Tabs */}
-      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1 gap-0.5">
+      <div className="inline-flex bg-[#E8EFEC] rounded-xl p-1 gap-0.5"
+        style={{ boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.04), inset -2px -2px 5px rgba(255,255,255,0.7)' }}>
         {LANGS.map(l => (
-          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeLang === l.code ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white hover:bg-slate-800'}`}>
+          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeLang === l.code ? 'bg-emerald-500 text-white' : 'text-[#6B8F82] hover:text-[#1A2F2A] hover:bg-[#DCE8E3]'}`}
+            style={activeLang === l.code ? { boxShadow: '2px 2px 6px rgba(16,185,129,0.3)' } : {}}>
             {l.label}
           </button>
         ))}
       </div>
 
-      {/* Section Filters */}
       <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setActiveSection(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${!activeSection ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800 border border-transparent'}`}>
+        <button onClick={() => setActiveSection(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${!activeSection ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'text-[#6B8F82] hover:text-[#1A2F2A] hover:bg-[#E8EFEC] border border-transparent'}`}>
           Tümü
         </button>
         {SECTIONS.map(s => (
-          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === s.prefix ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800 border border-transparent'}`}>
+          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all cursor-pointer ${activeSection === s.prefix ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'text-[#6B8F82] hover:text-[#1A2F2A] hover:bg-[#E8EFEC] border border-transparent'}`}>
             {s.label}
           </button>
         ))}
       </div>
 
-      {/* Search */}
       <div className="relative">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#93B5AA]" />
         <input
           type="text"
           placeholder="Anahtar veya metin ara..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-slate-900/80 border border-slate-800 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
+          className="w-full pl-11 pr-4 py-3 bg-[#E8EFEC] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
+          style={{ boxShadow: 'inset 2px 2px 5px rgba(0,0,0,0.04), inset -2px -2px 5px rgba(255,255,255,0.7)' }}
         />
       </div>
 
-      {/* Translation Table */}
-      <div className="bg-slate-900/80 border border-slate-800/60 rounded-2xl overflow-hidden">
+      <div className="bg-[#E8EFEC] rounded-2xl overflow-hidden"
+        style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}>
         <div className="max-h-[60vh] overflow-y-auto">
           {filteredKeys.length === 0 ? (
-            <div className="p-12 text-center text-slate-600">Sonuç bulunamadı</div>
+            <div className="p-12 text-center text-[#93B5AA]">Sonuç bulunamadı</div>
           ) : (
             <table className="w-full">
-              <thead className="sticky top-0 bg-slate-900 border-b border-slate-800">
+              <thead className="sticky top-0 bg-[#E0EBE7] border-b border-[#D0DDD8]">
                 <tr>
-                  <th className="px-5 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Anahtar</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Değer</th>
+                  <th className="px-5 py-3 text-left text-[11px] font-semibold text-[#6B8F82] uppercase tracking-wider">Anahtar</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-semibold text-[#6B8F82] uppercase tracking-wider">Değer</th>
                   <th className="w-12"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50">
+              <tbody className="divide-y divide-[#D0DDD8]/50">
                 {filteredKeys.map(key => (
-                  <tr key={key} className="hover:bg-slate-800/30 transition-colors group">
+                  <tr key={key} className="hover:bg-[#DCE8E3] transition-colors group">
                     <td className="px-5 py-3 w-[220px]">
-                      <code className="text-[11px] text-blue-400/80 font-mono">{key}</code>
+                      <code className="text-[11px] text-emerald-700/70 font-mono">{key}</code>
                     </td>
                     <td className="px-3 py-3">
                       <input
                         type="text"
                         value={currentData[key] || ''}
                         onChange={e => updateValue(key, e.target.value)}
-                        className="w-full px-3 py-1.5 bg-transparent border border-transparent hover:border-slate-700 focus:border-blue-500/50 focus:bg-slate-800/50 rounded-lg text-white text-sm focus:outline-none transition-all"
+                        className="w-full px-3 py-1.5 bg-transparent border border-transparent hover:border-[#B8CFC7] focus:border-emerald-300 focus:bg-[#F0F4F3] rounded-lg text-[#1A2F2A] text-sm focus:outline-none transition-all"
                       />
                     </td>
                     <td className="px-3 py-3">
-                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-1.5 text-slate-600 hover:text-red-400 rounded-lg transition-all cursor-pointer">
+                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-1.5 text-[#B8CFC7] hover:text-red-500 rounded-lg transition-all cursor-pointer">
                         <Trash2 size={12} />
                       </button>
                     </td>
@@ -177,13 +177,16 @@ export default function AdminTranslations() {
         </div>
       </div>
 
-      {/* Add New */}
-      <div className="bg-slate-900/80 border border-slate-800/60 rounded-2xl p-6">
-        <h3 className="text-sm font-semibold text-white mb-4">Yeni Çeviri Ekle</h3>
+      <div className="bg-[#E8EFEC] rounded-2xl p-6"
+        style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}>
+        <h3 className="text-sm font-semibold text-[#1A2F2A] mb-4">Yeni Çeviri Ekle</h3>
         <form onSubmit={(e) => { e.preventDefault(); const k = e.target.key.value.trim(); const v = e.target.val.value; if (k) { updateValue(k, v); e.target.reset(); } }} className="flex gap-4 flex-wrap sm:flex-nowrap">
-          <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="flex-1 min-w-0 px-4 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-all" />
-          <input name="val" placeholder="Değer" className="flex-1 min-w-0 px-4 py-2.5 bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-all" />
-          <button type="submit" className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shrink-0">
+          <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="flex-1 min-w-0 px-4 py-2.5 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
+            style={{ boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.04), inset -2px -2px 4px rgba(255,255,255,0.7)' }} />
+          <input name="val" placeholder="Değer" className="flex-1 min-w-0 px-4 py-2.5 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
+            style={{ boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.04), inset -2px -2px 4px rgba(255,255,255,0.7)' }} />
+          <button type="submit" className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shrink-0"
+            style={{ boxShadow: '3px 3px 8px rgba(16,185,129,0.25)' }}>
             <Plus size={14} /> Ekle
           </button>
         </form>

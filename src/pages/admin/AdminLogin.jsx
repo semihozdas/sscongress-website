@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Lock, User, ArrowRight, Loader2 } from 'lucide-react';
+import { Lock, User, ArrowRight, Loader2, Leaf } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
@@ -50,42 +50,48 @@ export default function AdminLogin() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <Loader2 size={28} className="text-blue-400 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-[#F0F4F3]">
+        <Loader2 size={28} className="text-emerald-500 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent" />
+    <div className="min-h-screen flex items-center justify-center bg-[#F0F4F3] px-4">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-100/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-teal-100/30 rounded-full blur-3xl" />
+      </div>
 
-      <div className="relative w-full max-w-[380px]">
+      <div className="relative w-full max-w-[400px]">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg shadow-blue-500/25 mb-5">
-            <span className="text-white font-bold text-xl">SS</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#E8EFEC] mb-5"
+            style={{ boxShadow: '8px 8px 16px rgba(0,0,0,0.08), -8px -8px 16px rgba(255,255,255,0.9)' }}>
+            <Leaf size={28} className="text-emerald-600" />
           </div>
-          <h1 className="text-2xl font-bold text-white">SS Congress</h1>
-          <p className="text-slate-400 text-sm mt-2">{needsSetup ? 'İlk admin hesabınızı oluşturun' : 'Yönetim paneline hoş geldiniz'}</p>
+          <h1 className="text-2xl font-bold text-[#1A2F2A]">SS Congress</h1>
+          <p className="text-[#6B8F82] text-sm mt-2">{needsSetup ? 'İlk admin hesabınızı oluşturun' : 'Yönetim paneline hoş geldiniz'}</p>
         </div>
 
-        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-7 shadow-2xl">
+        <div className="bg-[#E8EFEC] rounded-3xl p-8"
+          style={{ boxShadow: '10px 10px 20px rgba(0,0,0,0.07), -10px -10px 20px rgba(255,255,255,0.9)' }}>
           {error && (
-            <div className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-300 text-sm">
+            <div className="mb-5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm">
               {error}
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Kullanıcı Adı</label>
+              <label className="block text-sm font-medium text-[#3D6B5E] mb-2">Kullanıcı Adı</label>
               <div className="relative">
-                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <User size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#93B5AA]" />
                 <input
                   type="text"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3.5 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] placeholder-[#93B5AA] focus:outline-none transition-all duration-200"
+                  style={{ boxShadow: 'inset 3px 3px 7px rgba(0,0,0,0.05), inset -3px -3px 7px rgba(255,255,255,0.8)' }}
                   placeholder="admin"
                   required
                   autoComplete="username"
@@ -93,14 +99,15 @@ export default function AdminLogin() {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Şifre</label>
+              <label className="block text-sm font-medium text-[#3D6B5E] mb-2">Şifre</label>
               <div className="relative">
-                <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Lock size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#93B5AA]" />
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
+                  className="w-full pl-11 pr-4 py-3.5 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] placeholder-[#93B5AA] focus:outline-none transition-all duration-200"
+                  style={{ boxShadow: 'inset 3px 3px 7px rgba(0,0,0,0.05), inset -3px -3px 7px rgba(255,255,255,0.8)' }}
                   placeholder="••••••••"
                   required
                   minLength={6}
@@ -111,7 +118,8 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
+              className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+              style={{ boxShadow: '4px 4px 12px rgba(16,185,129,0.3)' }}
             >
               {submitting ? (
                 <Loader2 size={18} className="animate-spin" />
