@@ -1,37 +1,79 @@
 import { Link } from 'react-router-dom';
+import { Send } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-950 font-serif">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-center">
-          <div className="w-full sm:w-10/12 md:w-8/12 text-center">
-            <div
-              className="bg-[url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)] h-[250px] sm:h-[350px] md:h-[400px] bg-center bg-no-repeat bg-contain"
-              aria-hidden="true"
-            >
-              <h1 className="text-center text-gray-900 dark:text-white text-6xl sm:text-7xl md:text-8xl pt-6 sm:pt-8 font-bold">
-                404
-              </h1>
-            </div>
+    <section
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: 'var(--c-bg)',
+        fontFamily: "'Outfit', sans-serif",
+        transition: 'background 0.5s ease'
+      }}
+    >
+      <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
+        <div
+          style={{
+            backgroundImage: 'url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif)',
+            height: 400,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'contain'
+          }}
+          aria-hidden="true"
+        >
+          <h1
+            style={{
+              textAlign: 'center',
+              color: 'var(--c-heading)',
+              fontSize: 'clamp(4rem, 10vw, 8rem)',
+              paddingTop: 24,
+              fontWeight: 900,
+              letterSpacing: '-0.04em'
+            }}
+          >
+            404
+          </h1>
+        </div>
 
-            <div className="mt-[-50px]">
-              <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-900 dark:text-white">
-                Aradığınız sayfa bulunamadı
-              </h3>
-              <p className="mb-6 sm:mb-5 text-gray-600 dark:text-gray-400">
-                Ulaşmaya çalıştığınız sayfa mevcut değil veya taşınmış olabilir.
-              </p>
+        <div style={{ marginTop: 32 }}>
+          <h3
+            style={{
+              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+              fontWeight: 800,
+              marginBottom: 16,
+              color: 'var(--c-heading)'
+            }}
+          >
+            Aradığınız sayfa bulunamadı
+          </h3>
+          <p style={{ marginBottom: 32, color: 'var(--c-muted)', fontSize: 16, lineHeight: 1.7 }}>
+            Ulaşmaya çalıştığınız sayfa mevcut değil veya taşınmış olabilir.
+          </p>
 
-              <Link
-                to="/"
-                className="relative inline-flex items-center justify-center px-10 py-4 text-white font-semibold text-base rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden group"
-              >
-                <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <span className="relative z-10">Ana Sayfaya Dön</span>
-              </Link>
-            </div>
-          </div>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 10,
+              padding: '13px 26px',
+              borderRadius: 12,
+              background: '#10b981',
+              color: '#064e3b',
+              fontWeight: 800,
+              fontSize: 15,
+              fontFamily: 'Outfit, sans-serif',
+              boxShadow: '0 8px 25px rgba(16,185,129,0.25)',
+              transition: 'all 0.3s ease'
+            }}
+          >
+            <Send size={18} />
+            <span>Ana Sayfaya Dön</span>
+          </Link>
         </div>
       </div>
     </section>
