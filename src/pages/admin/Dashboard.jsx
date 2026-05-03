@@ -1,104 +1,130 @@
-import { useAdmin } from './useAdmin';
-import { Globe, Users, Briefcase, Image, HelpCircle, TrendingUp, ArrowRight, Activity } from 'lucide-react';
+import { Globe, Briefcase, HelpCircle, Image, Users, BarChart3, TrendingUp, ArrowUpRight, Activity, FolderKanban, Bell, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+const stats = [
+  { label: 'Toplam Proje', value: '18', icon: FolderKanban, color: 'blue', change: '+2 bu ay', to: '/admin/projects' },
+  { label: 'Aktif Hizmetler', value: '6', icon: Briefcase, color: 'green', change: 'Sabit', to: '/admin/services' },
+  { label: 'Galeri Görseli', value: '28', icon: Image, color: 'purple', change: '+5 yeni', to: '/admin/gallery' },
+  { label: 'Açık Pozisyon', value: '3', icon: Users, color: 'orange', change: '+1 yeni', to: '/admin/career' },
+];
+
+const COLORS = {
+  blue: { bg: 'bg-blue-900/20', text: 'text-blue-400' },
+  green: { bg: 'bg-green-900/20', text: 'text-green-400' },
+  purple: { bg: 'bg-purple-900/20', text: 'text-purple-400' },
+  orange: { bg: 'bg-orange-900/20', text: 'text-orange-400' },
+};
+
+const activities = [
+  { icon: FolderKanban, title: 'Yeni proje eklendi', desc: 'Kazan Forum 2026 güncellendi', time: '2 dk önce', color: 'blue' },
+  { icon: Users, title: 'Pozisyon güncellendi', desc: 'Proje Koordinatörü düzenlendi', time: '15 dk önce', color: 'green' },
+  { icon: Image, title: 'Galeri güncellendi', desc: '3 yeni fotoğraf yüklendi', time: '1 saat önce', color: 'purple' },
+  { icon: Activity, title: 'Çeviriler düzenlendi', desc: 'Arapça çeviriler tamamlandı', time: '3 saat önce', color: 'orange' },
+  { icon: Bell, title: 'SSS güncellendi', desc: '2 yeni soru eklendi', time: '5 saat önce', color: 'blue' },
+];
+
+const quickStats = [
+  { label: 'Ülke Sayısı', value: '25+', percent: 83 },
+  { label: 'SSS Soruları', value: '12', percent: 60 },
+  { label: 'Çeviri Anahtarı', value: '48', percent: 75 },
+];
+
 export default function Dashboard() {
-  const { data, loading } = useAdmin();
-
-  if (loading) return (
-    <div className="flex items-center justify-center h-64">
-      <div className="w-8 h-8 border-2 border-emerald-200 border-t-emerald-500 rounded-full animate-spin" />
-    </div>
-  );
-  if (!data) return (
-    <div className="rounded-2xl p-8 text-center bg-red-50 border border-red-100"
-      style={{ boxShadow: '4px 4px 12px rgba(0,0,0,0.04), -4px -4px 12px rgba(255,255,255,0.8)' }}>
-      <p className="text-red-600 font-medium">Backend sunucusu yanıt vermiyor.</p>
-      <p className="text-red-400 text-sm mt-2">Sunucunun çalıştığından emin olun.</p>
-    </div>
-  );
-
-  const stats = [
-    { icon: Globe, label: 'Projeler', value: (data.projects?.completed?.length || 0) + (data.projects?.upcoming?.length || 0), color: 'text-blue-600', bg: 'bg-blue-50', to: '/admin/projects' },
-    { icon: Briefcase, label: 'Hizmetler', value: data.services?.length || 0, color: 'text-violet-600', bg: 'bg-violet-50', to: '/admin/services' },
-    { icon: HelpCircle, label: 'SSS', value: data.faq?.length || 0, color: 'text-amber-600', bg: 'bg-amber-50', to: '/admin/faq' },
-    { icon: Image, label: 'Galeri', value: data.gallery?.length || 0, color: 'text-emerald-600', bg: 'bg-emerald-50', to: '/admin/gallery' },
-    { icon: Users, label: 'Pozisyonlar', value: data.career?.positions?.length || 0, color: 'text-rose-600', bg: 'bg-rose-50', to: '/admin/career' },
-    { icon: TrendingUp, label: 'Ülke', value: `${data.hero?.stats?.country || 25}+`, color: 'text-teal-600', bg: 'bg-teal-50', to: '/admin/hero' },
-  ];
-
-  const quickActions = [
-    { label: 'İstatistikleri Güncelle', desc: 'Hero bölümü rakamları', to: '/admin/hero', icon: TrendingUp },
-    { label: 'Fotoğraf Yükle', desc: 'Galeriye görsel ekle', to: '/admin/gallery', icon: Image },
-    { label: 'Yeni Proje Ekle', desc: 'Proje portföyünü genişlet', to: '/admin/projects', icon: Globe },
-    { label: 'Çevirileri Düzenle', desc: '4 dilde site metinleri', to: '/admin/translations', icon: Activity },
-  ];
-
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 max-w-7xl">
+      {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-[#1A2F2A]">Hoş Geldiniz</h1>
-        <p className="text-[#6B8F82] mt-1">Site içeriğinizi buradan yönetin</p>
+        <h2 className="text-3xl font-bold text-gray-100">Dashboard</h2>
+        <p className="text-gray-400 mt-1">SS Congress yönetim paneline hoş geldiniz</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        {stats.map((s, i) => (
-          <Link
-            key={i}
-            to={s.to}
-            className="bg-[#E8EFEC] rounded-2xl p-5 hover:translate-y-[-2px] transition-all duration-200 cursor-pointer group"
-            style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}
-          >
-            <div className={`w-11 h-11 rounded-xl ${s.bg} flex items-center justify-center mb-4`}>
-              <s.icon size={20} className={s.color} />
-            </div>
-            <p className="text-2xl font-bold text-[#1A2F2A]">{s.value}</p>
-            <p className="text-xs text-[#6B8F82] mt-1 group-hover:text-[#3D6B5E] transition-colors">{s.label}</p>
-          </Link>
-        ))}
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {stats.map((s, i) => {
+          const c = COLORS[s.color];
+          return (
+            <Link key={i} to={s.to} className="p-6 rounded-xl border border-gray-800 bg-gray-900 shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+              <div className="flex items-center justify-between mb-4">
+                <div className={`p-2 ${c.bg} rounded-lg`}>
+                  <s.icon className={`h-5 w-5 ${c.text}`} />
+                </div>
+                <TrendingUp className="h-4 w-4 text-green-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <h3 className="font-medium text-gray-400 mb-1">{s.label}</h3>
+              <p className="text-2xl font-bold text-gray-100">{s.value}</p>
+              <p className="text-sm text-green-400 mt-1">{s.change}</p>
+            </Link>
+          );
+        })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-[#E8EFEC] rounded-2xl p-6"
-          style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}>
-          <h2 className="text-base font-semibold text-[#1A2F2A] mb-5">Hızlı İşlemler</h2>
-          <div className="space-y-2">
-            {quickActions.map((item, i) => (
-              <Link
-                key={i}
-                to={item.to}
-                className="flex items-center gap-4 p-3.5 rounded-xl hover:bg-[#DCE8E3] transition-all duration-200 group cursor-pointer"
-              >
-                <div className="w-9 h-9 rounded-lg bg-[#F0F4F3] flex items-center justify-center group-hover:bg-emerald-50 transition-colors"
-                  style={{ boxShadow: 'inset 2px 2px 4px rgba(0,0,0,0.04), inset -2px -2px 4px rgba(255,255,255,0.8)' }}>
-                  <item.icon size={16} className="text-[#6B8F82] group-hover:text-emerald-600 transition-colors" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-[#1A2F2A]">{item.label}</p>
-                  <p className="text-xs text-[#6B8F82]">{item.desc}</p>
-                </div>
-                <ArrowRight size={14} className="text-[#B8CFC7] group-hover:text-emerald-500 transition-colors" />
+      {/* Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Recent Activity */}
+        <div className="lg:col-span-2">
+          <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-100">Son Aktiviteler</h3>
+              <Link to="/admin/projects" className="text-sm text-blue-400 hover:text-blue-300 font-medium">
+                Tümünü Gör
               </Link>
-            ))}
+            </div>
+            <div className="space-y-1">
+              {activities.map((item, i) => {
+                const c = COLORS[item.color];
+                return (
+                  <div key={i} className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-800 transition-colors cursor-pointer">
+                    <div className={`p-2 rounded-lg ${c.bg}`}>
+                      <item.icon className={`h-4 w-4 ${c.text}`} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-100 truncate">{item.title}</p>
+                      <p className="text-xs text-gray-500 truncate">{item.desc}</p>
+                    </div>
+                    <div className="text-xs text-gray-500 shrink-0">{item.time}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        <div className="bg-[#E8EFEC] rounded-2xl p-6"
-          style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}>
-          <h2 className="text-base font-semibold text-[#1A2F2A] mb-5">Kullanım Kılavuzu</h2>
-          <div className="space-y-4">
-            {[
-              { text: '4 dilde içerik düzenleyin (TR/EN/AR/RU)', color: 'bg-blue-400' },
-              { text: 'Kaydet butonu ile değişiklikleri onaylayın', color: 'bg-emerald-400' },
-              { text: 'Galeriye sürükle-bırak ile fotoğraf ekleyin', color: 'bg-violet-400' },
-              { text: 'Projeler, hizmetler, SSS\'ye sınırsız içerik ekleyin', color: 'bg-amber-400' },
-              { text: 'Çeviriler sayfasından tüm site metinlerini yönetin', color: 'bg-rose-400' },
-            ].map((item, i) => (
-              <p key={i} className="flex items-center gap-3 text-sm text-[#3D6B5E]">
-                <span className={`w-2 h-2 rounded-full ${item.color} shrink-0`} />
-                {item.text}
-              </p>
-            ))}
+        {/* Right Column */}
+        <div className="space-y-6">
+          {/* Quick Stats */}
+          <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-100 mb-4">İstatistikler</h3>
+            <div className="space-y-5">
+              {quickStats.map((item, i) => (
+                <div key={i}>
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm text-gray-400">{item.label}</span>
+                    <span className="text-sm font-medium text-gray-100">{item.value}</span>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div className="bg-blue-500 h-2 rounded-full transition-all duration-500" style={{ width: `${item.percent}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick Actions */}
+          <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 shadow-sm">
+            <h3 className="text-lg font-semibold text-gray-100 mb-4">Hızlı İşlemler</h3>
+            <div className="space-y-2">
+              {[
+                { label: 'Yeni Proje Ekle', to: '/admin/projects' },
+                { label: 'Fotoğraf Yükle', to: '/admin/gallery' },
+                { label: 'Çevirileri Düzenle', to: '/admin/translations' },
+                { label: 'İstatistik Güncelle', to: '/admin/hero' },
+              ].map((item, i) => (
+                <Link key={i} to={item.to} className="flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-gray-800 transition-colors group cursor-pointer">
+                  <span className="text-sm text-gray-400 group-hover:text-gray-200 transition-colors">{item.label}</span>
+                  <ArrowUpRight className="h-4 w-4 text-gray-600 group-hover:text-blue-400 transition-colors" />
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
