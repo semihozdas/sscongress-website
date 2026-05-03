@@ -89,7 +89,7 @@ export default function Dashboard() {
               { text: '4 dilde içerik düzenleyin (TR/EN/AR/RU)', color: 'bg-blue-500' },
               { text: 'Kaydet butonu ile değişiklikleri onaylayın', color: 'bg-emerald-500' },
               { text: 'Galeriye sürükle-bırak ile fotoğraf ekleyin', color: 'bg-violet-500' },
-              { text: 'Projeler, hizmetler, SSS'ye sınırsız içerik ekleyin', color: 'bg-amber-500' },
+              { text: 'Projeler, hizmetler, SSS\'ye sınırsız içerik ekleyin', color: 'bg-amber-500' },
               { text: 'Çeviriler sayfasından tüm site metinlerini yönetin', color: 'bg-rose-500' },
             ].map((item, i) => (
               <p key={i} className="flex items-center gap-3 text-sm text-slate-400">
