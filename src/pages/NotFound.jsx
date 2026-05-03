@@ -1,7 +1,27 @@
 import { Link } from 'react-router-dom';
 import { Send } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 export default function NotFound() {
+  const { theme, setTheme } = useTheme();
+  const prevTheme = useRef(theme);
+
+  useEffect(() => {
+    // Remember the user's real theme, then force light
+    prevTheme.current = theme;
+    if (theme !== 'light') {
+      setTheme('light');
+    }
+
+    // Restore original theme when leaving
+    return () => {
+      if (prevTheme.current !== 'light') {
+        setTheme(prevTheme.current);
+      }
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <section
       style={{
@@ -9,9 +29,8 @@ export default function NotFound() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'var(--c-bg)',
+        background: '#ffffff',
         fontFamily: "'Outfit', sans-serif",
-        transition: 'background 0.5s ease'
       }}
     >
       <div style={{ maxWidth: 640, margin: '0 auto', padding: '0 24px', textAlign: 'center' }}>
@@ -28,7 +47,7 @@ export default function NotFound() {
           <h1
             style={{
               textAlign: 'center',
-              color: 'var(--c-heading)',
+              color: '#111827',
               fontSize: 'clamp(4rem, 10vw, 8rem)',
               paddingTop: 24,
               fontWeight: 900,
@@ -45,12 +64,12 @@ export default function NotFound() {
               fontSize: 'clamp(1.5rem, 3vw, 2rem)',
               fontWeight: 800,
               marginBottom: 16,
-              color: 'var(--c-heading)'
+              color: '#111827'
             }}
           >
             Aradığınız sayfa bulunamadı
           </h3>
-          <p style={{ marginBottom: 32, color: 'var(--c-muted)', fontSize: 16, lineHeight: 1.7 }}>
+          <p style={{ marginBottom: 32, color: '#6b7280', fontSize: 16, lineHeight: 1.7 }}>
             Ulaşmaya çalıştığınız sayfa mevcut değil veya taşınmış olabilir.
           </p>
 
