@@ -91,70 +91,84 @@ export default function AdminTranslations() {
   if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" /></div>;
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center justify-between flex-wrap gap-3">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Çeviriler</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{Object.keys(currentData).length} metin anahtarı</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Çeviriler</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{Object.keys(currentData).length} metin anahtarı</p>
         </div>
-        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
-          {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
+        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md shadow-blue-500/20">
+          {saved ? <><CheckCircle size={18} /> Kaydedildi</> : <><Save size={18} /> Kaydet</>}
         </button>
       </div>
 
-      <div className="inline-flex bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1">
+      {/* Language Tabs */}
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1.5 inline-flex gap-1">
         {LANGS.map(l => (
-          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l.code ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}`}>
+          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${activeLang === l.code ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800'}`}>
             {l.label}
           </button>
         ))}
       </div>
 
+      {/* Section Filters */}
       <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setActiveSection(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${!activeSection ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+        <button onClick={() => setActiveSection(null)} className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${!activeSection ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'}`}>
           Tümü
         </button>
         {SECTIONS.map(s => (
-          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeSection === s.prefix ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
+          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-4 py-2 rounded-lg text-sm font-medium transition-all cursor-pointer ${activeSection === s.prefix ? 'bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'}`}>
             {s.label}
           </button>
         ))}
       </div>
 
+      {/* Search */}
       <div className="relative">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
         <input
           type="text"
           placeholder="Anahtar veya metin ara..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
+          className="w-full pl-12 pr-4 py-3.5 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
         />
       </div>
 
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
-        <div className="max-h-[55vh] overflow-y-auto">
+      {/* Translation Table */}
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <div className="max-h-[60vh] overflow-y-auto">
           {filteredKeys.length === 0 ? (
-            <div className="p-12 text-center text-gray-400 dark:text-gray-500">Sonuç bulunamadı</div>
+            <div className="p-16 text-center">
+              <p className="text-gray-400">Sonuç bulunamadı</p>
+            </div>
           ) : (
             <table className="w-full">
+              <thead className="sticky top-0 bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+                <tr>
+                  <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Anahtar</th>
+                  <th className="px-5 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase">Değer</th>
+                  <th className="w-12"></th>
+                </tr>
+              </thead>
               <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                 {filteredKeys.map(key => (
                   <tr key={key} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
-                    <td className="px-4 py-2.5 w-[200px]">
-                      <code className="text-[11px] text-blue-600 dark:text-blue-400 font-mono">{key}</code>
+                    <td className="px-5 py-3 w-[220px]">
+                      <code className="text-xs text-blue-600 dark:text-blue-400 font-mono bg-blue-50 dark:bg-blue-900/20 px-2 py-1 rounded">{key}</code>
                     </td>
-                    <td className="px-2 py-2.5">
+                    <td className="px-3 py-3">
                       <input
                         type="text"
                         value={currentData[key] || ''}
                         onChange={e => updateValue(key, e.target.value)}
-                        className="w-full px-3 py-1.5 bg-transparent border border-transparent hover:border-gray-200 dark:hover:border-gray-700 focus:border-blue-500/50 rounded-lg text-gray-900 dark:text-gray-100 text-sm focus:outline-none transition-colors"
+                        className="w-full px-3 py-2 bg-transparent border border-transparent hover:border-gray-200 dark:hover:border-gray-700 focus:border-blue-500 focus:bg-gray-50 dark:focus:bg-gray-800 rounded-lg text-gray-900 dark:text-gray-100 text-sm focus:outline-none transition-all"
                       />
                     </td>
-                    <td className="px-2 py-2.5 w-10">
-                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 rounded transition-all cursor-pointer">
-                        <Trash2 size={12} />
+                    <td className="px-3 py-3">
+                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-2 text-gray-400 hover:text-red-500 rounded-lg transition-all cursor-pointer">
+                        <Trash2 size={14} />
                       </button>
                     </td>
                   </tr>
@@ -165,13 +179,18 @@ export default function AdminTranslations() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-5">
-        <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Yeni Çeviri Ekle</p>
-        <form onSubmit={(e) => { e.preventDefault(); const k = e.target.key.value.trim(); const v = e.target.val.value; if (k) { updateValue(k, v); e.target.reset(); } }} className="flex gap-3">
-          <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
-          <input name="val" placeholder="Değer" className="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
-          <button type="submit" className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer">
-            <Plus size={14} /> Ekle
+      {/* Add New Translation */}
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">Yeni Çeviri Ekle</h3>
+        <form onSubmit={(e) => { e.preventDefault(); const k = e.target.key.value.trim(); const v = e.target.val.value; if (k) { updateValue(k, v); e.target.reset(); } }} className="flex gap-4">
+          <div className="flex-1">
+            <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+          </div>
+          <div className="flex-1">
+            <input name="val" placeholder="Değer" className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+          </div>
+          <button type="submit" className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-all flex items-center gap-2 cursor-pointer shrink-0">
+            <Plus size={16} /> Ekle
           </button>
         </form>
       </div>

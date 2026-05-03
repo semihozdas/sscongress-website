@@ -150,7 +150,7 @@ export default function AdminLayout() {
             </div>
           </header>
 
-          <main className="flex-1 bg-gray-50 dark:bg-gray-950 p-6 overflow-auto">
+          <main className="flex-1 bg-gray-50 dark:bg-gray-950 p-8 lg:p-10 overflow-auto">
             <Outlet />
           </main>
         </div>

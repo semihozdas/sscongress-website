@@ -38,68 +38,75 @@ export default function AdminFAQ() {
   if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" /></div>;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-3">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Sıkça Sorulan Sorular</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{faq.length} soru</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Sıkça Sorulan Sorular</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{faq.length} soru tanımlı</p>
         </div>
-        <div className="flex gap-2">
-          <button onClick={addFaq} className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
-            <Plus size={16} /> Soru Ekle
+        <div className="flex gap-3">
+          <button onClick={addFaq} className="flex items-center gap-2 px-5 py-3 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-200 rounded-xl text-sm font-semibold transition-all cursor-pointer">
+            <Plus size={18} /> Soru Ekle
           </button>
-          <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
-            {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
+          <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md shadow-blue-500/20">
+            {saved ? <><CheckCircle size={18} /> Kaydedildi</> : <><Save size={18} /> Kaydet</>}
           </button>
         </div>
       </div>
 
-      <div className="inline-flex bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1">
+      {/* Language Tabs */}
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1.5 inline-flex gap-1">
         {LANGS.map(l => (
-          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}`}>
+          <button key={l} onClick={() => setActiveLang(l)} className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-all cursor-pointer ${activeLang === l ? 'bg-blue-600 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-800'}`}>
             {LANG_LABELS[l]}
           </button>
         ))}
       </div>
 
-      <div className="space-y-3">
+      {/* FAQ Items */}
+      <div className="space-y-4">
         {faq.map((item, idx) => {
           const isExpanded = expandedId === item.id;
           const questionText = typeof item.question === 'object' ? (item.question[activeLang] || '') : item.question;
           return (
-            <div key={item.id} className={`bg-white dark:bg-gray-900 border rounded-xl overflow-hidden transition-all duration-200 shadow-sm ${isExpanded ? 'border-blue-300 dark:border-blue-700' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'}`}>
+            <div key={item.id} className={`bg-white dark:bg-gray-900 border rounded-2xl overflow-hidden transition-all duration-200 ${isExpanded ? 'border-blue-200 dark:border-blue-800 shadow-md' : 'border-gray-200 dark:border-gray-800 hover:shadow-sm'}`}>
+              {/* Question Header */}
               <div
-                className="flex items-center gap-3 px-5 py-4 cursor-pointer select-none"
+                className="flex items-center gap-4 px-6 py-5 cursor-pointer select-none"
                 onClick={() => setExpandedId(isExpanded ? null : item.id)}
               >
-                <span className="text-xs font-bold text-gray-400 dark:text-gray-500 w-6">{idx + 1}</span>
-                <p className="flex-1 text-sm text-gray-900 dark:text-gray-100 truncate">{questionText || <span className="text-gray-400 dark:text-gray-600 italic">Soruyu girin...</span>}</p>
-                <button onClick={(e) => { e.stopPropagation(); removeFaq(item.id); }} className="p-1.5 text-gray-400 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors cursor-pointer">
-                  <Trash2 size={14} />
+                <span className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-sm font-bold text-gray-500 dark:text-gray-400 shrink-0">{idx + 1}</span>
+                <p className="flex-1 text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                  {questionText || <span className="text-gray-400 italic">Soruyu girin...</span>}
+                </p>
+                <button onClick={(e) => { e.stopPropagation(); removeFaq(item.id); }} className="p-2 text-gray-300 hover:text-red-500 rounded-lg transition-colors cursor-pointer">
+                  <Trash2 size={16} />
                 </button>
-                <ChevronDown size={16} className={`text-gray-400 dark:text-gray-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                <ChevronDown size={18} className={`text-gray-400 transition-transform duration-200 shrink-0 ${isExpanded ? 'rotate-180' : ''}`} />
               </div>
 
+              {/* Expanded Content */}
               {isExpanded && (
-                <div className="px-5 pb-5 pt-1 space-y-4 border-t border-gray-200 dark:border-gray-800">
+                <div className="px-6 pb-6 pt-2 border-t border-gray-100 dark:border-gray-800 space-y-5">
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Soru</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Soru</label>
                     <input
                       type="text"
                       value={questionText}
                       onChange={e => updateFaq(item.id, 'question', e.target.value)}
                       placeholder="Soruyu yazın..."
-                      className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Cevap</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Cevap</label>
                     <textarea
-                      rows={3}
+                      rows={4}
                       value={typeof item.answer === 'object' ? (item.answer[activeLang] || '') : item.answer}
                       onChange={e => updateFaq(item.id, 'answer', e.target.value)}
                       placeholder="Cevabı yazın..."
-                      className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
+                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all resize-none"
                     />
                   </div>
                 </div>
@@ -107,6 +114,13 @@ export default function AdminFAQ() {
             </div>
           );
         })}
+
+        {faq.length === 0 && (
+          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 border-dashed rounded-2xl p-12 text-center">
+            <p className="text-gray-500 dark:text-gray-400">Henüz soru eklenmemiş</p>
+            <button onClick={addFaq} className="mt-3 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline cursor-pointer">+ Yeni soru ekle</button>
+          </div>
+        )}
       </div>
     </div>
   );

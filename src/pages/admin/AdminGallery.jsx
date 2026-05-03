@@ -48,58 +48,62 @@ export default function AdminGallery() {
   const gallery = data?.gallery || [];
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-3">
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Galeri</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{gallery.length} fotoğraf</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Galeri</h1>
+          <p className="text-gray-500 dark:text-gray-400 mt-1">{gallery.length} fotoğraf yüklendi</p>
         </div>
-        <label className={`flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20 ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
-          {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
+        <label className={`flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md shadow-blue-500/20 ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
+          {uploading ? <Loader2 size={18} className="animate-spin" /> : <Upload size={18} />}
           {uploading ? 'Yükleniyor...' : 'Fotoğraf Yükle'}
           <input ref={fileRef} type="file" multiple accept="image/*" onChange={handleUpload} className="hidden" />
         </label>
       </div>
 
+      {/* Drop Zone */}
       <div
-        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 ${dragOver ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600'}`}
+        className={`bg-white dark:bg-gray-900 border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-200 ${dragOver ? 'border-blue-400 bg-blue-50 dark:bg-blue-950/20' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
       >
-        <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-3">
-          <Plus size={20} className="text-gray-400 dark:text-gray-500" />
+        <div className="w-14 h-14 bg-gray-100 dark:bg-gray-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <Plus size={24} className="text-gray-400" />
         </div>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Fotoğrafları buraya sürükleyin</p>
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">veya yukarıdaki butonu kullanın</p>
+        <p className="text-base font-medium text-gray-700 dark:text-gray-300">Fotoğrafları buraya sürükleyin</p>
+        <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">veya yukarıdaki butonu kullanın</p>
       </div>
 
+      {/* Gallery Grid */}
       {gallery.length === 0 ? (
-        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-16 text-center">
-          <Image size={32} className="text-gray-300 dark:text-gray-700 mx-auto mb-3" />
-          <p className="text-gray-500 dark:text-gray-400">Henüz fotoğraf eklenmemiş</p>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-16 text-center">
+          <Image size={40} className="text-gray-200 dark:text-gray-700 mx-auto mb-4" />
+          <p className="text-gray-500 dark:text-gray-400 font-medium">Henüz fotoğraf eklenmemiş</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500 mt-1">Yukarıdaki butonu kullanarak veya sürükleyerek fotoğraf ekleyin</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {gallery.map(item => {
             const imgSrc = resolveImageUrl(item.url);
             const isDeleting = deletingId === item.id;
             return (
-              <div key={item.id} className={`group relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden aspect-square hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-200 shadow-sm ${isDeleting ? 'opacity-30 scale-95' : ''}`}>
+              <div key={item.id} className={`group relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden aspect-square hover:shadow-lg transition-all duration-200 ${isDeleting ? 'opacity-30 scale-95' : ''}`}>
                 {imgSrc ? (
                   <img src={imgSrc} alt="Galeri" className="w-full h-full object-cover" loading="lazy" />
                 ) : (
-                  <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                    <Image size={20} className="text-gray-300 dark:text-gray-700" />
+                  <div className="w-full h-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+                    <Image size={24} className="text-gray-300 dark:text-gray-600" />
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end justify-center pb-3">
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-200 flex items-center justify-center">
                   <button
                     onClick={() => handleDelete(item.id)}
                     disabled={isDeleting}
-                    className="px-3 py-1.5 bg-red-500/90 backdrop-blur-sm rounded-lg text-white text-xs font-medium hover:bg-red-600 transition-colors duration-200 flex items-center gap-1.5 cursor-pointer"
+                    className="opacity-0 group-hover:opacity-100 px-4 py-2 bg-red-500 hover:bg-red-600 rounded-xl text-white text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer shadow-lg"
                   >
-                    <Trash2 size={12} /> Sil
+                    <Trash2 size={14} /> Sil
                   </button>
                 </div>
               </div>
