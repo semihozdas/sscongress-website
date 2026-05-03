@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe2, Sun, Moon } from 'lucide-react';
+import { Menu, X, Globe2, Sun, Moon, ChevronDown } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage, LANGUAGES } from '../context/LanguageContext';
 import logoBeyaz from '../assets/logo/beyaz.png';
@@ -30,78 +30,54 @@ function LangDropdown({ mobile }) {
   }, [open]);
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
-      <button
+    <div ref={ref} className="relative">
+      <motion.button
         onClick={() => setOpen((v) => !v)}
-        style={{
-          display: 'flex', alignItems: 'center', gap: 6,
-          padding: '0 10px',
-          width: mobile ? '100%' : 'auto',
-          height: 36,
-          borderRadius: 10,
-          border: '1px solid var(--c-border)',
-          background: open ? 'rgba(16,185,129,0.10)' : 'var(--c-card)',
-          cursor: 'pointer',
-          color: open ? '#10b981' : 'var(--c-muted)',
-          fontSize: 13, fontWeight: 600,
-          transition: 'all 0.2s',
-        }}
-        aria-label="Select language"
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.97 }}
+        className={`flex items-center gap-1.5 px-3 h-9 rounded-xl border cursor-pointer transition-all duration-200 text-[13px] font-semibold ${
+          mobile ? 'w-full justify-center' : ''
+        } ${
+          open
+            ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-500'
+            : 'border-[var(--c-border)] bg-[var(--c-card)] text-[var(--c-muted)] hover:border-emerald-500/20 hover:text-[var(--c-heading)]'
+        }`}
       >
-        <Globe2 size={15} style={{ flexShrink: 0 }} />
-        <span style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}>{language}</span>
-      </button>
+        <Globe2 size={14} />
+        <span className="uppercase tracking-wide">{language}</span>
+        <ChevronDown size={12} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </motion.button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -6, scale: 0.97 }}
+            initial={{ opacity: 0, y: -8, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -6, scale: 0.97 }}
-            transition={{ duration: 0.18 }}
-            style={{
-              position: mobile ? 'relative' : 'absolute',
-              top: mobile ? 4 : 'calc(100% + 8px)',
-              right: mobile ? 'auto' : 0,
-              width: mobile ? '100%' : 164,
-              background: 'var(--c-glass)',
-              backdropFilter: 'blur(18px)',
-              WebkitBackdropFilter: 'blur(18px)',
-              border: '1px solid var(--c-border)',
-              borderRadius: 12,
-              padding: '6px 0',
-              zIndex: 200,
-              boxShadow: '0 12px 32px rgba(0,0,0,0.12)',
-              marginTop: mobile ? 6 : 0,
-            }}
+            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            className={`${mobile ? 'relative mt-2' : 'absolute top-[calc(100%+10px)] right-0'} w-${mobile ? 'full' : '[170px]'} rounded-xl border border-[var(--c-border)] bg-[var(--c-glass)] backdrop-blur-xl shadow-2xl shadow-black/10 overflow-hidden z-[200]`}
+            style={{ width: mobile ? '100%' : 170 }}
           >
-            {LANGUAGES.map(({ code }) => {
+            {LANGUAGES.map(({ code }, i) => {
               const active = language === code;
               return (
-                <button
+                <motion.button
                   key={code}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.04 }}
                   onClick={() => { setLanguage(code); setOpen(false); }}
-                  style={{
-                    width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                    padding: '9px 14px',
-                    background: active ? 'rgba(16,185,129,0.12)' : 'transparent',
-                    border: 'none', cursor: 'pointer',
-                    color: active ? '#10b981' : 'var(--c-body)',
-                    fontSize: 13, fontWeight: active ? 700 : 500,
-                    transition: 'background 0.15s',
-                    textAlign: 'start',
-                  }}
-                  onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(16,185,129,0.06)'; }}
-                  onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
+                  className={`w-full flex items-center justify-between px-4 py-2.5 text-[13px] cursor-pointer transition-all duration-150 ${
+                    active
+                      ? 'bg-emerald-500/10 text-emerald-500 font-bold'
+                      : 'text-[var(--c-body)] hover:bg-emerald-500/5 font-medium'
+                  }`}
                 >
                   <span>{t(`lang.${code}`)}</span>
-                  <span style={{
-                    fontSize: 10, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-                    color: active ? '#10b981' : 'var(--c-subtle)',
-                    background: active ? 'rgba(16,185,129,0.15)' : 'var(--c-bg-alt)',
-                    padding: '2px 6px', borderRadius: 5,
-                  }}>{code.toUpperCase()}</span>
-                </button>
+                  <span className={`text-[10px] font-bold tracking-wider uppercase px-1.5 py-0.5 rounded-md ${
+                    active ? 'bg-emerald-500/15 text-emerald-500' : 'bg-[var(--c-bg-alt)] text-[var(--c-subtle)]'
+                  }`}>{code}</span>
+                </motion.button>
               );
             })}
           </motion.div>
@@ -113,116 +89,195 @@ function LangDropdown({ mobile }) {
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
   const { isDark, toggle } = useTheme();
   const { t } = useLanguage();
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
+    const fn = () => setScrolled(window.scrollY > 30);
     window.addEventListener('scroll', fn, { passive: true });
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
+  useEffect(() => setMobileOpen(false), [pathname]);
 
   return (
-    <header style={{
-      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-      backgroundColor: scrolled ? 'var(--c-navbar)' : 'transparent',
-      backdropFilter: scrolled ? 'blur(20px)' : 'none',
-      borderBottom: scrolled ? '1px solid var(--c-navbar-br)' : 'none',
-      boxShadow: scrolled ? '0 1px 24px rgba(16,185,129,0.06)' : 'none',
-      transition: 'all 0.3s ease',
-      padding: scrolled ? '12px 0' : '22px 0',
-    }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        scrolled
+          ? 'py-2 bg-[var(--c-navbar)] backdrop-blur-2xl border-b border-[var(--c-navbar-br)] shadow-lg shadow-black/5'
+          : 'py-5 bg-transparent'
+      }`}
+    >
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-8 flex items-center justify-between">
 
-        <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
-          <img
-            src={isDark ? logoBeyaz : logoSiyah}
-            alt="SS Congress"
-            style={{ height: 40, width: 'auto', objectFit: 'contain' }}
-          />
-        </Link>
+        {/* Logo */}
+        <motion.div
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+        >
+          <Link to="/" className="flex items-center">
+            <img
+              src={isDark ? logoBeyaz : logoSiyah}
+              alt="SS Congress"
+              className={`w-auto object-contain transition-all duration-300 ${scrolled ? 'h-8' : 'h-10'}`}
+            />
+          </Link>
+        </motion.div>
 
-        {/* Desktop */}
-        <nav style={{ gap: 24 }} className="nb-desktop">
+        {/* Desktop Nav - Centered */}
+        <nav className="hidden lg:flex items-center gap-1 px-2 py-1.5 rounded-2xl border border-[var(--c-border)] bg-[var(--c-card)]/60 backdrop-blur-xl">
           {NAV_LINKS.map(({ key, to }) => {
             const active = pathname === to;
             return (
-              <Link key={to} to={to}
-                style={{ fontSize: 14, fontWeight: 500, color: active ? '#10b981' : 'var(--c-muted)', transition: 'color 0.2s', position: 'relative', paddingBottom: 2 }}
-                onMouseEnter={e => { if (!active) e.target.style.color = 'var(--c-heading)'; }}
-                onMouseLeave={e => { if (!active) e.target.style.color = 'var(--c-muted)'; }}
-              >
-                {t(key)}
-                {active && <span style={{ position: 'absolute', bottom: -4, left: 0, right: 0, height: 2, borderRadius: 1, background: '#10b981' }} />}
+              <Link key={to} to={to} className="relative px-4 py-2 rounded-xl text-[13px] font-medium transition-all duration-200 cursor-pointer group">
+                {active && (
+                  <motion.span
+                    layoutId="navActive"
+                    className="absolute inset-0 rounded-xl bg-emerald-500/10 border border-emerald-500/20"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className={`relative z-10 transition-colors duration-200 ${
+                  active ? 'text-emerald-500 font-semibold' : 'text-[var(--c-muted)] group-hover:text-[var(--c-heading)]'
+                }`}>
+                  {t(key)}
+                </span>
               </Link>
             );
           })}
-
-          <LangDropdown />
-
-          <motion.button onClick={toggle} whileTap={{ scale: 0.92 }}
-            style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--c-border)', background: 'var(--c-card)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#fbbf24' : '#6b7280', transition: 'all 0.2s' }}
-            whileHover={{ scale: 1.05 }}
-          >
-            {isDark ? <Sun size={15} /> : <Moon size={15} />}
-          </motion.button>
-
-          <Link to="/iletisim"
-            style={{ padding: '9px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'linear-gradient(135deg,#10b981,#059669)', color: '#fff', whiteSpace: 'nowrap', boxShadow: '0 4px 14px rgba(16,185,129,0.25)', transition: 'transform 0.15s,box-shadow 0.15s', display: 'inline-block' }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,185,129,0.35)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 14px rgba(16,185,129,0.25)'; }}
-          >
-            {t('nav.contact')}
-          </Link>
         </nav>
 
-        {/* Mobile row */}
-        <div style={{ alignItems: 'center', gap: 8 }} className="nb-mobile-row">
-          <motion.button onClick={toggle} whileTap={{ scale: 0.92 }}
-            style={{ width: 34, height: 34, borderRadius: 9, border: '1px solid var(--c-border)', background: 'var(--c-card)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#fbbf24' : '#6b7280' }}
+        {/* Desktop Right Actions */}
+        <div className="hidden lg:flex items-center gap-3">
+          <LangDropdown />
+
+          <motion.button
+            onClick={toggle}
+            whileHover={{ scale: 1.08, rotate: 15 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-9 h-9 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] cursor-pointer flex items-center justify-center transition-all duration-200 hover:border-emerald-500/20"
+            style={{ color: isDark ? '#fbbf24' : '#6b7280' }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={isDark ? 'sun' : 'moon'}
+                initial={{ scale: 0, rotate: -90 }}
+                animate={{ scale: 1, rotate: 0 }}
+                exit={{ scale: 0, rotate: 90 }}
+                transition={{ duration: 0.2 }}
+              >
+                {isDark ? <Sun size={15} /> : <Moon size={15} />}
+              </motion.div>
+            </AnimatePresence>
+          </motion.button>
+
+          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+            <Link
+              to="/iletisim"
+              className="inline-flex items-center px-5 py-2.5 rounded-xl text-[13px] font-semibold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 hover:from-emerald-400 hover:to-emerald-500 transition-all duration-300"
+            >
+              {t('nav.contact')}
+            </Link>
+          </motion.div>
+        </div>
+
+        {/* Mobile Right */}
+        <div className="flex lg:hidden items-center gap-2">
+          <motion.button
+            onClick={toggle}
+            whileTap={{ scale: 0.9 }}
+            className="w-9 h-9 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] cursor-pointer flex items-center justify-center"
+            style={{ color: isDark ? '#fbbf24' : '#6b7280' }}
           >
             {isDark ? <Sun size={15} /> : <Moon size={15} />}
           </motion.button>
-          <button onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--c-heading)', padding: 4 }}>
-            {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
+
+          <motion.button
+            onClick={() => setMobileOpen(o => !o)}
+            whileTap={{ scale: 0.9 }}
+            className="w-9 h-9 rounded-xl border border-[var(--c-border)] bg-[var(--c-card)] cursor-pointer flex items-center justify-center text-[var(--c-heading)]"
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={mobileOpen ? 'close' : 'menu'}
+                initial={{ scale: 0, rotate: -90 }}
+                animate={{ scale: 1, rotate: 0 }}
+                exit={{ scale: 0, rotate: 90 }}
+                transition={{ duration: 0.15 }}
+              >
+                {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+              </motion.div>
+            </AnimatePresence>
+          </motion.button>
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       <AnimatePresence>
-        {open && (
+        {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
-            style={{ background: 'var(--c-navbar)', backdropFilter: 'blur(24px)', borderTop: '1px solid var(--c-navbar-br)', padding: '24px 32px 32px' }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+            className="lg:hidden overflow-hidden bg-[var(--c-navbar)] backdrop-blur-2xl border-t border-[var(--c-navbar-br)]"
           >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-              {NAV_LINKS.map(({ key, to }, i) => (
-                <motion.div key={to} initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.04 }}>
-                  <Link to={to} style={{ fontSize: 17, fontWeight: 600, color: pathname === to ? '#10b981' : 'var(--c-heading)' }}>{t(key)}</Link>
-                </motion.div>
-              ))}
-              <LangDropdown mobile />
-              <Link to="/iletisim" style={{ marginTop: 8, padding: '13px 20px', borderRadius: 10, textAlign: 'center', background: 'linear-gradient(135deg,#10b981,#059669)', color: '#fff', fontWeight: 700, fontSize: 15 }}>
-                {t('nav.contact')}
-              </Link>
+            <div className="px-6 py-6 space-y-2">
+              {NAV_LINKS.map(({ key, to }, i) => {
+                const active = pathname === to;
+                return (
+                  <motion.div
+                    key={to}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.05, ease: [0.23, 1, 0.32, 1] }}
+                  >
+                    <Link
+                      to={to}
+                      className={`block px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-200 ${
+                        active
+                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                          : 'text-[var(--c-heading)] hover:bg-[var(--c-bg-alt)]'
+                      }`}
+                    >
+                      {t(key)}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: NAV_LINKS.length * 0.05 }}
+                className="pt-3"
+              >
+                <LangDropdown mobile />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: (NAV_LINKS.length + 1) * 0.05 }}
+                className="pt-3"
+              >
+                <Link
+                  to="/iletisim"
+                  className="block text-center px-5 py-3.5 rounded-xl text-[15px] font-bold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-lg shadow-emerald-500/20"
+                >
+                  {t('nav.contact')}
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <style>{`
-        .nb-desktop { display: flex; }
-        .nb-mobile-row { display: none; }
-        @media (max-width:1024px) {
-          .nb-desktop { display: none !important; }
-          .nb-mobile-row { display: flex !important; }
-        }
-      `}</style>
-    </header>
+    </motion.header>
   );
 }
