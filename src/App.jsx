@@ -12,9 +12,9 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import KazanForum from './pages/KazanForum';
 import Career from './pages/Career';
+import Privacy from './pages/Privacy';
+import KVKK from './pages/KVKK';
 import Gallery from './components/Gallery';
-
-import AdminLogin from './pages/admin/AdminLogin';
 import AdminLayout from './pages/admin/AdminLayout';
 import Dashboard from './pages/admin/Dashboard';
 import AdminHero from './pages/admin/AdminHero';
@@ -40,8 +40,6 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <Routes>
-        {/* Admin Routes */}
-        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="hero" element={<AdminHero />} />
@@ -54,8 +52,6 @@ export default function App() {
           <Route path="translations" element={<AdminTranslations />} />
           <Route path="settings" element={<AdminSettings />} />
         </Route>
-
-        {/* Public Routes */}
         <Route path="/*" element={
           <>
             <Navbar />
@@ -69,6 +65,8 @@ export default function App() {
                 <Route path="/iletisim" element={<Contact />} />
                 <Route path="/galeri" element={<Gallery />} />
                 <Route path="/kariyer" element={<Career />} />
+                <Route path="/gizlilik-politikasi" element={<Privacy />} />
+                <Route path="/kvkk" element={<KVKK />} />
                 <Route path="/proje/kazan-forum-2026" element={<KazanForum />} />
               </Routes>
             </main>

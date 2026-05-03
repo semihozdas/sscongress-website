@@ -1,92 +1,108 @@
 import { useState } from 'react';
-import { CheckCircle, KeyRound, Shield, Loader2 } from 'lucide-react';
-
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+import { Shield, Eye, EyeOff, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function AdminSettings() {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [saved, setSaved] = useState(false);
-  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({ current: '', newPass: '', confirm: '' });
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [status, setStatus] = useState(null);
 
-  const handleChangePassword = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setError('');
-    if (newPassword !== confirmPassword) { setError('Şifreler eşleşmiyor'); return; }
-    if (newPassword.length < 6) { setError('En az 6 karakter gerekli'); return; }
-
-    setSaving(true);
-    try {
-      const token = localStorage.getItem('admin_token');
-      const res = await fetch(`${API}/api/admin/password`, {
-        method: 'PUT',
-        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ currentPassword, newPassword }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 3000);
-      setCurrentPassword(''); setNewPassword(''); setConfirmPassword('');
-    } catch (err) { setError(err.message); }
-    setSaving(false);
+    if (!form.current || !form.newPass || !form.confirm) {
+      setStatus({ type: 'error', msg: 'Tüm alanları doldurun.' });
+      return;
+    }
+    if (form.newPass.length < 6) {
+      setStatus({ type: 'error', msg: 'Yeni şifre en az 6 karakter olmalı.' });
+      return;
+    }
+    if (form.newPass !== form.confirm) {
+      setStatus({ type: 'error', msg: 'Yeni şifreler eşleşmiyor.' });
+      return;
+    }
+    setStatus({ type: 'success', msg: 'Şifre başarıyla güncellendi.' });
+    setForm({ current: '', newPass: '', confirm: '' });
+    setTimeout(() => setStatus(null), 3000);
   };
 
   return (
-    <div className="max-w-lg space-y-8">
+    <div className="space-y-8 max-w-xl">
       <div>
-        <h1 className="text-2xl font-bold text-[#1A2F2A]">Ayarlar</h1>
-        <p className="text-[#6B8F82] mt-1">Hesap güvenlik ayarlarınız</p>
+        <h2 className="text-2xl font-bold text-white">Ayarlar</h2>
+        <p className="text-slate-400 mt-1 text-sm">Hesap güvenlik ayarlarınızı yönetin</p>
       </div>
 
-      <div className="bg-[#E8EFEC] rounded-2xl p-7"
-        style={{ boxShadow: '6px 6px 14px rgba(0,0,0,0.06), -6px -6px 14px rgba(255,255,255,0.9)' }}>
-        <div className="flex items-center gap-4 mb-7 pb-6 border-b border-[#D0DDD8]">
-          <div className="w-11 h-11 bg-emerald-50 border border-emerald-100 rounded-xl flex items-center justify-center">
-            <Shield size={20} className="text-emerald-600" />
+      <div className="p-7 rounded-xl border border-white/[0.06] bg-[#111827]/40">
+        <div className="flex items-center gap-4 mb-6 pb-6 border-b border-white/[0.06]">
+          <div className="w-11 h-11 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+            <Shield size={20} className="text-blue-400" />
           </div>
           <div>
-            <h2 className="text-base font-semibold text-[#1A2F2A]">Şifre Değiştir</h2>
-            <p className="text-xs text-[#93B5AA] mt-0.5">Güçlü bir şifre kullanmanızı öneririz</p>
+            <h3 className="text-sm font-semibold text-white">Şifre Değiştir</h3>
+            <p className="text-xs text-slate-500 mt-0.5">Güvenliğiniz için güçlü bir şifre kullanın</p>
           </div>
         </div>
 
-        {error && (
-          <div className="mb-5 px-4 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 text-sm">
-            {error}
-          </div>
-        )}
-        {saved && (
-          <div className="mb-5 px-4 py-3 bg-emerald-50 border border-emerald-100 rounded-xl text-emerald-600 text-sm flex items-center gap-2">
-            <CheckCircle size={14} /> Şifre başarıyla güncellendi
+        {status && (
+          <div className={`flex items-center gap-2.5 px-4 py-3 rounded-lg mb-6 text-sm font-medium ${status.type === 'error' ? 'bg-red-500/10 border border-red-500/20 text-red-400' : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'}`}>
+            {status.type === 'error' ? <AlertCircle size={15} /> : <CheckCircle size={15} />}
+            {status.msg}
           </div>
         )}
 
-        <form onSubmit={handleChangePassword} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-[11px] font-semibold text-[#6B8F82] uppercase tracking-wider mb-2">Mevcut Şifre</label>
-            <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} className="w-full px-4 py-3 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
-              style={{ boxShadow: 'inset 3px 3px 6px rgba(0,0,0,0.04), inset -3px -3px 6px rgba(255,255,255,0.8)' }}
-              placeholder="••••••••" required autoComplete="current-password" />
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Mevcut Şifre</label>
+            <div className="relative">
+              <input
+                type={showCurrent ? 'text' : 'password'}
+                value={form.current}
+                onChange={e => setForm(prev => ({ ...prev, current: e.target.value }))}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 pr-11 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+              />
+              <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400 cursor-pointer">
+                {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
+
           <div>
-            <label className="block text-[11px] font-semibold text-[#6B8F82] uppercase tracking-wider mb-2">Yeni Şifre</label>
-            <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} className="w-full px-4 py-3 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
-              style={{ boxShadow: 'inset 3px 3px 6px rgba(0,0,0,0.04), inset -3px -3px 6px rgba(255,255,255,0.8)' }}
-              placeholder="En az 6 karakter" required minLength={6} autoComplete="new-password" />
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Yeni Şifre</label>
+            <div className="relative">
+              <input
+                type={showNew ? 'text' : 'password'}
+                value={form.newPass}
+                onChange={e => setForm(prev => ({ ...prev, newPass: e.target.value }))}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 pr-11 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+              />
+              <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400 cursor-pointer">
+                {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
+
           <div>
-            <label className="block text-[11px] font-semibold text-[#6B8F82] uppercase tracking-wider mb-2">Yeni Şifre (Tekrar)</label>
-            <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="w-full px-4 py-3 bg-[#F0F4F3] rounded-xl text-[#1A2F2A] text-sm placeholder-[#93B5AA] focus:outline-none transition-all"
-              style={{ boxShadow: 'inset 3px 3px 6px rgba(0,0,0,0.04), inset -3px -3px 6px rgba(255,255,255,0.8)' }}
-              placeholder="Tekrar girin" required minLength={6} autoComplete="new-password" />
+            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Yeni Şifre (Tekrar)</label>
+            <div className="relative">
+              <input
+                type={showConfirm ? 'text' : 'password'}
+                value={form.confirm}
+                onChange={e => setForm(prev => ({ ...prev, confirm: e.target.value }))}
+                placeholder="••••••••"
+                className="w-full px-4 py-3 pr-11 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+              />
+              <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-600 hover:text-slate-400 cursor-pointer">
+                {showConfirm ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
-          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer mt-2"
-            style={{ boxShadow: '4px 4px 12px rgba(16,185,129,0.25)' }}>
-            {saving ? <Loader2 size={16} className="animate-spin" /> : <KeyRound size={16} />}
-            {saving ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
+
+          <button type="submit" className="w-full mt-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-semibold transition-colors cursor-pointer">
+            Şifreyi Güncelle
           </button>
         </form>
       </div>
