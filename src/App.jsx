@@ -15,6 +15,7 @@ import Career from './pages/Career';
 import Privacy from './pages/Privacy';
 import KVKK from './pages/KVKK';
 import Gallery from './components/Gallery';
+import NotFound from './pages/NotFound';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -45,6 +46,7 @@ export default function App() {
                 <Route path="/gizlilik-politikasi" element={<Privacy />} />
                 <Route path="/kvkk" element={<KVKK />} />
                 <Route path="/proje/kazan-forum-2026" element={<KazanForum />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />
