@@ -1,139 +1,176 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, Outlet, NavLink, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, FileText, Globe, Image, Briefcase, HelpCircle,
-  Phone, Users, LogOut, Menu, KeyRound, ExternalLink, Languages,
-  ChevronLeft, X, Leaf
+  LayoutDashboard, BarChart3, Briefcase, FolderKanban, HelpCircle,
+  Image, Users, Phone, Languages, Settings, ChevronsRight, LogOut, Globe2,
+  ChevronDown
 } from 'lucide-react';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const NAV_ITEMS = [
+  { label: 'Dashboard', icon: LayoutDashboard, to: '/admin' },
+  { label: 'Hero & İstatistikler', icon: BarChart3, to: '/admin/hero' },
+  { label: 'Hizmetler', icon: Briefcase, to: '/admin/services' },
+  { label: 'Projeler', icon: FolderKanban, to: '/admin/projects' },
+  { label: 'SSS', icon: HelpCircle, to: '/admin/faq' },
+  { label: 'Galeri', icon: Image, to: '/admin/gallery' },
+  { label: 'Kariyer', icon: Users, to: '/admin/career' },
+  { label: 'İletişim', icon: Phone, to: '/admin/contact' },
+  { label: 'Çeviriler', icon: Languages, to: '/admin/translations' },
+];
 
-const navItems = [
-  { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
-  { to: '/admin/hero', icon: FileText, label: 'Hero & İstatistikler' },
-  { to: '/admin/services', icon: Briefcase, label: 'Hizmetler' },
-  { to: '/admin/projects', icon: Globe, label: 'Projeler' },
-  { to: '/admin/faq', icon: HelpCircle, label: 'SSS' },
-  { to: '/admin/gallery', icon: Image, label: 'Galeri' },
-  { to: '/admin/career', icon: Users, label: 'Kariyer' },
-  { to: '/admin/contact', icon: Phone, label: 'İletişim' },
-  { to: '/admin/translations', icon: Languages, label: 'Çeviriler' },
-  { to: '/admin/settings', icon: KeyRound, label: 'Ayarlar' },
+const ACCOUNT_ITEMS = [
+  { label: 'Ayarlar', icon: Settings, to: '/admin/settings' },
 ];
 
 export default function AdminLayout() {
-  const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const token = localStorage.getItem('admin_token');
-    if (!token) { navigate('/admin/login'); return; }
-    fetch(`${API}/api/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(d => setUser(d.user))
-      .catch(() => { localStorage.removeItem('admin_token'); navigate('/admin/login'); });
-  }, [navigate]);
-
-  const logout = () => {
-    localStorage.removeItem('admin_token');
-    localStorage.removeItem('admin_user');
-    navigate('/admin/login');
-  };
+  const [open, setOpen] = useState(true);
+  const { pathname } = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-[#F0F4F3] font-[Inter,sans-serif]">
-      {mobileOpen && (
-        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
-      )}
-
-      <aside className={`fixed lg:sticky top-0 h-screen z-50 flex flex-col transition-all duration-300 ease-in-out
-        ${collapsed ? 'w-[72px]' : 'w-[260px]'}
-        ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        bg-[#E8EFEC] border-r border-[#D0DDD8]`}
-        style={{ boxShadow: '6px 0 20px rgba(0,0,0,0.03)' }}
+    <div className="flex min-h-screen w-full bg-gray-950 text-gray-100">
+      {/* Sidebar */}
+      <nav
+        className={`sticky top-0 h-screen shrink-0 border-r transition-all duration-300 ease-in-out ${
+          open ? 'w-64' : 'w-16'
+        } border-gray-800 bg-gray-900 p-2 flex flex-col`}
       >
-        <div className={`flex items-center h-[72px] border-b border-[#D0DDD8] ${collapsed ? 'justify-center px-3' : 'px-6'}`}>
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[#E8EFEC]"
-            style={{ boxShadow: '4px 4px 10px rgba(0,0,0,0.08), -4px -4px 10px rgba(255,255,255,0.9)' }}>
-            <Leaf size={20} className="text-emerald-600" />
-          </div>
-          {!collapsed && (
-            <div className="ml-3">
-              <p className="text-sm font-semibold text-[#1A2F2A]">SS Congress</p>
-              <p className="text-[11px] text-[#6B8F82]">Yönetim Paneli</p>
-            </div>
-          )}
-          <button onClick={() => setMobileOpen(false)} className="lg:hidden ml-auto p-1.5 text-[#6B8F82] hover:text-[#1A2F2A] cursor-pointer">
-            <X size={18} />
-          </button>
-        </div>
-
-        <nav className={`flex-1 py-5 overflow-y-auto ${collapsed ? 'px-2' : 'px-3'} space-y-1.5`}>
-          {navItems.map(item => (
-            <NavLink
-              key={item.to}
-              to={item.to}
-              end={item.end}
-              onClick={() => setMobileOpen(false)}
-              title={collapsed ? item.label : undefined}
-              className={({ isActive }) =>
-                `flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 cursor-pointer group
-                ${isActive
-                  ? 'bg-[#E8EFEC] text-emerald-700 font-semibold'
-                  : 'text-[#5A7D72] hover:text-[#1A2F2A] hover:bg-[#E0EBE7]'
-                }`
-              }
-              style={({ isActive }) => isActive ? {
-                boxShadow: 'inset 3px 3px 6px rgba(0,0,0,0.06), inset -3px -3px 6px rgba(255,255,255,0.8)'
-              } : {}}
-            >
-              <item.icon size={18} className="shrink-0" />
-              {!collapsed && <span>{item.label}</span>}
-            </NavLink>
-          ))}
-        </nav>
-
-        <div className={`${collapsed ? 'px-2' : 'px-3'} py-4 border-t border-[#D0DDD8] space-y-1`}>
-          <Link to="/" target="_blank" className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-[#6B8F82] hover:text-[#1A2F2A] hover:bg-[#E0EBE7] transition-all cursor-pointer`} title="Siteyi Görüntüle">
-            <ExternalLink size={16} className="shrink-0" />
-            {!collapsed && <span>Siteyi Görüntüle</span>}
-          </Link>
-          <button onClick={logout} className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-[#6B8F82] hover:text-red-600 hover:bg-red-50 w-full transition-all cursor-pointer`} title="Çıkış">
-            <LogOut size={16} className="shrink-0" />
-            {!collapsed && <span>Çıkış Yap</span>}
-          </button>
-        </div>
-
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex absolute -right-3 top-[80px] w-6 h-6 bg-[#E8EFEC] border border-[#D0DDD8] rounded-full items-center justify-center text-[#6B8F82] hover:text-[#1A2F2A] transition-all cursor-pointer"
-          style={{ boxShadow: '2px 2px 6px rgba(0,0,0,0.08), -2px -2px 6px rgba(255,255,255,0.9)' }}
-        >
-          <ChevronLeft size={12} className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} />
-        </button>
-      </aside>
-
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 h-[72px] bg-[#F0F4F3]/90 backdrop-blur-md border-b border-[#D0DDD8]/60 px-6 lg:px-8 flex items-center justify-between">
-          <button className="lg:hidden p-2 text-[#5A7D72] hover:text-[#1A2F2A] rounded-lg hover:bg-[#E0EBE7] transition-colors cursor-pointer" onClick={() => setMobileOpen(true)}>
-            <Menu size={20} />
-          </button>
-          <div className="hidden lg:block" />
-
-          {user && (
+        {/* Title Section */}
+        <div className="mb-6 border-b border-gray-800 pb-4">
+          <div className="flex cursor-pointer items-center justify-between rounded-md p-2 transition-colors hover:bg-gray-800">
             <div className="flex items-center gap-3">
-              <span className="text-[13px] text-[#6B8F82] hidden sm:block">Merhaba, <span className="text-[#1A2F2A] font-medium">{user.username}</span></span>
-              <div className="w-9 h-9 rounded-xl bg-[#E8EFEC] flex items-center justify-center"
-                style={{ boxShadow: '3px 3px 8px rgba(0,0,0,0.06), -3px -3px 8px rgba(255,255,255,0.9)' }}>
-                <span className="text-emerald-700 text-xs font-bold">{user.username?.charAt(0).toUpperCase()}</span>
+              <div className="grid size-10 shrink-0 place-content-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm">
+                <Globe2 size={18} className="text-white" />
               </div>
+              {open && (
+                <div className="transition-opacity duration-200">
+                  <span className="block text-sm font-semibold text-gray-100">
+                    SS Congress
+                  </span>
+                  <span className="block text-xs text-gray-400">
+                    Admin Panel
+                  </span>
+                </div>
+              )}
             </div>
-          )}
-        </header>
+            {open && <ChevronDown className="h-4 w-4 text-gray-500" />}
+          </div>
+        </div>
 
-        <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
+        {/* Main Nav */}
+        <div className="space-y-1 mb-8 flex-1">
+          {NAV_ITEMS.map(({ label, icon: Icon, to }) => {
+            const isExact = to === '/admin' && pathname === '/admin';
+            const isActive = isExact || (to !== '/admin' && pathname.startsWith(to));
+
+            return (
+              <Link
+                key={to}
+                to={to}
+                className={`relative flex h-11 w-full items-center rounded-md transition-all duration-200 ${
+                  isActive
+                    ? 'bg-blue-900/50 text-blue-300 shadow-sm border-l-2 border-blue-500'
+                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200 border-l-2 border-transparent'
+                }`}
+                title={!open ? label : undefined}
+              >
+                <div className="grid h-full w-12 place-content-center">
+                  <Icon className="h-4 w-4" />
+                </div>
+                {open && (
+                  <span className="text-sm font-medium transition-opacity duration-200">
+                    {label}
+                  </span>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+
+        {/* Account Section */}
+        {open && (
+          <div className="border-t border-gray-800 pt-4 space-y-1">
+            <div className="px-3 py-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
+              Hesap
+            </div>
+            {ACCOUNT_ITEMS.map(({ label, icon: Icon, to }) => {
+              const isActive = pathname.startsWith(to);
+              return (
+                <Link
+                  key={to}
+                  to={to}
+                  className={`relative flex h-11 w-full items-center rounded-md transition-all duration-200 ${
+                    isActive
+                      ? 'bg-blue-900/50 text-blue-300 shadow-sm border-l-2 border-blue-500'
+                      : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200 border-l-2 border-transparent'
+                  }`}
+                >
+                  <div className="grid h-full w-12 place-content-center">
+                    <Icon className="h-4 w-4" />
+                  </div>
+                  {open && (
+                    <span className="text-sm font-medium transition-opacity duration-200">
+                      {label}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+            <Link
+              to="/"
+              className="relative flex h-11 w-full items-center rounded-md transition-all duration-200 text-gray-400 hover:bg-gray-800 hover:text-red-400 border-l-2 border-transparent"
+            >
+              <div className="grid h-full w-12 place-content-center">
+                <LogOut className="h-4 w-4" />
+              </div>
+              {open && (
+                <span className="text-sm font-medium transition-opacity duration-200">
+                  Siteye Dön
+                </span>
+              )}
+            </Link>
+          </div>
+        )}
+
+        {/* Toggle */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="mt-2 border-t border-gray-800 transition-colors hover:bg-gray-800 cursor-pointer"
+        >
+          <div className="flex items-center p-3">
+            <div className="grid size-10 place-content-center">
+              <ChevronsRight
+                className={`h-4 w-4 transition-transform duration-300 text-gray-400 ${
+                  open ? 'rotate-180' : ''
+                }`}
+              />
+            </div>
+            {open && (
+              <span className="text-sm font-medium text-gray-300 transition-opacity duration-200">
+                Daralt
+              </span>
+            )}
+          </div>
+        </button>
+      </nav>
+
+      {/* Main Content */}
+      <div className="flex-1 bg-gray-950 overflow-auto">
+        {/* Header */}
+        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-gray-800 bg-gray-950/80 backdrop-blur-xl px-8 py-4">
+          <div>
+            <h1 className="text-lg font-semibold text-gray-100">Admin Panel</h1>
+            <p className="text-xs text-gray-500">SS Congress Yönetim</p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-gray-400">Semih Özdaş</span>
+            <div className="p-2 rounded-lg border border-gray-800 bg-gray-900 text-gray-400">
+              <Users className="h-4 w-4" />
+            </div>
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <main className="p-8">
           <Outlet />
         </main>
       </div>
