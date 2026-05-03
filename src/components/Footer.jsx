@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook, ArrowUp, Globe2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Twitter, Instagram, Facebook, ArrowUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useTheme } from '../context/ThemeContext';
+import logoBeyaz from '../assets/logo/beyaz.png';
+import logoSiyah from '../assets/logo/siyah.png';
 
 const EM = '#10b981';
 const BORDER = '1px solid var(--c-border-md)';
@@ -26,6 +29,7 @@ const socials = [Linkedin, Twitter, Instagram, Facebook];
 
 export default function Footer() {
   const { t } = useLanguage();
+  const { isDark } = useTheme();
   return (
     <footer style={{ backgroundColor: 'var(--c-footer)', borderTop: BORDER }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '72px 32px 32px' }}>
@@ -33,13 +37,12 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-              <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#10b981,#059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 0 18px rgba(16,185,129,0.25)' }}>
-                <Globe2 size={18} style={{ color: '#022c22' }} strokeWidth={2.5} />
-              </div>
-              <span style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 18, letterSpacing: '-0.04em', color: 'var(--c-heading)' }}>
-                SS<span style={{ color: EM }}>CONGRESS</span>
-              </span>
+            <Link to="/" style={{ display: 'inline-flex', alignItems: 'center', marginBottom: 20 }}>
+              <img
+                src={isDark ? logoBeyaz : logoSiyah}
+                alt="SS Congress"
+                style={{ height: 36, width: 'auto', objectFit: 'contain' }}
+              />
             </Link>
             <p style={{ fontSize: 14, color: MUTED, lineHeight: 1.7, marginBottom: 24, maxWidth: 260 }}>
               {t('footer.tagline')}

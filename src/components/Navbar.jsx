@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe2, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage, LANGUAGES } from '../context/LanguageContext';
+import logoBeyaz from '../assets/logo/beyaz.png';
+import logoSiyah from '../assets/logo/siyah.png';
 
 const NAV_LINKS = [
   { key: 'nav.home',     to: '/' },
@@ -136,13 +138,12 @@ export default function Navbar() {
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'linear-gradient(135deg,#10b981,#059669)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 14px rgba(16,185,129,0.3)' }}>
-            <Globe2 size={18} style={{ color: '#fff' }} strokeWidth={2.5} />
-          </div>
-          <span style={{ fontFamily: 'Outfit', fontWeight: 900, fontSize: 20, letterSpacing: '-0.04em', color: 'var(--c-heading)' }}>
-            SS<span style={{ color: '#10b981' }}>CONGRESS</span>
-          </span>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <img
+            src={isDark ? logoBeyaz : logoSiyah}
+            alt="SS Congress"
+            style={{ height: 40, width: 'auto', objectFit: 'contain' }}
+          />
         </Link>
 
         {/* Desktop */}
