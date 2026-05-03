@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAdmin } from './useAdmin';
-import { Save, CheckCircle, Plus, Trash2, GripVertical } from 'lucide-react';
+import { Save, CheckCircle, Plus, Trash2 } from 'lucide-react';
 
 const LANGS = ['tr', 'en', 'ar', 'ru'];
 const LANG_LABELS = { tr: 'Türkçe', en: 'English', ar: 'العربية', ru: 'Русский' };
@@ -41,11 +41,11 @@ export default function AdminServices() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">Hizmetler</h1>
-          <p className="text-sm text-slate-400 mt-0.5">{services.length} hizmet tanımlı</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Hizmetler</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{services.length} hizmet tanımlı</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={addService} className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
+          <button onClick={addService} className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
             <Plus size={16} /> Ekle
           </button>
           <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
@@ -54,9 +54,9 @@ export default function AdminServices() {
         </div>
       </div>
 
-      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1">
+      <div className="inline-flex bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1">
         {LANGS.map(l => (
-          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>
+          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}`}>
             {LANG_LABELS[l]}
           </button>
         ))}
@@ -64,19 +64,19 @@ export default function AdminServices() {
 
       <div className="space-y-4">
         {services.map((service, idx) => (
-          <div key={service.id} className="bg-slate-900/50 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors duration-200 group">
+          <div key={service.id} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-5 hover:border-gray-300 dark:hover:border-gray-700 transition-colors duration-200 group">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 text-xs font-bold">{idx + 1}</div>
+                <div className="w-8 h-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 text-xs font-bold">{idx + 1}</div>
                 <select
                   value={service.icon}
                   onChange={e => updateService(service.id, 'icon', e.target.value)}
-                  className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-blue-500 cursor-pointer"
+                  className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-gray-100 text-xs focus:outline-none focus:border-blue-500 cursor-pointer"
                 >
                   {ICONS.map(i => <option key={i} value={i}>{i}</option>)}
                 </select>
               </div>
-              <button onClick={() => removeService(service.id)} className="opacity-0 group-hover:opacity-100 p-2 text-slate-600 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all duration-200 cursor-pointer">
+              <button onClick={() => removeService(service.id)} className="opacity-0 group-hover:opacity-100 p-2 text-gray-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-all duration-200 cursor-pointer">
                 <Trash2 size={15} />
               </button>
             </div>
@@ -86,14 +86,14 @@ export default function AdminServices() {
                 value={typeof service.title === 'object' ? (service.title[activeLang] || '') : service.title}
                 onChange={e => updateService(service.id, 'title', e.target.value)}
                 placeholder="Hizmet adını girin..."
-                className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200"
+                className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200"
               />
               <textarea
                 rows={2}
                 value={typeof service.desc === 'object' ? (service.desc[activeLang] || '') : service.desc}
                 onChange={e => updateService(service.id, 'desc', e.target.value)}
                 placeholder="Hizmet açıklamasını girin..."
-                className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200 resize-none"
+                className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200 resize-none"
               />
             </div>
           </div>

@@ -94,66 +94,66 @@ export default function AdminTranslations() {
     <div className="space-y-5">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">Çeviriler</h1>
-          <p className="text-sm text-slate-400 mt-0.5">{Object.keys(currentData).length} metin anahtarı</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Çeviriler</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{Object.keys(currentData).length} metin anahtarı</p>
         </div>
         <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
           {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
         </button>
       </div>
 
-      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1">
+      <div className="inline-flex bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1">
         {LANGS.map(l => (
-          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l.code ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>
+          <button key={l.code} onClick={() => setActiveLang(l.code)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l.code ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}`}>
             {l.label}
           </button>
         ))}
       </div>
 
       <div className="flex gap-2 flex-wrap">
-        <button onClick={() => setActiveSection(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${!activeSection ? 'bg-slate-700 text-white' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800'}`}>
+        <button onClick={() => setActiveSection(null)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${!activeSection ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
           Tümü
         </button>
         {SECTIONS.map(s => (
-          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeSection === s.prefix ? 'bg-slate-700 text-white' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-800'}`}>
+          <button key={s.prefix} onClick={() => setActiveSection(s.prefix)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeSection === s.prefix ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
             {s.label}
           </button>
         ))}
       </div>
 
       <div className="relative">
-        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+        <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
         <input
           type="text"
           placeholder="Anahtar veya metin ara..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-800 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
+          className="w-full pl-11 pr-4 py-3 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
         />
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
         <div className="max-h-[55vh] overflow-y-auto">
           {filteredKeys.length === 0 ? (
-            <div className="p-12 text-center text-slate-600">Sonuç bulunamadı</div>
+            <div className="p-12 text-center text-gray-400 dark:text-gray-500">Sonuç bulunamadı</div>
           ) : (
             <table className="w-full">
-              <tbody className="divide-y divide-slate-800/50">
+              <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                 {filteredKeys.map(key => (
-                  <tr key={key} className="hover:bg-slate-800/20 transition-colors group">
+                  <tr key={key} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
                     <td className="px-4 py-2.5 w-[200px]">
-                      <code className="text-[11px] text-blue-400/70 font-mono">{key}</code>
+                      <code className="text-[11px] text-blue-600 dark:text-blue-400 font-mono">{key}</code>
                     </td>
                     <td className="px-2 py-2.5">
                       <input
                         type="text"
                         value={currentData[key] || ''}
                         onChange={e => updateValue(key, e.target.value)}
-                        className="w-full px-3 py-1.5 bg-transparent border border-transparent hover:border-slate-700 focus:border-blue-500/50 rounded-lg text-white text-sm focus:outline-none transition-colors"
+                        className="w-full px-3 py-1.5 bg-transparent border border-transparent hover:border-gray-200 dark:hover:border-gray-700 focus:border-blue-500/50 rounded-lg text-gray-900 dark:text-gray-100 text-sm focus:outline-none transition-colors"
                       />
                     </td>
                     <td className="px-2 py-2.5 w-10">
-                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-1 text-slate-600 hover:text-red-400 rounded transition-all cursor-pointer">
+                      <button onClick={() => deleteKey(key)} className="opacity-0 group-hover:opacity-100 p-1 text-gray-400 hover:text-red-500 dark:hover:text-red-400 rounded transition-all cursor-pointer">
                         <Trash2 size={12} />
                       </button>
                     </td>
@@ -165,11 +165,11 @@ export default function AdminTranslations() {
         </div>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-5">
-        <p className="text-xs font-medium text-slate-500 mb-3">Yeni Çeviri Ekle</p>
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-5">
+        <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-3">Yeni Çeviri Ekle</p>
         <form onSubmit={(e) => { e.preventDefault(); const k = e.target.key.value.trim(); const v = e.target.val.value; if (k) { updateValue(k, v); e.target.reset(); } }} className="flex gap-3">
-          <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="flex-1 px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
-          <input name="val" placeholder="Değer" className="flex-1 px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
+          <input name="key" placeholder="Anahtar (örn: hero.new_title)" className="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
+          <input name="val" placeholder="Değer" className="flex-1 px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors" />
           <button type="submit" className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer">
             <Plus size={14} /> Ekle
           </button>

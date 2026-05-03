@@ -28,19 +28,19 @@ export default function AdminContact() {
     <div className="space-y-6 max-w-2xl">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">İletişim Bilgileri</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Sitenizde görüntülenen iletişim detayları</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">İletişim Bilgileri</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">Sitenizde görüntülenen iletişim detayları</p>
         </div>
         <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
           {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
         </button>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 space-y-5">
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-6 space-y-5">
         {fields.map(f => (
           <div key={f.key}>
-            <label className="flex items-center gap-2 text-xs font-medium text-slate-400 mb-2">
-              <f.icon size={14} className="text-blue-400/60" />
+            <label className="flex items-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+              <f.icon size={14} className="text-blue-500 dark:text-blue-400" />
               {f.label}
             </label>
             <input
@@ -48,7 +48,7 @@ export default function AdminContact() {
               value={contact[f.key] || ''}
               onChange={e => setContact(prev => ({ ...prev, [f.key]: e.target.value }))}
               placeholder={f.placeholder}
-              className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
+              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/10 transition-all duration-200"
             />
           </div>
         ))}

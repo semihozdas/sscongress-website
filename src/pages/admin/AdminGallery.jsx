@@ -51,8 +51,8 @@ export default function AdminGallery() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">Galeri</h1>
-          <p className="text-sm text-slate-400 mt-0.5">{gallery.length} fotoğraf</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Galeri</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{gallery.length} fotoğraf</p>
         </div>
         <label className={`flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20 ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
           {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
@@ -62,22 +62,22 @@ export default function AdminGallery() {
       </div>
 
       <div
-        className={`border-2 border-dashed rounded-2xl p-8 text-center transition-all duration-200 ${dragOver ? 'border-blue-500 bg-blue-500/5' : 'border-slate-800 hover:border-slate-700'}`}
+        className={`border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 ${dragOver ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600'}`}
         onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
       >
-        <div className="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center mx-auto mb-3">
-          <Plus size={20} className="text-slate-500" />
+        <div className="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <Plus size={20} className="text-gray-400 dark:text-gray-500" />
         </div>
-        <p className="text-sm text-slate-400">Fotoğrafları buraya sürükleyin</p>
-        <p className="text-xs text-slate-600 mt-1">veya yukarıdaki butonu kullanın</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Fotoğrafları buraya sürükleyin</p>
+        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">veya yukarıdaki butonu kullanın</p>
       </div>
 
       {gallery.length === 0 ? (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-16 text-center">
-          <Image size={32} className="text-slate-700 mx-auto mb-3" />
-          <p className="text-slate-500">Henüz fotoğraf eklenmemiş</p>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-16 text-center">
+          <Image size={32} className="text-gray-300 dark:text-gray-700 mx-auto mb-3" />
+          <p className="text-gray-500 dark:text-gray-400">Henüz fotoğraf eklenmemiş</p>
         </div>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
@@ -85,12 +85,12 @@ export default function AdminGallery() {
             const imgSrc = resolveImageUrl(item.url);
             const isDeleting = deletingId === item.id;
             return (
-              <div key={item.id} className={`group relative bg-slate-900 border border-slate-800 rounded-xl overflow-hidden aspect-square hover:border-slate-700 transition-all duration-200 ${isDeleting ? 'opacity-30 scale-95' : ''}`}>
+              <div key={item.id} className={`group relative bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden aspect-square hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-200 shadow-sm ${isDeleting ? 'opacity-30 scale-95' : ''}`}>
                 {imgSrc ? (
                   <img src={imgSrc} alt="Galeri" className="w-full h-full object-cover" loading="lazy" />
                 ) : (
-                  <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                    <Image size={20} className="text-slate-700" />
+                  <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <Image size={20} className="text-gray-300 dark:text-gray-700" />
                   </div>
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end justify-center pb-3">

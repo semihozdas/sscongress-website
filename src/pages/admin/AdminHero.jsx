@@ -29,26 +29,26 @@ export default function AdminHero() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold text-white">Hero & İstatistikler</h1>
-          <p className="text-sm text-slate-400 mt-0.5">Ana sayfadaki istatistik sayılarını düzenleyin</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Hero & İstatistikler</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">Ana sayfadaki istatistik sayılarını düzenleyin</p>
         </div>
         <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
           {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
         </button>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-        <h3 className="text-sm font-semibold text-white mb-1">Hero Bölümü</h3>
-        <p className="text-xs text-slate-500 mb-5">Ana sayfanın en üstünde görüntülenen rakamlar</p>
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-6">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">Hero Bölümü</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">Ana sayfanın en üstünde görüntülenen rakamlar</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {Object.entries(hero.stats || {}).map(([key, val]) => (
-            <div key={key} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:border-slate-600 transition-colors duration-200">
-              <label className="block text-[11px] font-medium text-slate-500 mb-2 uppercase tracking-wider">{statLabels[key] || key}</label>
+            <div key={key} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors duration-200">
+              <label className="block text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{statLabels[key] || key}</label>
               <input
                 type="text"
                 value={val}
                 onChange={e => setHero(prev => ({ ...prev, stats: { ...prev.stats, [key]: e.target.value } }))}
-                className="w-full text-3xl font-bold text-white bg-transparent border-none focus:outline-none placeholder-slate-700"
+                className="w-full text-3xl font-bold text-gray-900 dark:text-gray-100 bg-transparent border-none focus:outline-none placeholder-gray-300 dark:placeholder-gray-700"
                 placeholder="0"
               />
             </div>
@@ -56,18 +56,18 @@ export default function AdminHero() {
         </div>
       </div>
 
-      <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
-        <h3 className="text-sm font-semibold text-white mb-1">Hakkımızda Bölümü</h3>
-        <p className="text-xs text-slate-500 mb-5">Hakkımızda alanında görüntülenen rakamlar</p>
+      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl shadow-sm p-6">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-1">Hakkımızda Bölümü</h3>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mb-5">Hakkımızda alanında görüntülenen rakamlar</p>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {Object.entries(about.stats || {}).map(([key, val]) => (
-            <div key={key} className="bg-slate-800/50 border border-slate-700/50 rounded-xl p-4 hover:border-slate-600 transition-colors duration-200">
-              <label className="block text-[11px] font-medium text-slate-500 mb-2 uppercase tracking-wider">{statLabels[key] || key}</label>
+            <div key={key} className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 hover:border-gray-300 dark:hover:border-gray-600 transition-colors duration-200">
+              <label className="block text-[11px] font-medium text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider">{statLabels[key] || key}</label>
               <input
                 type="text"
                 value={val}
                 onChange={e => setAbout(prev => ({ ...prev, stats: { ...prev.stats, [key]: e.target.value } }))}
-                className="w-full text-3xl font-bold text-white bg-transparent border-none focus:outline-none placeholder-slate-700"
+                className="w-full text-3xl font-bold text-gray-900 dark:text-gray-100 bg-transparent border-none focus:outline-none placeholder-gray-300 dark:placeholder-gray-700"
                 placeholder="0"
               />
             </div>
@@ -75,9 +75,9 @@ export default function AdminHero() {
         </div>
       </div>
 
-      <div className="flex items-start gap-3 p-4 bg-blue-500/5 border border-blue-500/15 rounded-xl">
-        <Info size={16} className="text-blue-400 shrink-0 mt-0.5" />
-        <p className="text-xs text-slate-400 leading-relaxed">Metin içerikleri (başlıklar, açıklamalar, buton metinleri) <span className="text-blue-400 font-medium">Çeviriler</span> sayfasından düzenlenir.</p>
+      <div className="flex items-start gap-3 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-xl">
+        <Info size={16} className="text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+        <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">Metin içerikleri (başlıklar, açıklamalar, buton metinleri) <span className="text-blue-600 dark:text-blue-400 font-medium">Çeviriler</span> sayfasından düzenlenir.</p>
       </div>
     </div>
   );

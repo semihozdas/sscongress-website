@@ -41,11 +41,11 @@ export default function AdminFAQ() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h1 className="text-xl font-bold text-white">Sıkça Sorulan Sorular</h1>
-          <p className="text-sm text-slate-400 mt-0.5">{faq.length} soru</p>
+          <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">Sıkça Sorulan Sorular</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{faq.length} soru</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={addFaq} className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
+          <button onClick={addFaq} className="flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
             <Plus size={16} /> Soru Ekle
           </button>
           <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
@@ -54,9 +54,9 @@ export default function AdminFAQ() {
         </div>
       </div>
 
-      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1">
+      <div className="inline-flex bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl p-1">
         {LANGS.map(l => (
-          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>
+          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'}`}>
             {LANG_LABELS[l]}
           </button>
         ))}
@@ -67,39 +67,39 @@ export default function AdminFAQ() {
           const isExpanded = expandedId === item.id;
           const questionText = typeof item.question === 'object' ? (item.question[activeLang] || '') : item.question;
           return (
-            <div key={item.id} className={`bg-slate-900/50 border rounded-2xl overflow-hidden transition-all duration-200 ${isExpanded ? 'border-blue-500/30' : 'border-slate-800 hover:border-slate-700'}`}>
+            <div key={item.id} className={`bg-white dark:bg-gray-900 border rounded-xl overflow-hidden transition-all duration-200 shadow-sm ${isExpanded ? 'border-blue-300 dark:border-blue-700' : 'border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700'}`}>
               <div
                 className="flex items-center gap-3 px-5 py-4 cursor-pointer select-none"
                 onClick={() => setExpandedId(isExpanded ? null : item.id)}
               >
-                <span className="text-xs font-bold text-slate-600 w-6">{idx + 1}</span>
-                <p className="flex-1 text-sm text-white truncate">{questionText || <span className="text-slate-600 italic">Soruyu girin...</span>}</p>
-                <button onClick={(e) => { e.stopPropagation(); removeFaq(item.id); }} className="p-1.5 text-slate-600 hover:text-red-400 rounded-lg transition-colors cursor-pointer">
+                <span className="text-xs font-bold text-gray-400 dark:text-gray-500 w-6">{idx + 1}</span>
+                <p className="flex-1 text-sm text-gray-900 dark:text-gray-100 truncate">{questionText || <span className="text-gray-400 dark:text-gray-600 italic">Soruyu girin...</span>}</p>
+                <button onClick={(e) => { e.stopPropagation(); removeFaq(item.id); }} className="p-1.5 text-gray-400 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors cursor-pointer">
                   <Trash2 size={14} />
                 </button>
-                <ChevronDown size={16} className={`text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
+                <ChevronDown size={16} className={`text-gray-400 dark:text-gray-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`} />
               </div>
 
               {isExpanded && (
-                <div className="px-5 pb-5 pt-1 space-y-4 border-t border-slate-800/50">
+                <div className="px-5 pb-5 pt-1 space-y-4 border-t border-gray-200 dark:border-gray-800">
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-2">Soru</label>
+                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Soru</label>
                     <input
                       type="text"
                       value={questionText}
                       onChange={e => updateFaq(item.id, 'question', e.target.value)}
                       placeholder="Soruyu yazın..."
-                      className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+                      className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-medium text-slate-500 mb-2">Cevap</label>
+                    <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Cevap</label>
                     <textarea
                       rows={3}
                       value={typeof item.answer === 'object' ? (item.answer[activeLang] || '') : item.answer}
                       onChange={e => updateFaq(item.id, 'answer', e.target.value)}
                       placeholder="Cevabı yazın..."
-                      className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
+                      className="w-full px-4 py-2.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 dark:placeholder-gray-600 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
                     />
                   </div>
                 </div>
