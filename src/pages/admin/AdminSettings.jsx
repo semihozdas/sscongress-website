@@ -38,48 +38,48 @@ export default function AdminSettings() {
     <div className="max-w-lg space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Ayarlar</h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">Hesap güvenlik ayarlarınız</p>
+        <h1 className="text-2xl font-bold text-white">Ayarlar</h1>
+        <p className="text-slate-400 mt-1">Hesap güvenlik ayarlarınız</p>
       </div>
 
-      {/* Password Change Card */}
-      <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-8">
-        <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-100 dark:border-gray-800">
-          <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-            <Shield size={22} className="text-blue-600 dark:text-blue-400" />
+      {/* Password Card */}
+      <div className="bg-slate-900/80 border border-slate-800/60 rounded-2xl p-7">
+        <div className="flex items-center gap-4 mb-7 pb-6 border-b border-slate-800/60">
+          <div className="w-11 h-11 bg-blue-500/10 border border-blue-500/20 rounded-xl flex items-center justify-center">
+            <Shield size={20} className="text-blue-400" />
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Şifre Değiştir</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">Güçlü bir şifre kullanmanızı öneririz</p>
+            <h2 className="text-base font-semibold text-white">Şifre Değiştir</h2>
+            <p className="text-xs text-slate-500 mt-0.5">Güçlü bir şifre kullanmanızı öneririz</p>
           </div>
         </div>
 
         {error && (
-          <div className="mb-6 px-5 py-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-700 dark:text-red-400 text-sm font-medium">
+          <div className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
             {error}
           </div>
         )}
         {saved && (
-          <div className="mb-6 px-5 py-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-green-700 dark:text-green-400 text-sm font-medium flex items-center gap-2">
-            <CheckCircle size={16} /> Şifre başarıyla güncellendi
+          <div className="mb-5 px-4 py-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm flex items-center gap-2">
+            <CheckCircle size={14} /> Şifre başarıyla güncellendi
           </div>
         )}
 
         <form onSubmit={handleChangePassword} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mevcut Şifre</label>
-            <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="••••••••" required autoComplete="current-password" />
+            <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Mevcut Şifre</label>
+            <input type="password" value={currentPassword} onChange={e => setCurrentPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all" placeholder="••••••••" required autoComplete="current-password" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Yeni Şifre</label>
-            <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="En az 6 karakter" required minLength={6} autoComplete="new-password" />
+            <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Yeni Şifre</label>
+            <input type="password" value={newPassword} onChange={e => setNewPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all" placeholder="En az 6 karakter" required minLength={6} autoComplete="new-password" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Yeni Şifre (Tekrar)</label>
-            <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="w-full px-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-gray-900 dark:text-gray-100 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" placeholder="Tekrar girin" required minLength={6} autoComplete="new-password" />
+            <label className="block text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Yeni Şifre (Tekrar)</label>
+            <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-800/60 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all" placeholder="Tekrar girin" required minLength={6} autoComplete="new-password" />
           </div>
-          <button type="submit" disabled={saving} className="flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-md shadow-blue-500/20 mt-2">
-            {saving ? <Loader2 size={18} className="animate-spin" /> : <KeyRound size={18} />}
+          <button type="submit" disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-lg shadow-blue-500/25 mt-2">
+            {saving ? <Loader2 size={16} className="animate-spin" /> : <KeyRound size={16} />}
             {saving ? 'Güncelleniyor...' : 'Şifreyi Güncelle'}
           </button>
         </form>
