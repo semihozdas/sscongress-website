@@ -136,9 +136,10 @@ export default function Navbar() {
       transition: 'all 0.3s ease',
       padding: scrolled ? '12px 0' : '22px 0',
     }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', display: 'flex', alignItems: 'center', position: 'relative' }}>
 
-        <Link to="/" style={{ display: 'flex', alignItems: 'center' }}>
+        {/* Logo - Left */}
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', position: 'relative', zIndex: 2 }}>
           <img
             src={isDark ? logoBeyaz : logoSiyah}
             alt="SS Congress"
@@ -146,8 +147,8 @@ export default function Navbar() {
           />
         </Link>
 
-        {/* Desktop */}
-        <nav style={{ gap: 24 }} className="nb-desktop">
+        {/* Desktop Nav - Centered */}
+        <nav style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', gap: 24 }} className="nb-desktop">
           {NAV_LINKS.map(({ key, to }) => {
             const active = pathname === to;
             return (
@@ -161,7 +162,10 @@ export default function Navbar() {
               </Link>
             );
           })}
+        </nav>
 
+        {/* Right Actions */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 'auto', position: 'relative', zIndex: 2 }} className="nb-right">
           <LangDropdown />
 
           <motion.button onClick={toggle} whileTap={{ scale: 0.92 }}
@@ -178,7 +182,7 @@ export default function Navbar() {
           >
             {t('nav.contact')}
           </Link>
-        </nav>
+        </div>
 
         {/* Mobile row */}
         <div style={{ alignItems: 'center', gap: 8 }} className="nb-mobile-row">
@@ -217,9 +221,11 @@ export default function Navbar() {
 
       <style>{`
         .nb-desktop { display: flex; }
+        .nb-right { display: flex; }
         .nb-mobile-row { display: none; }
         @media (max-width:1024px) {
           .nb-desktop { display: none !important; }
+          .nb-right { display: none !important; }
           .nb-mobile-row { display: flex !important; }
         }
       `}</style>
