@@ -15,17 +15,6 @@ import Career from './pages/Career';
 import Privacy from './pages/Privacy';
 import KVKK from './pages/KVKK';
 import Gallery from './components/Gallery';
-import AdminLayout from './pages/admin/AdminLayout';
-import Dashboard from './pages/admin/Dashboard';
-import AdminHero from './pages/admin/AdminHero';
-import AdminServices from './pages/admin/AdminServices';
-import AdminProjects from './pages/admin/AdminProjects';
-import AdminFAQ from './pages/admin/AdminFAQ';
-import AdminGallery from './pages/admin/AdminGallery';
-import AdminCareer from './pages/admin/AdminCareer';
-import AdminContact from './pages/admin/AdminContact';
-import AdminTranslations from './pages/admin/AdminTranslations';
-import AdminSettings from './pages/admin/AdminSettings';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -40,18 +29,6 @@ export default function App() {
     <Router>
       <ScrollToTop />
       <Routes>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="hero" element={<AdminHero />} />
-          <Route path="services" element={<AdminServices />} />
-          <Route path="projects" element={<AdminProjects />} />
-          <Route path="faq" element={<AdminFAQ />} />
-          <Route path="gallery" element={<AdminGallery />} />
-          <Route path="career" element={<AdminCareer />} />
-          <Route path="contact" element={<AdminContact />} />
-          <Route path="translations" element={<AdminTranslations />} />
-          <Route path="settings" element={<AdminSettings />} />
-        </Route>
         <Route path="/*" element={
           <>
             <Navbar />

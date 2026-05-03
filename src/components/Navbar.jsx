@@ -163,6 +163,13 @@ export default function Navbar() {
 
           <LangDropdown />
 
+          <motion.button onClick={toggle} whileTap={{ scale: 0.92 }}
+            style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--c-border)', background: 'var(--c-card)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#fbbf24' : '#6b7280', transition: 'all 0.2s' }}
+            whileHover={{ scale: 1.05 }}
+          >
+            {isDark ? <Sun size={15} /> : <Moon size={15} />}
+          </motion.button>
+
           <Link to="/iletisim"
             style={{ padding: '9px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'linear-gradient(135deg,#10b981,#059669)', color: '#fff', whiteSpace: 'nowrap', boxShadow: '0 4px 14px rgba(16,185,129,0.25)', transition: 'transform 0.15s,box-shadow 0.15s', display: 'inline-block' }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,185,129,0.35)'; }}

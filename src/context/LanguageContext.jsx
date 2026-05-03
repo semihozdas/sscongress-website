@@ -70,6 +70,7 @@ const tr = {
 
   'footer.tagline': 'Dünya pazarlarına açılan firmalara stratejik, diplomatik ve organizasyonel destek sunan küresel ortağınız.',
   'footer.menu': 'Menü', 'footer.corporate': 'Kurumsal', 'footer.contact_title': 'İletişim',
+  'footer.faq': 'SSS', 'footer.career': 'Kariyer',
   'footer.privacy': 'Gizlilik Politikası', 'footer.kvkk': 'KVKK Aydınlatma',
   'footer.copyright': '© SS CONGRESS 2025 — Tüm Hakları Saklıdır',
 
@@ -240,6 +241,7 @@ const en = {
 
   'footer.tagline': 'Your global partner providing strategic, diplomatic, and organizational support to companies entering world markets.',
   'footer.menu': 'Menu', 'footer.corporate': 'Corporate', 'footer.contact_title': 'Contact',
+  'footer.faq': 'FAQ', 'footer.career': 'Career',
   'footer.privacy': 'Privacy Policy', 'footer.kvkk': 'Data Protection',
   'footer.copyright': '© SS CONGRESS 2025 — All Rights Reserved',
 
@@ -410,6 +412,7 @@ const ar = {
 
   'footer.tagline': 'شريكك العالمي الذي يقدم الدعم الاستراتيجي والدبلوماسي والتنظيمي للشركات الراغبة في دخول الأسواق العالمية.',
   'footer.menu': 'القائمة', 'footer.corporate': 'الشركة', 'footer.contact_title': 'تواصل معنا',
+  'footer.faq': 'الأسئلة الشائعة', 'footer.career': 'الوظائف',
   'footer.privacy': 'سياسة الخصوصية', 'footer.kvkk': 'حماية البيانات',
   'footer.copyright': '© SS CONGRESS 2025 — جميع الحقوق محفوظة',
 
@@ -580,6 +583,7 @@ const ru = {
 
   'footer.tagline': 'Ваш глобальный партнёр, оказывающий стратегическую, дипломатическую и организационную поддержку компаниям, выходящим на мировые рынки.',
   'footer.menu': 'Меню', 'footer.corporate': 'Компания', 'footer.contact_title': 'Контакты',
+  'footer.faq': 'Вопросы', 'footer.career': 'Карьера',
   'footer.privacy': 'Политика конфиденциальности', 'footer.kvkk': 'Защита данных',
   'footer.copyright': '© SS CONGRESS 2025 — Все права защищены',
 

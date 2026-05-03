@@ -18,8 +18,8 @@ const NAV_LINKS = [
 const CORP_LINKS = [
   { key: 'footer.faq',     to: '/sss' },
   { key: 'footer.career',  to: '/kariyer' },
-  { key: 'footer.privacy', to: '#' },
-  { key: 'footer.kvkk',    to: '#' },
+  { key: 'footer.privacy', to: '/gizlilik-politikasi' },
+  { key: 'footer.kvkk',    to: '/kvkk' },
 ];
 
 const socials = [Linkedin, Twitter, Instagram, Facebook];

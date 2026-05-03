@@ -1,0 +1,74 @@
+:root {
+  --admin-bg: #0B1120;
+  --admin-sidebar: #0F172A;
+  --admin-card: #1E293B;
+  --admin-border: rgba(255, 255, 255, 0.08);
+  --admin-primary: #3B82F6;
+  --admin-primary-hover: #2563EB;
+  --admin-text: #F8FAFC;
+  --admin-text-muted: #94A3B8;
+  --admin-accent: #6366F1;
+  --admin-success: #10B981;
+  --admin-danger: #EF4444;
+  --admin-warning: #F59E0B;
+}
+
+.admin-glass {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--admin-border);
+}
+
+.admin-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.5);
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.admin-sidebar-item {
+  transition: all 0.2s ease;
+}
+
+.admin-sidebar-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.admin-sidebar-item.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--admin-primary);
+  border-right: 3px solid var(--admin-primary);
+}
+
+/* Custom Scrollbar for Admin */
+.admin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-track {
+  background: var(--admin-sidebar);
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* ApexCharts Overrides */
+.apexcharts-canvas {
+  filter: drop-shadow(0 0 10px rgba(0,0,0,0.1));
+}
+
+.apexcharts-tooltip.apexcharts-theme-dark {
+  background: var(--admin-card) !important;
+  border: 1px solid var(--admin-border) !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
