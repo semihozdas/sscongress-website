@@ -25,9 +25,10 @@ export default function NotFound() {
 
               <Link
                 to="/"
-                className="inline-flex items-center justify-center px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-semibold transition-colors"
+                className="relative inline-flex items-center justify-center px-10 py-4 text-white font-semibold text-base rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-700 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_30px_rgba(16,185,129,0.5)] hover:scale-105 active:scale-95 transition-all duration-300 overflow-hidden group"
               >
-                Ana Sayfaya Dön
+                <span className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative z-10">Ana Sayfaya Dön</span>
               </Link>
             </div>
           </div>
