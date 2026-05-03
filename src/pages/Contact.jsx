@@ -55,11 +55,12 @@ export default function ContactPage() {
             ))}
 
             {/* Map */}
-            <div style={{ borderRadius: 14, overflow: 'hidden', border: BORDER, height: 200, marginTop: 8 }}>
+            <div style={{ borderRadius: 14, overflow: 'hidden', border: BORDER, height: 220, marginTop: 8, boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3059.8821434316335!2d32.81232821538356!3d39.91421697942731!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d3489849202521%3A0x6b44766861298d02!2sTepe%20Prime!5e0!3m2!1str!2str!4v1714562400000!5m2!1str!2str"
+                src="https://maps.google.com/maps?q=be%C5%9Ftepe%20mah%2031.%20sok%20no%3A2A%20yenimahalle%20ankara&t=m&z=15&output=embed&iwloc=near"
                 width="100%" height="100%" style={{ border: 0, display: 'block' }}
-                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Ofis"
+                allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="SS Congress - Beştepe, Ankara"
+                aria-label="SS Congress Ofis Konumu - Beştepe, Ankara"
               />
             </div>
           </div>
