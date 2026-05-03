@@ -36,7 +36,7 @@ export default function AdminGallery() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-white">Galeri</h2>
+        <h2 className="text-xl font-bold text-white">Galeri ({gallery.length} fotoğraf)</h2>
         <label className={`flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition cursor-pointer ${uploading ? 'opacity-50 pointer-events-none' : ''}`}>
           <Upload size={16} />
           {uploading ? 'Yükleniyor...' : 'Fotoğraf Yükle'}
@@ -54,7 +54,12 @@ export default function AdminGallery() {
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
           {gallery.map(item => (
             <div key={item.id} className="group relative bg-[#111916] border border-emerald-500/10 rounded-xl overflow-hidden aspect-square">
-              <img src={item.url} alt="" className="w-full h-full object-cover" />
+              <img
+                src={item.url.startsWith('/src') ? new URL(`../../${item.url.replace('/src/', '')}`, import.meta.url).href : item.url}
+                alt=""
+                className="w-full h-full object-cover"
+                onError={(e) => { e.target.src = ''; e.target.className = 'w-full h-full bg-gray-800 flex items-center justify-center'; }}
+              />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                 <button onClick={() => handleDelete(item.id)} className="p-2 bg-red-500/20 border border-red-500/40 rounded-lg text-red-400 hover:bg-red-500/30 transition">
                   <Trash2 size={20} />

@@ -6,44 +6,75 @@
     "stats": { "country": "25", "year": "6", "forum": "40" }
   },
   "services": [
-    { "id": "s1", "icon": "Globe", "titleKey": "services_page.s1.title", "descKey": "services_page.s1.desc" },
-    { "id": "s2", "icon": "Users", "titleKey": "services_page.s2.title", "descKey": "services_page.s2.desc" },
-    { "id": "s3", "icon": "TrendingUp", "titleKey": "services_page.s3.title", "descKey": "services_page.s3.desc" },
-    { "id": "s4", "icon": "Building", "titleKey": "services_page.s4.title", "descKey": "services_page.s4.desc" },
-    { "id": "s5", "icon": "Network", "titleKey": "services_page.s5.title", "descKey": "services_page.s5.desc" },
-    { "id": "s6", "icon": "Calendar", "titleKey": "services_page.s6.title", "descKey": "services_page.s6.desc" }
+    {
+      "id": "s1",
+      "icon": "Globe",
+      "title": { "tr": "Uluslararası İş Forumu Organizasyonu", "en": "International Business Forum Organization", "ar": "تنظيم منتديات الأعمال الدولية", "ru": "Организация международных бизнес-форумов" },
+      "desc": { "tr": "Hedef ülkelerde sektörel iş forumları ve ticaret heyetleri düzenliyoruz; firmaları doğru muhataplarla buluşturuyoruz.", "en": "We organize sectoral business forums and trade delegations in target countries, connecting companies with the right counterparts.", "ar": "نُنظّم منتديات الأعمال القطاعية ووفود التجارة في الدول المستهدفة، ونربط الشركات بالشركاء المناسبين.", "ru": "Мы организуем отраслевые бизнес-форумы и торговые делегации в целевых странах, соединяя компании с нужными партнёрами." }
+    },
+    {
+      "id": "s2",
+      "icon": "Users",
+      "title": { "tr": "Ticaret Heyeti Yönetimi", "en": "Trade Delegation Management", "ar": "إدارة وفود التجارة", "ru": "Управление торговыми делегациями" },
+      "desc": { "tr": "Resmi ticaret heyetlerinin planlanmasından ulaşım, konaklama ve toplantı ajandalarına tüm süreci yönetiyoruz.", "en": "We manage the entire process from planning official trade delegations to transportation, accommodation, and meeting agendas.", "ar": "ندير العملية بأكملها من تخطيط الوفود التجارية الرسمية إلى النقل والإقامة وجداول الاجتماعات.", "ru": "Управляем всем процессом от планирования официальных торговых делегаций до транспорта, проживания и повестки встреч." }
+    },
+    {
+      "id": "s3",
+      "icon": "TrendingUp",
+      "title": { "tr": "Pazar Giriş Danışmanlığı", "en": "Market Entry Consulting", "ar": "استشارات دخول السوق", "ru": "Консалтинг выхода на рынок" },
+      "desc": { "tr": "Yeni pazarlara açılmak isteyen firmalara strateji geliştirmeden doğru iş ortağı bulmaya uçtan uca danışmanlık veriyoruz.", "en": "End-to-end consulting for companies entering new markets, from strategy development to finding the right business partner.", "ar": "نقدم استشارات شاملة للشركات الراغبة في دخول أسواق جديدة، من تطوير الاستراتيجية إلى إيجاد الشريك المناسب.", "ru": "Комплексный консалтинг от разработки стратегии до поиска нужного бизнес-партнёра." }
+    },
+    {
+      "id": "s4",
+      "icon": "Building",
+      "title": { "tr": "Fuar & Expo Katılım", "en": "Trade Fair & Expo Participation", "ar": "المشاركة في المعارض", "ru": "Участие в выставках и экспо" },
+      "desc": { "tr": "Uluslararası fuar ve expo katılım sürecini baştan sona organize ediyor; sahada profesyonel temsil sağlıyoruz.", "en": "We organize international fair and expo participation start to finish, providing professional on-site representation.", "ar": "ننظم المشاركة في المعارض الدولية من البداية للنهاية، ونوفر تمثيلاً احترافياً في الميدان.", "ru": "Организуем международное участие в выставках от начала до конца с профессиональным представлением на месте." }
+    },
+    {
+      "id": "s5",
+      "icon": "Network",
+      "title": { "tr": "Kurumsal Ağ Geliştirme", "en": "Corporate Network Development", "ar": "تطوير الشبكة المؤسسية", "ru": "Развитие корпоративной сети" },
+      "desc": { "tr": "Ticaret odaları ve sanayi birlikleriyle güçlü ilişkilerimiz aracılığıyla doğru kurumsal paydaşlarla buluşturuyoruz.", "en": "Through strong relationships with chambers of commerce and industry associations, we connect companies with the right institutional stakeholders.", "ar": "من خلال علاقاتنا القوية مع غرف التجارة والاتحادات الصناعية، نربط الشركات بأصحاب المصلحة المؤسسيين المناسبين.", "ru": "Через прочные связи с торгово-промышленными палатами и отраслевыми ассоциациями соединяем компании с нужными партнёрами." }
+    },
+    {
+      "id": "s6",
+      "icon": "Calendar",
+      "title": { "tr": "Uluslararası Etkinlik", "en": "International Events", "ar": "الفعاليات الدولية", "ru": "Международные мероприятия" },
+      "desc": { "tr": "B2B buluşmaları, ikili iş görüşmeleri ve çok uluslu konferansları profesyonelce planlıyoruz.", "en": "We professionally plan B2B meetings, bilateral business talks, and multinational conferences.", "ar": "نخطط باحترافية لاجتماعات B2B والمحادثات التجارية الثنائية والمؤتمرات متعددة الجنسيات.", "ru": "Профессионально планируем встречи B2B, двусторонние переговоры и многонациональные конференции." }
+    }
   ],
   "projects": {
     "completed": [
-      { "id": "p1", "titleKey": "projects.past1", "locationKey": "projects.past1_loc", "year": "2024" },
-      { "id": "p2", "titleKey": "projects.past2", "locationKey": "projects.past2_loc", "year": "2023" },
-      { "id": "p3", "titleKey": "projects.past3", "locationKey": "projects.past3_loc", "year": "2023" },
-      { "id": "p4", "titleKey": "projects.past4", "locationKey": "projects.past4_loc", "year": "2022" }
+      { "id": "p1", "title": { "tr": "Katar İş Forumu 2024", "en": "Qatar Business Forum 2024", "ar": "منتدى الأعمال القطري 2024", "ru": "Катарский бизнес-форум 2024" }, "location": { "tr": "Doha, Katar", "en": "Doha, Qatar", "ar": "الدوحة، قطر", "ru": "Доха, Катар" }, "year": "2024" },
+      { "id": "p2", "title": { "tr": "Rusya ProExpo Katılımı", "en": "Russia ProExpo Participation", "ar": "المشاركة في ProExpo روسيا", "ru": "Участие в РосПроЭкспо" }, "location": { "tr": "Moskova, Rusya", "en": "Moscow, Russia", "ar": "موسكو، روسيا", "ru": "Москва, Россия" }, "year": "2023" },
+      { "id": "p3", "title": { "tr": "Londra Helal Forumu", "en": "London Halal Forum", "ar": "منتدى لندن الحلال", "ru": "Лондонский халяльный форум" }, "location": { "tr": "Londra, Birleşik Krallık", "en": "London, UK", "ar": "لندن، المملكة المتحدة", "ru": "Лондон, Великобритания" }, "year": "2023" },
+      { "id": "p4", "title": { "tr": "Mekke Helal Ekonomi Zirvesi", "en": "Makkah Halal Economy Summit", "ar": "قمة مكة للاقتصاد الحلال", "ru": "Мекканский саммит халяльной экономики" }, "location": { "tr": "Mekke, Suudi Arabistan", "en": "Makkah, Saudi Arabia", "ar": "مكة المكرمة، السعودية", "ru": "Мекка, Саудовская Аравия" }, "year": "2022" }
     ],
     "upcoming": [
-      { "id": "u1", "titleKey": "projects.up1", "locationKey": "projects.up1_loc", "dateKey": "projects.up1_date" },
-      { "id": "u2", "titleKey": "projects.up2", "locationKey": "projects.up2_loc", "dateKey": "projects.up2_date" },
-      { "id": "u3", "titleKey": "projects.up3", "locationKey": "projects.up3_loc", "dateKey": "projects.up3_date" }
+      { "id": "u1", "title": { "tr": "Kazan Forum 2026", "en": "Kazan Forum 2026", "ar": "منتدى قازان 2026", "ru": "Казань Форум 2026" }, "location": { "tr": "Kazan, Tataristan", "en": "Kazan, Tatarstan", "ar": "قازان، تتارستان", "ru": "Казань, Татарстан" }, "date": { "tr": "12–17 Mayıs 2026", "en": "May 12–17, 2026", "ar": "12-17 مايو 2026", "ru": "12–17 мая 2026" } },
+      { "id": "u2", "title": { "tr": "Tayland Expo 2025", "en": "Thailand Expo 2025", "ar": "معرض تايلاند 2025", "ru": "Thailand Expo 2025" }, "location": { "tr": "Bangkok, Tayland", "en": "Bangkok, Thailand", "ar": "بانكوك، تايلاند", "ru": "Бангкок, Таиланд" }, "date": { "tr": "2025", "en": "2025", "ar": "2025", "ru": "2025" } },
+      { "id": "u3", "title": { "tr": "Berlin ITB Türk Delegasyonu", "en": "Berlin ITB Turkish Delegation", "ar": "وفد ITB برلين التركي", "ru": "Турецкая делегация на ITB Берлин" }, "location": { "tr": "Berlin, Almanya", "en": "Berlin, Germany", "ar": "برلين، ألمانيا", "ru": "Берлин, Германия" }, "date": { "tr": "2025", "en": "2025", "ar": "2025", "ru": "2025" } }
     ]
   },
   "faq": [
-    { "id": "faq1", "qKey": "faq.q1", "aKey": "faq.a1" },
-    { "id": "faq2", "qKey": "faq.q2", "aKey": "faq.a2" },
-    { "id": "faq3", "qKey": "faq.q3", "aKey": "faq.a3" },
-    { "id": "faq4", "qKey": "faq.q4", "aKey": "faq.a4" },
-    { "id": "faq5", "qKey": "faq.q5", "aKey": "faq.a5" },
-    { "id": "faq6", "qKey": "faq.q6", "aKey": "faq.a6" },
-    { "id": "faq7", "qKey": "faq.q7", "aKey": "faq.a7" },
-    { "id": "faq8", "qKey": "faq.q8", "aKey": "faq.a8" }
+    { "id": "faq1", "question": { "tr": "Hangi sektörlerde hizmet veriyorsunuz?", "en": "Which sectors do you serve?", "ar": "ما القطاعات التي تخدمونها؟", "ru": "В каких секторах вы работаете?" }, "answer": { "tr": "İhracat, ithalat, lojistik, dış ticaret danışmanlığı ve uluslararası pazarlama alanlarında faaliyet gösteriyoruz.", "en": "We operate in export, import, logistics, foreign trade consulting, and international marketing.", "ar": "نعمل في مجالات التصدير والاستيراد والخدمات اللوجستية والاستشارات التجارية الخارجية والتسويق الدولي.", "ru": "Мы работаем в области экспорта, импорта, логистики, консалтинга во внешней торговле и международного маркетинга." } },
+    { "id": "faq2", "question": { "tr": "Danışmanlık hizmetiniz şirketimize nasıl fayda sağlar?", "en": "How will your consulting services benefit our company?", "ar": "كيف ستفيد خدماتك الاستشارية شركتنا؟", "ru": "Как ваши консалтинговые услуги принесут пользу нашей компании?" }, "answer": { "tr": "Süreçlerinizi daha verimli hale getirir, maliyetlerinizi azaltır ve küresel pazarlarda rekabet gücü kazandırırız.", "en": "We make your processes more efficient, reduce costs, and help you gain competitive advantage in global markets.", "ar": "نجعل عملياتك أكثر كفاءة ونقلل التكاليف ونساعدك على اكتساب ميزة تنافسية في الأسواق العالمية.", "ru": "Мы сделаем ваши процессы эффективнее, снизим затраты и поможем получить конкурентное преимущество на мировых рынках." } },
+    { "id": "faq3", "question": { "tr": "Start-up ve KOBİ'lerle çalışıyor musunuz?", "en": "Do you work with start-ups and SMEs?", "ar": "هل تعملون مع الشركات الناشئة والمشاريع الصغيرة والمتوسطة؟", "ru": "Работаете ли вы со стартапами и МСП?" }, "answer": { "tr": "Evet, özellikle küçük ve orta ölçekli işletmelere ihracat ve global pazara açılma konularında özel çözümler sunuyoruz.", "en": "Yes, we provide special solutions especially for small and medium-sized enterprises on export and global market entry.", "ar": "نعم، نقدم حلولاً خاصة للشركات الصغيرة والمتوسطة في مجال التصدير ودخول الأسواق العالمية.", "ru": "Да, мы предоставляем специальные решения для малых и средних предприятий по экспорту и выходу на мировой рынок." } },
+    { "id": "faq4", "question": { "tr": "SS Congress hangi ülkelerde hizmet veriyor?", "en": "In which countries does SS Congress operate?", "ar": "في أي دول يعمل SS Congress؟", "ru": "В каких странах работает SS Congress?" }, "answer": { "tr": "4 kıta ve 25'ten fazla ülkede aktif olarak faaliyet gösteriyoruz. Katar, Japonya, Rusya, Hollanda, Suudi Arabistan ve daha pek çok ülkede hizmet sunuyoruz.", "en": "We actively operate across 4 continents and more than 25 countries, including Qatar, Japan, Russia, the Netherlands, Saudi Arabia, and many more.", "ar": "نعمل بنشاط في 4 قارات وأكثر من 25 دولة، بما فيها قطر واليابان وروسيا وهولندا والسعودية وغيرها.", "ru": "Мы активно работаем на 4 континентах и в более чем 25 странах: Катар, Япония, Россия, Нидерланды, Саудовская Аравия и многие другие." } },
+    { "id": "faq5", "question": { "tr": "Bir iş forumu organize ettirmek için süreci nasıl başlatırım?", "en": "How do I start the process to organize a business forum?", "ar": "كيف أبدأ عملية تنظيم منتدى أعمال؟", "ru": "Как начать процесс организации бизнес-форума?" }, "answer": { "tr": "İhtiyacınızı ve hedef pazarınızı birlikte değerlendiriyor, size özel bir organizasyon planı hazırlıyoruz. Tüm süreçler SS Congress tarafından yönetiliyor.", "en": "We evaluate your needs and target market together and prepare a custom organization plan. All processes are managed by SS Congress.", "ar": "نقيّم معك احتياجاتك وسوقك المستهدف ونضع خطة تنظيمية مخصصة. تُدار جميع العمليات من قبل SS Congress.", "ru": "Мы вместе оцениваем ваши потребности и целевой рынок и готовим индивидуальный план. Все процессы управляются SS Congress." } },
+    { "id": "faq6", "question": { "tr": "SS Congress'in diğer organizasyon şirketlerinden farkı nedir?", "en": "What distinguishes SS Congress from other event companies?", "ar": "ما الذي يميز SS Congress عن شركات الفعاليات الأخرى؟", "ru": "Чем SS Congress отличается от других event-компаний?" }, "answer": { "tr": "Yalnızca etkinlik organize etmiyoruz; aynı zamanda stratejik danışmanlık veriyor, birden fazla ülkenin ticaret bakanlığıyla koordineli çalışıyoruz.", "en": "We not only organize events; we also provide strategic consulting and work in coordination with the trade ministries of multiple countries.", "ar": "لا نكتفي بتنظيم الفعاليات؛ بل نقدم أيضاً استشارات استراتيجية ونعمل بالتنسيق مع وزارات التجارة في دول متعددة.", "ru": "Мы не только организуем мероприятия, но и предоставляем стратегический консалтинг, координируясь с министерствами торговли разных стран." } },
+    { "id": "faq7", "question": { "tr": "Uzun vadeli iş ortaklığı sağlıyor musunuz?", "en": "Do you provide long-term business partnerships?", "ar": "هل تقدمون شراكات تجارية طويلة الأمد؟", "ru": "Обеспечиваете ли вы долгосрочное деловое партнёрство?" }, "answer": { "tr": "Evet, müşterilerimizle uzun soluklu, güvene dayalı iş birlikleri kurmayı hedefliyoruz.", "en": "Yes, we aim to establish long-lasting, trust-based collaborations with our clients.", "ar": "نعم، نهدف إلى إقامة تعاونات قائمة على الثقة وطويلة الأمد مع عملائنا.", "ru": "Да, мы стремимся к долгосрочному сотрудничеству на основе доверия с нашими клиентами." } },
+    { "id": "faq8", "question": { "tr": "Uluslararası mevzuat ve belgeler konusunda yardımcı oluyor musunuz?", "en": "Do you assist with international regulations and documentation?", "ar": "هل تساعدون في اللوائح والوثائق الدولية؟", "ru": "Помогаете ли вы с международными нормативами и документацией?" }, "answer": { "tr": "Evet, gerekli belgeler, sertifikalar ve yasal süreçlerde size rehberlik ediyoruz.", "en": "Yes, we guide you through the necessary documents, certificates, and legal processes.", "ar": "نعم، نرشدك في الوثائق والشهادات والإجراءات القانونية اللازمة.", "ru": "Да, мы сопровождаем вас при работе с документами, сертификатами и юридическими процессами." } }
   ],
   "career": {
     "positions": [
       {
         "id": "c1",
-        "titleKey": "career.job_title",
-        "locationKey": "career.location",
-        "status": "open",
-        "descKey": "career.desc"
+        "title": { "tr": "Ofis Koordinatörü / İdari Asistan", "en": "Office Coordinator / Administrative Assistant", "ar": "منسق المكتب / مساعد إداري", "ru": "Координатор офиса / Административный ассистент" },
+        "location": { "tr": "Beştepe / Yenimahalle, Ankara", "en": "Beştepe / Yenimahalle, Ankara", "ar": "بيشتيبه / ينيماهاله، أنقرة", "ru": "Бештепе / Йенимахалле, Анкара" },
+        "description": { "tr": "Uluslararası dış ticaret organizasyon süreçlerinin koordinasyonu, idari süreçlerin yönetimi ve ekip desteği sağlanması.", "en": "Coordinating international foreign trade organization processes, managing administrative processes, and supporting the team.", "ar": "تنسيق عمليات تنظيم التجارة الخارجية الدولية وإدارة العمليات الإدارية وتقديم الدعم للفريق.", "ru": "Координация международных процессов организации внешней торговли, управление административными процессами и поддержка команды." },
+        "requirements": { "tr": ["20-35 yaş aralığında", "İyi derecede İngilizce veya Rusça", "Güçlü planlama ve organizasyon", "Ekip çalışmasına yatkın", "Ön muhasebe bilgisi (Tercihli)", "Esnek çalışmaya yatkın"], "en": ["Ages 20-35", "Good command of English or Russian", "Strong planning and organization skills", "Teamwork oriented", "Basic accounting knowledge (Preferred)", "Flexible working attitude"], "ar": ["من عمر 20 إلى 35 سنة", "إجادة جيدة للإنجليزية أو الروسية", "مهارات قوية في التخطيط والتنظيم", "موجه نحو العمل الجماعي", "معرفة المحاسبة الأساسية (مفضّل)", "استعداد للعمل المرن"], "ru": ["Возраст 20-35 лет", "Хорошее знание английского или русского", "Сильные навыки планирования и организации", "Ориентированность на командную работу", "Базовые знания бухгалтерского учёта (желательно)", "Готовность к гибкому графику"] },
+        "status": "open"
       }
     ]
   },
@@ -54,5 +85,27 @@
     "weekdays": "09:00 - 18:00",
     "saturday": "10:00 - 14:00"
   },
-  "gallery": []
+  "gallery": [
+    { "id": "g1", "url": "/src/assets/sss galery/11-768x432.webp" },
+    { "id": "g2", "url": "/src/assets/sss galery/14-768x432.webp" },
+    { "id": "g3", "url": "/src/assets/sss galery/16-768x432.webp" },
+    { "id": "g4", "url": "/src/assets/sss galery/1694278622106.webp" },
+    { "id": "g5", "url": "/src/assets/sss galery/1697172124695-768x576.webp" },
+    { "id": "g6", "url": "/src/assets/sss galery/20-768x432.webp" },
+    { "id": "g7", "url": "/src/assets/sss galery/22-768x432.webp" },
+    { "id": "g8", "url": "/src/assets/sss galery/24-768x432.webp" },
+    { "id": "g9", "url": "/src/assets/sss galery/25-768x432.webp" },
+    { "id": "g10", "url": "/src/assets/sss galery/26-768x432.webp" },
+    { "id": "g11", "url": "/src/assets/sss galery/3-768x432.webp" },
+    { "id": "g12", "url": "/src/assets/sss galery/4-768x432.webp" },
+    { "id": "g13", "url": "/src/assets/sss galery/4E3A9232-768x512.webp" },
+    { "id": "g14", "url": "/src/assets/sss galery/4E3A9259-768x512.webp" },
+    { "id": "g15", "url": "/src/assets/sss galery/4E3A9266-768x512.webp" },
+    { "id": "g16", "url": "/src/assets/sss galery/4E3A9419-768x512.webp" },
+    { "id": "g17", "url": "/src/assets/sss galery/6-768x432.webp" },
+    { "id": "g18", "url": "/src/assets/sss galery/8-768x432.webp" },
+    { "id": "g19", "url": "/src/assets/sss galery/Adsiz-tasarim-9.webp" },
+    { "id": "g20", "url": "/src/assets/sss galery/ddd-768x768.webp" },
+    { "id": "g21", "url": "/src/assets/sss galery/romania-national-day-Romanya-milli-gunu-resepsiyonu-768x768.webp" }
+  ]
 }

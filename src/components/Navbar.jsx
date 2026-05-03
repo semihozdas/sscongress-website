@@ -146,7 +146,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: 24 }} className="nb-desktop">
+        <nav style={{ gap: 24 }} className="nb-desktop">
           {NAV_LINKS.map(({ key, to }) => {
             const active = pathname === to;
             return (
@@ -163,12 +163,6 @@ export default function Navbar() {
 
           <LangDropdown />
 
-          <motion.button onClick={toggle} whileHover={{ scale: 1.08 }} whileTap={{ scale: 0.92 }}
-            style={{ width: 36, height: 36, borderRadius: 10, border: '1px solid var(--c-border)', background: 'var(--c-card)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#fbbf24' : '#6b7280', transition: 'all 0.2s' }}
-          >
-            {isDark ? <Sun size={16} /> : <Moon size={16} />}
-          </motion.button>
-
           <Link to="/iletisim"
             style={{ padding: '9px 20px', borderRadius: 8, fontSize: 14, fontWeight: 600, background: 'linear-gradient(135deg,#10b981,#059669)', color: '#fff', whiteSpace: 'nowrap', boxShadow: '0 4px 14px rgba(16,185,129,0.25)', transition: 'transform 0.15s,box-shadow 0.15s', display: 'inline-block' }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(16,185,129,0.35)'; }}
@@ -179,7 +173,7 @@ export default function Navbar() {
         </nav>
 
         {/* Mobile row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }} className="nb-mobile-row">
+        <div style={{ alignItems: 'center', gap: 8 }} className="nb-mobile-row">
           <motion.button onClick={toggle} whileTap={{ scale: 0.92 }}
             style={{ width: 34, height: 34, borderRadius: 9, border: '1px solid var(--c-border)', background: 'var(--c-card)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: isDark ? '#fbbf24' : '#6b7280' }}
           >
@@ -214,11 +208,11 @@ export default function Navbar() {
       </AnimatePresence>
 
       <style>{`
-        .nb-desktop { display:flex; }
-        .nb-mobile-row { display:none; }
+        .nb-desktop { display: flex; }
+        .nb-mobile-row { display: none; }
         @media (max-width:1024px) {
-          .nb-desktop { display:none!important; }
-          .nb-mobile-row { display:flex!important; }
+          .nb-desktop { display: none !important; }
+          .nb-mobile-row { display: flex !important; }
         }
       `}</style>
     </header>
