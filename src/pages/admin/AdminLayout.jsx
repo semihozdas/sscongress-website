@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Outlet, NavLink, Link } from 'react-router-dom';
-import { LayoutDashboard, FileText, Globe, Image, Briefcase, HelpCircle, Phone, Users, LogOut, Menu, X, KeyRound, ExternalLink } from 'lucide-react';
+import { LayoutDashboard, FileText, Globe, Image, Briefcase, HelpCircle, Phone, Users, LogOut, Menu, X, KeyRound, ExternalLink, Languages, ChevronLeft } from 'lucide-react';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 const navItems = [
-  { to: '/admin', icon: LayoutDashboard, label: 'Genel Bakış', end: true },
+  { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/hero', icon: FileText, label: 'Hero & İstatistikler' },
   { to: '/admin/services', icon: Briefcase, label: 'Hizmetler' },
   { to: '/admin/projects', icon: Globe, label: 'Projeler' },
@@ -13,12 +13,13 @@ const navItems = [
   { to: '/admin/gallery', icon: Image, label: 'Galeri' },
   { to: '/admin/career', icon: Users, label: 'Kariyer' },
   { to: '/admin/contact', icon: Phone, label: 'İletişim' },
-  { to: '/admin/translations', icon: Globe, label: 'Çeviriler' },
+  { to: '/admin/translations', icon: Languages, label: 'Çeviriler' },
   { to: '/admin/settings', icon: KeyRound, label: 'Ayarlar' },
 ];
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
@@ -38,65 +39,76 @@ export default function AdminLayout() {
   };
 
   const linkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-colors duration-200 cursor-pointer ${isActive ? 'bg-emerald-500/15 text-emerald-400 font-medium' : 'text-gray-400 hover:text-white hover:bg-white/5'}`;
+    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200 cursor-pointer group ${
+      isActive
+        ? 'bg-blue-500/10 text-blue-400'
+        : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+    }`;
 
   return (
-    <div className="min-h-screen bg-[#080c0a] flex font-[Inter,sans-serif]">
-      {sidebarOpen && <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
+    <div className="min-h-screen bg-slate-950 flex">
+      {sidebarOpen && <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden" onClick={() => setSidebarOpen(false)} />}
 
-      <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-[260px] bg-[#0d1210] border-r border-emerald-500/8 flex flex-col transition-transform duration-300 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="p-5 border-b border-emerald-500/8">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-emerald-500/10 rounded-lg flex items-center justify-center">
-              <span className="text-emerald-400 font-bold text-sm">SS</span>
+      <aside className={`fixed lg:static inset-y-0 left-0 z-50 ${collapsed ? 'w-[72px]' : 'w-[250px]'} bg-slate-900 border-r border-slate-800 flex flex-col transition-all duration-300 lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`flex items-center ${collapsed ? 'justify-center px-2' : 'justify-between px-5'} h-16 border-b border-slate-800`}>
+          {!collapsed && (
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center shadow-sm">
+                <span className="text-white font-bold text-xs">SS</span>
+              </div>
+              <span className="text-sm font-semibold text-white">SS Congress</span>
             </div>
-            <div>
-              <h2 className="text-sm font-semibold text-white tracking-tight">SS Congress</h2>
-              <p className="text-[11px] text-gray-500">İçerik Yönetimi</p>
+          )}
+          {collapsed && (
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xs">SS</span>
             </div>
-          </div>
+          )}
+          <button onClick={() => setCollapsed(!collapsed)} className="hidden lg:flex w-6 h-6 items-center justify-center rounded-md hover:bg-slate-800 text-slate-500 hover:text-white transition-colors cursor-pointer">
+            <ChevronLeft size={14} className={`transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`} />
+          </button>
         </div>
 
-        <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
+        <nav className={`flex-1 ${collapsed ? 'px-2' : 'px-3'} py-4 space-y-1 overflow-y-auto`}>
           {navItems.map(item => (
-            <NavLink key={item.to} to={item.to} end={item.end} className={linkClass} onClick={() => setSidebarOpen(false)}>
-              <item.icon size={17} />
-              {item.label}
+            <NavLink key={item.to} to={item.to} end={item.end} className={linkClass} onClick={() => setSidebarOpen(false)} title={collapsed ? item.label : undefined}>
+              <item.icon size={18} className="shrink-0" />
+              {!collapsed && <span>{item.label}</span>}
             </NavLink>
           ))}
         </nav>
 
-        <div className="p-3 border-t border-emerald-500/8">
-          <Link to="/" target="_blank" className="flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-gray-500 hover:text-gray-300 hover:bg-white/5 transition-colors duration-200 mb-1 cursor-pointer">
-            <ExternalLink size={15} />
-            Siteyi Görüntüle
+        <div className={`${collapsed ? 'px-2' : 'px-3'} py-3 border-t border-slate-800 space-y-1`}>
+          <Link to="/" target="_blank" className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-slate-500 hover:text-slate-300 hover:bg-slate-800/50 transition-all duration-200 cursor-pointer`} title="Siteyi Görüntüle">
+            <ExternalLink size={16} className="shrink-0" />
+            {!collapsed && <span>Siteyi Görüntüle</span>}
           </Link>
-          <button onClick={logout} className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-red-400/70 hover:text-red-400 hover:bg-red-500/8 w-full transition-colors duration-200 cursor-pointer">
-            <LogOut size={17} />
-            Çıkış Yap
+          <button onClick={logout} className={`flex items-center gap-3 ${collapsed ? 'justify-center' : ''} px-3 py-2.5 rounded-xl text-[13px] text-slate-500 hover:text-red-400 hover:bg-red-500/5 w-full transition-all duration-200 cursor-pointer`} title="Çıkış Yap">
+            <LogOut size={16} className="shrink-0" />
+            {!collapsed && <span>Çıkış Yap</span>}
           </button>
         </div>
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="sticky top-0 z-30 bg-[#080c0a]/95 backdrop-blur-md border-b border-emerald-500/8 px-6 py-3.5 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button className="lg:hidden text-gray-400 hover:text-white transition-colors cursor-pointer" onClick={() => setSidebarOpen(true)}>
-              <Menu size={22} />
-            </button>
-            <h1 className="text-[15px] font-medium text-gray-200">Yönetim Paneli</h1>
-          </div>
+        <header className="sticky top-0 z-30 h-16 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50 px-6 flex items-center justify-between">
+          <button className="lg:hidden text-slate-400 hover:text-white transition-colors cursor-pointer" onClick={() => setSidebarOpen(true)}>
+            <Menu size={22} />
+          </button>
+
+          <div className="hidden lg:block" />
+
           {user && (
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-emerald-500/15 rounded-full flex items-center justify-center">
-                <span className="text-emerald-400 text-xs font-medium">{user.username?.charAt(0).toUpperCase()}</span>
+            <div className="flex items-center gap-3">
+              <span className="text-xs text-slate-500 hidden sm:block">{user.username}</span>
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-500/20 to-blue-600/20 border border-blue-500/30 rounded-full flex items-center justify-center">
+                <span className="text-blue-400 text-xs font-semibold">{user.username?.charAt(0).toUpperCase()}</span>
               </div>
-              <span className="text-xs text-gray-500 hidden sm:block">{user.username}</span>
             </div>
           )}
         </header>
 
-        <main className="flex-1 p-5 lg:p-7 overflow-y-auto">
+        <main className="flex-1 p-6 lg:p-8 overflow-y-auto">
           <Outlet />
         </main>
       </div>

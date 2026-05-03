@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAdmin } from './useAdmin';
-import { Save, CheckCircle, Plus, Trash2 } from 'lucide-react';
+import { Save, CheckCircle, Plus, Trash2, GripVertical } from 'lucide-react';
 
 const LANGS = ['tr', 'en', 'ar', 'ru'];
-const LANG_LABELS = { tr: 'TR', en: 'EN', ar: 'AR', ru: 'RU' };
+const LANG_LABELS = { tr: 'Türkçe', en: 'English', ar: 'العربية', ru: 'Русский' };
 const ICONS = ['Globe', 'Users', 'TrendingUp', 'Building', 'Network', 'Calendar', 'Briefcase', 'Award', 'Target', 'Zap'];
 
 export default function AdminServices() {
@@ -35,25 +35,28 @@ export default function AdminServices() {
     }));
   };
 
-  if (loading) return <div className="text-emerald-400">Yükleniyor...</div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" /></div>;
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
-        <h2 className="text-xl font-bold text-white">Hizmetler</h2>
+        <div>
+          <h1 className="text-xl font-bold text-white">Hizmetler</h1>
+          <p className="text-sm text-slate-400 mt-0.5">{services.length} hizmet tanımlı</p>
+        </div>
         <div className="flex gap-2">
-          <button onClick={addService} className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 text-white rounded-lg text-sm transition">
-            <Plus size={16} /> Hizmet Ekle
+          <button onClick={addService} className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer">
+            <Plus size={16} /> Ekle
           </button>
-          <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white rounded-lg text-sm font-medium transition">
+          <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
             {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
           </button>
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1">
         {LANGS.map(l => (
-          <button key={l} onClick={() => setActiveLang(l)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${activeLang === l ? 'bg-emerald-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>
             {LANG_LABELS[l]}
           </button>
         ))}
@@ -61,54 +64,40 @@ export default function AdminServices() {
 
       <div className="space-y-4">
         {services.map((service, idx) => (
-          <div key={service.id} className="bg-[#111916] border border-emerald-500/10 rounded-xl p-5">
+          <div key={service.id} className="bg-slate-900/50 border border-slate-800 rounded-2xl p-5 hover:border-slate-700 transition-colors duration-200 group">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm text-emerald-400 font-medium">Hizmet #{idx + 1}</span>
-              <button onClick={() => removeService(service.id)} className="text-red-400/50 hover:text-red-400 transition">
-                <Trash2 size={16} />
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 text-xs font-bold">{idx + 1}</div>
+                <select
+                  value={service.icon}
+                  onChange={e => updateService(service.id, 'icon', e.target.value)}
+                  className="px-3 py-1.5 bg-slate-800 border border-slate-700 rounded-lg text-white text-xs focus:outline-none focus:border-blue-500 cursor-pointer"
+                >
+                  {ICONS.map(i => <option key={i} value={i}>{i}</option>)}
+                </select>
+              </div>
+              <button onClick={() => removeService(service.id)} className="opacity-0 group-hover:opacity-100 p-2 text-slate-600 hover:text-red-400 hover:bg-red-500/5 rounded-lg transition-all duration-200 cursor-pointer">
+                <Trash2 size={15} />
               </button>
             </div>
-            <div className="grid grid-cols-1 gap-4">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div>
-                  <label className="block text-xs text-gray-500 mb-1">İkon</label>
-                  <select
-                    value={service.icon}
-                    onChange={e => updateService(service.id, 'icon', e.target.value)}
-                    className="w-full px-3 py-2 bg-[#0a0f0d] border border-emerald-500/20 rounded-lg text-white text-sm focus:outline-none focus:border-emerald-500/50"
-                  >
-                    {ICONS.map(i => <option key={i} value={i}>{i}</option>)}
-                  </select>
-                </div>
-                <div className="md:col-span-3">
-                  <label className="block text-xs text-gray-500 mb-1">Hizmet Adı ({LANG_LABELS[activeLang]})</label>
-                  <input
-                    type="text"
-                    value={typeof service.title === 'object' ? (service.title[activeLang] || '') : service.title}
-                    onChange={e => updateService(service.id, 'title', e.target.value)}
-                    placeholder="Hizmet adı..."
-                    className="w-full px-3 py-2 bg-[#0a0f0d] border border-emerald-500/20 rounded-lg text-white text-sm focus:outline-none focus:border-emerald-500/50"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs text-gray-500 mb-1">Açıklama ({LANG_LABELS[activeLang]})</label>
-                <textarea
-                  rows={2}
-                  value={typeof service.desc === 'object' ? (service.desc[activeLang] || '') : service.desc}
-                  onChange={e => updateService(service.id, 'desc', e.target.value)}
-                  placeholder="Hizmet açıklaması..."
-                  className="w-full px-3 py-2 bg-[#0a0f0d] border border-emerald-500/20 rounded-lg text-white text-sm focus:outline-none focus:border-emerald-500/50 resize-none"
-                />
-              </div>
+            <div className="space-y-3">
+              <input
+                type="text"
+                value={typeof service.title === 'object' ? (service.title[activeLang] || '') : service.title}
+                onChange={e => updateService(service.id, 'title', e.target.value)}
+                placeholder="Hizmet adını girin..."
+                className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200"
+              />
+              <textarea
+                rows={2}
+                value={typeof service.desc === 'object' ? (service.desc[activeLang] || '') : service.desc}
+                onChange={e => updateService(service.id, 'desc', e.target.value)}
+                placeholder="Hizmet açıklamasını girin..."
+                className="w-full px-4 py-2.5 bg-slate-800/50 border border-slate-700/50 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors duration-200 resize-none"
+              />
             </div>
           </div>
         ))}
-        {services.length === 0 && (
-          <div className="bg-[#111916] border border-emerald-500/10 rounded-xl p-8 text-center text-gray-500">
-            Henüz hizmet eklenmemiş
-          </div>
-        )}
       </div>
     </div>
   );

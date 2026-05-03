@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAdmin } from './useAdmin';
-import { Save, CheckCircle, Plus, Trash2, MapPin, Calendar, Loader2 } from 'lucide-react';
+import { Save, CheckCircle, Plus, Trash2, MapPin, Calendar } from 'lucide-react';
 
 const LANGS = ['tr', 'en', 'ar', 'ru'];
-const LANG_LABELS = { tr: 'TR', en: 'EN', ar: 'AR', ru: 'RU' };
+const LANG_LABELS = { tr: 'Türkçe', en: 'English', ar: 'العربية', ru: 'Русский' };
 
 export default function AdminProjects() {
   const { data, loading, saving, saveSection } = useAdmin();
@@ -42,65 +42,62 @@ export default function AdminProjects() {
     }));
   };
 
-  if (loading) return <div className="flex items-center gap-2 text-emerald-400"><Loader2 size={16} className="animate-spin" /> Yükleniyor...</div>;
+  if (loading) return <div className="flex items-center justify-center h-64"><div className="w-8 h-8 border-2 border-blue-500/30 border-t-blue-500 rounded-full animate-spin" /></div>;
 
-  const renderSection = (title, type, items, badgeColor) => (
-    <div className="bg-[#0d1210] border border-emerald-500/8 rounded-2xl p-6">
+  const renderSection = (title, type, items, badge) => (
+    <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6">
       <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-2">
-          <div className={`w-2 h-2 rounded-full ${badgeColor}`} />
-          <h3 className="text-sm font-semibold text-white">{title}</h3>
-          <span className="text-xs text-gray-600 ml-1">({items.length})</span>
+        <div className="flex items-center gap-3">
+          <span className={`text-xs font-medium px-2.5 py-1 rounded-lg ${badge}`}>{title}</span>
+          <span className="text-xs text-slate-600">{items.length} proje</span>
         </div>
-        <button onClick={() => addProject(type)} className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-medium transition-colors duration-200 cursor-pointer">
-          <Plus size={13} /> Yeni Proje
+        <button onClick={() => addProject(type)} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer">
+          <Plus size={13} /> Ekle
         </button>
       </div>
       <div className="space-y-3">
-        {items.map((project, idx) => (
-          <div key={project.id} className="p-4 bg-[#080c0a] rounded-xl border border-emerald-500/6 hover:border-emerald-500/15 transition-colors duration-200">
-            <div className="flex items-center justify-between mb-3">
-              <span className="text-[11px] bg-emerald-500/10 text-emerald-400/80 px-2 py-0.5 rounded-md font-medium">{idx + 1}</span>
-              <button onClick={() => removeProject(type, project.id)} className="text-red-400/40 hover:text-red-400 transition-colors duration-200 cursor-pointer">
-                <Trash2 size={13} />
+        {items.map((project) => (
+          <div key={project.id} className="p-4 bg-slate-800/30 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors duration-200 group">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label className="text-[11px] text-slate-500 mb-1 block">Proje Adı</label>
+                  <input
+                    type="text"
+                    value={typeof project.title === 'object' ? (project.title[activeLang] || '') : project.title}
+                    onChange={e => updateProject(type, project.id, 'title', e.target.value)}
+                    placeholder="Proje adı..."
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[11px] text-slate-500 mb-1 flex items-center gap-1"><MapPin size={9} /> Konum</label>
+                  <input
+                    type="text"
+                    value={typeof project.location === 'object' ? (project.location[activeLang] || '') : project.location}
+                    onChange={e => updateProject(type, project.id, 'location', e.target.value)}
+                    placeholder="Şehir, Ülke"
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-[11px] text-slate-500 mb-1 flex items-center gap-1"><Calendar size={9} /> {type === 'completed' ? 'Yıl' : 'Tarih'}</label>
+                  <input
+                    type="text"
+                    value={type === 'completed' ? (project.year || '') : (typeof project.date === 'object' ? (project.date[activeLang] || '') : (project.date || ''))}
+                    onChange={e => updateProject(type, project.id, type === 'completed' ? 'year' : 'date', e.target.value)}
+                    placeholder={type === 'completed' ? '2024' : '12-17 Mayıs 2026'}
+                    className="w-full px-3 py-2 bg-slate-900/50 border border-slate-700/50 rounded-lg text-white text-sm placeholder-slate-600 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
+              </div>
+              <button onClick={() => removeProject(type, project.id)} className="opacity-0 group-hover:opacity-100 p-2 text-slate-600 hover:text-red-400 rounded-lg transition-all duration-200 cursor-pointer shrink-0">
+                <Trash2 size={14} />
               </button>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
-                <label className="text-[11px] text-gray-500 mb-1 block font-medium">Proje Adı</label>
-                <input
-                  type="text"
-                  value={typeof project.title === 'object' ? (project.title[activeLang] || '') : project.title}
-                  onChange={e => updateProject(type, project.id, 'title', e.target.value)}
-                  placeholder="Proje adı..."
-                  className="w-full px-3 py-2 bg-[#0d1210] border border-emerald-500/10 rounded-lg text-white text-sm placeholder-gray-700 focus:outline-none focus:border-emerald-500/30 transition-colors duration-200"
-                />
-              </div>
-              <div>
-                <label className="text-[11px] text-gray-500 mb-1 flex items-center gap-1 font-medium"><MapPin size={9} /> Konum</label>
-                <input
-                  type="text"
-                  value={typeof project.location === 'object' ? (project.location[activeLang] || '') : project.location}
-                  onChange={e => updateProject(type, project.id, 'location', e.target.value)}
-                  placeholder="Şehir, Ülke"
-                  className="w-full px-3 py-2 bg-[#0d1210] border border-emerald-500/10 rounded-lg text-white text-sm placeholder-gray-700 focus:outline-none focus:border-emerald-500/30 transition-colors duration-200"
-                />
-              </div>
-              {type === 'completed' ? (
-                <div>
-                  <label className="text-[11px] text-gray-500 mb-1 flex items-center gap-1 font-medium"><Calendar size={9} /> Yıl</label>
-                  <input type="text" value={project.year || ''} onChange={e => updateProject(type, project.id, 'year', e.target.value)} placeholder="2024" className="w-full px-3 py-2 bg-[#0d1210] border border-emerald-500/10 rounded-lg text-white text-sm placeholder-gray-700 focus:outline-none focus:border-emerald-500/30 transition-colors duration-200" />
-                </div>
-              ) : (
-                <div>
-                  <label className="text-[11px] text-gray-500 mb-1 flex items-center gap-1 font-medium"><Calendar size={9} /> Tarih</label>
-                  <input type="text" value={typeof project.date === 'object' ? (project.date[activeLang] || '') : (project.date || '')} onChange={e => updateProject(type, project.id, 'date', e.target.value)} placeholder="12-17 Mayıs 2026" className="w-full px-3 py-2 bg-[#0d1210] border border-emerald-500/10 rounded-lg text-white text-sm placeholder-gray-700 focus:outline-none focus:border-emerald-500/30 transition-colors duration-200" />
-                </div>
-              )}
             </div>
           </div>
         ))}
-        {items.length === 0 && <p className="text-gray-600 text-sm text-center py-6">Henüz proje eklenmemiş</p>}
+        {items.length === 0 && <p className="text-slate-600 text-sm text-center py-6">Henüz proje eklenmemiş</p>}
       </div>
     </div>
   );
@@ -109,24 +106,24 @@ export default function AdminProjects() {
     <div className="space-y-6">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h2 className="text-xl font-bold text-white">Projeler</h2>
-          <p className="text-sm text-gray-500 mt-0.5">Tamamlanan ve gelecek projeleri yönetin</p>
+          <h1 className="text-xl font-bold text-white">Projeler</h1>
+          <p className="text-sm text-slate-400 mt-0.5">Geçmiş ve gelecek projeleri yönetin</p>
         </div>
-        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer">
+        <button onClick={handleSave} disabled={saving} className="flex items-center gap-2 px-5 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer shadow-lg shadow-blue-500/20">
           {saved ? <><CheckCircle size={16} /> Kaydedildi</> : <><Save size={16} /> Kaydet</>}
         </button>
       </div>
 
-      <div className="flex gap-2">
+      <div className="inline-flex bg-slate-900 border border-slate-800 rounded-xl p-1">
         {LANGS.map(l => (
-          <button key={l} onClick={() => setActiveLang(l)} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors duration-200 cursor-pointer ${activeLang === l ? 'bg-emerald-600 text-white' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}>
+          <button key={l} onClick={() => setActiveLang(l)} className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 cursor-pointer ${activeLang === l ? 'bg-blue-500 text-white shadow-sm' : 'text-slate-400 hover:text-white'}`}>
             {LANG_LABELS[l]}
           </button>
         ))}
       </div>
 
-      {renderSection('Gelecek Projeler', 'upcoming', projects.upcoming, 'bg-blue-400')}
-      {renderSection('Tamamlanan Projeler', 'completed', projects.completed, 'bg-emerald-400')}
+      {renderSection('Gelecek', 'upcoming', projects.upcoming, 'bg-blue-500/10 text-blue-400 border border-blue-500/20')}
+      {renderSection('Tamamlanan', 'completed', projects.completed, 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20')}
     </div>
   );
 }

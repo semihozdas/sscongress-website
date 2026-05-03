@@ -50,46 +50,42 @@ export default function AdminLogin() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#080c0a]">
-        <Loader2 size={24} className="text-emerald-400 animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <Loader2 size={28} className="text-blue-400 animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#080c0a] px-4 font-[Inter,sans-serif]">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-500/3 rounded-full blur-[120px]" />
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 px-4">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent" />
 
-      <div className="relative w-full max-w-sm">
+      <div className="relative w-full max-w-[380px]">
         <div className="text-center mb-8">
-          <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-emerald-400 font-bold text-lg">SS</span>
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg shadow-blue-500/25 mb-5">
+            <span className="text-white font-bold text-xl">SS</span>
           </div>
-          <h1 className="text-xl font-semibold text-white tracking-tight">SS Congress</h1>
-          <p className="text-sm text-gray-500 mt-1">{needsSetup ? 'Admin hesabı oluşturun' : 'Yönetim paneline giriş yapın'}</p>
+          <h1 className="text-2xl font-bold text-white">SS Congress</h1>
+          <p className="text-slate-400 text-sm mt-2">{needsSetup ? 'İlk admin hesabınızı oluşturun' : 'Yönetim paneline hoş geldiniz'}</p>
         </div>
 
-        <div className="bg-[#0d1210] border border-emerald-500/10 rounded-2xl p-6 shadow-2xl shadow-black/20">
+        <div className="bg-slate-800/50 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-7 shadow-2xl">
           {error && (
-            <div className="mb-4 p-3 bg-red-500/8 border border-red-500/20 rounded-xl text-red-400 text-sm flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
+            <div className="mb-5 px-4 py-3 bg-red-500/10 border border-red-500/20 rounded-xl text-red-300 text-sm">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Kullanıcı Adı</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Kullanıcı Adı</label>
               <div className="relative">
-                <User size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600" />
+                <User size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   type="text"
                   value={username}
                   onChange={e => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-[#080c0a] border border-emerald-500/12 rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                   placeholder="admin"
                   required
                   autoComplete="username"
@@ -97,14 +93,14 @@ export default function AdminLogin() {
               </div>
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-400 mb-1.5 ml-1">Şifre</label>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Şifre</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-600" />
+                <Lock size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
                 <input
                   type="password"
                   value={password}
                   onChange={e => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 bg-[#080c0a] border border-emerald-500/12 rounded-xl text-white text-sm placeholder-gray-600 focus:outline-none focus:border-emerald-500/40 focus:ring-1 focus:ring-emerald-500/20 transition-all duration-200"
+                  className="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-slate-600/50 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200"
                   placeholder="••••••••"
                   required
                   minLength={6}
@@ -115,21 +111,19 @@ export default function AdminLogin() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm font-medium rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer mt-6"
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40"
             >
               {submitting ? (
-                <Loader2 size={16} className="animate-spin" />
+                <Loader2 size={18} className="animate-spin" />
               ) : (
                 <>
                   {needsSetup ? 'Hesap Oluştur' : 'Giriş Yap'}
-                  <ArrowRight size={15} />
+                  <ArrowRight size={16} />
                 </>
               )}
             </button>
           </form>
         </div>
-
-        <p className="text-center text-[11px] text-gray-600 mt-6">SS Congress Admin Panel v1.0</p>
       </div>
     </div>
   );
